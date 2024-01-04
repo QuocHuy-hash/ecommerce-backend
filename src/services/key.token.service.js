@@ -35,8 +35,34 @@ const removeKeyById = async (id) => {
     console.log("id::", id);
     return await Keytoken.destroy({ where: { id } });
 }
+const findByRefreshTokenUsed = async (refreshToken) => {
+    return await Keytoken.findOne({ where: { refreshTokensUsed: refreshToken } });
+}
+
+const findByRefreshToken = async (refreshToken) => {
+    return await Keytoken.findOne({ where: { refreshToken } });
+}
+
+const updateRefreshToken = async (refreshToken, refreshTokenUsed) => {
+    const token = await Keytoken.findOne({ where: { refreshToken: refreshTokenUsed } });
+    console.log("totken", token);
+    if (token) {
+        await token.update({
+            refreshToken,
+            $addToSet: {
+                refreshTokensUsed: refreshTokenUsed // Already used to obtain a new token
+            }
+        });
+    }
+
+    console.log('check token result', token, refreshTokenUsed);
+}
 module.exports = {
     KeyTokenService,
     findByUserId,
-    removeKeyById
+    removeKeyById,
+    findByRefreshTokenUsed,
+    findByRefreshToken,
+    updateRefreshToken
+
 };

@@ -5,6 +5,7 @@ module.exports = (sequelize) => {
   class Shops extends Model {
     static associate(models) {
       // Định nghĩa mối quan hệ giữa các model ở đây nếu cần thiết
+
     }
   }
 

@@ -2,8 +2,8 @@
 const { Shops } = require('../models');
 const bcrypt = require('bcrypt');
 const crypto = require('node:crypto');
-const { KeyTokenService, removeKeyById } = require('./key.token.service');
-const { createTokenPair } = require('../auth/authUtil');
+const { KeyTokenService, removeKeyById, findByRefreshTokenUsed, updateRefreshToken } = require('./key.token.service');
+const { createTokenPair, verifyJWT } = require('../auth/authUtil');
 const { getInfoData } = require('../utils');
 const { BadRequestError } = require('../core/error.response');
 const { findByEmail } = require('./shop.service');
@@ -24,10 +24,9 @@ const RoleShop = {
    */
 const login = async ({ email, password, refreshToken = null }) => {
     //1.
-    console.log(" email 111");
 
     const foundShop = await findByEmail({ email });
-    console.log(" foundShop ", foundShop);
+
     if (!foundShop) {
         throw new BadRequestError('Shop not registed');
     }
@@ -119,8 +118,57 @@ const logout = async (keyStore) => {
     console.log({ deleteKey });
     return deleteKey;
 }
+
+const handleRefreshToken = async (refreshToken) => {
+
+    /* 
+        check this token used
+    */
+    console.log("refreshToken", refreshToken);
+
+    const foundToken = await findByRefreshTokenUsed(refreshToken);
+    console.log("foundToken", foundToken);
+    //neu co
+    if (foundToken) {
+        // decode xem may la thang nao?
+        const { userId, email } = await verifyJWT(refreshToken, foundToken.privateKey);
+        console.log({ userId, email });
+        // xoa tat ca token trong keyStore
+        await KeyTokenService.removeKeyById(userId);
+        throw new ForbidenError('Something wrong happend !! please relogin');
+    }
+
+    // NO
+    const holderToken = await KeyTokenService.findByRefreshToken(refreshToken);
+    if (!holderToken) {
+        throw new AuthFailureError('Shop not registed ');
+    }
+
+    // verify token
+    const { userId, email } = await verifyJWT(refreshToken, holderToken.privateKey);
+    // check user id
+    const foundShop = await findByEmail({ email });
+    if (!foundShop) {
+        throw new AuthFailureError('Shop not registed 2');
+    }
+
+    //create 1 cap token moi
+    const tokens = await createTokenPair({ userId, email }, holderToken.publicKey, holderToken.privateKey);
+
+    console.log('check holderToken', holderToken)
+
+    await updateRefreshToken(tokens.refreshToken, refreshToken);
+
+
+
+    return {
+        user: { userId, email },
+        tokens
+    }
+}
 module.exports = {
     AccessService,
     login,
-    logout
+    logout,
+    handleRefreshToken
 }

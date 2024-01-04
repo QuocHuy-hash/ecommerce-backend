@@ -1,8 +1,18 @@
 'use strict'
 
 const { CreatedResponse, SuccessResponse } = require("../core/success.response");
-const { AccessService, login, logout } = require("../services/access.service");
+const { AccessService, login, logout, handleRefreshToken } = require("../services/access.service");
 class AccessController {
+    handleRefreshToken = async (req, res, next) => {
+        console.log("req.body.refreshToken111");
+
+        console.log("req.body.refreshToken", req.body.refreshToken);
+        new SuccessResponse({
+            message: 'refreshToken Success',
+            metadata: await handleRefreshToken(req.body.refreshToken),
+        }).send(res)
+
+    }
     login = async (req, res, next) => {
         new SuccessResponse({
             message: 'login Success',

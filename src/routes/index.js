@@ -11,5 +11,7 @@ const router = express.Router();
 router.use('/v1/api/', require('./users/users'));
 // signUp
 router.use('/v1/api/', require('./access/index'));
+//product
+router.use('/v1/api/', require('./products/index'));
 
 module.exports = router;
