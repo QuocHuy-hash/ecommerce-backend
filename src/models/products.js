@@ -10,7 +10,35 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Products.belongsTo(models.ProductsType, { foreignKey: 'product_type', as: 'productType' });
+      Products.hasOne(models.Clothings, { foreignKey: 'product_id', as: 'clothing' });
+      Products.hasOne(models.Electronic, { foreignKey: 'product_id', as: 'electronic' });
+      Products.belongsTo(models.Shops, { foreignKey: 'product_shop', as: 'shop' });
+    }
+    async getProductDetails() {
+      if (this.productType) {
+        switch (this.productType.type_name) {
+          case 'Clothing':
+            this.clothingDetails = await this.getClothingDetails();
+            break;
+          case 'Electronic':
+            this.electronicDetails = await this.getElectronicDetails();
+            break;
+          case 'Shoes':
+            // this.electronicDetails = await this.getElectronicDetails();
+            break;
+          default:
+            break;
+        }
+      }
+    }
+
+    async getClothingDetails() {
+      return await this.getClothing();
+    }
+
+    async getElectronicDetails() {
+      return await this.getElectronic();
     }
   }
   Products.init({

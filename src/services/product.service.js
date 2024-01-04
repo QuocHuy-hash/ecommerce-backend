@@ -1,6 +1,6 @@
 'use strict';
 
-const { Products, Electronic, ProductsType, Clothings } = require('../models');
+const { Products, Electronic, ProductsType, Clothings, db } = require('../models');
 const { sequelize } = require('../models/index');
 
 async function createProducts(productData, userId) {
@@ -49,10 +49,8 @@ async function createProducts(productData, userId) {
                 { transaction }
             );
             break;
-        // Add more cases for other product types if needed
 
         default:
-            // Handle the default case or do nothing
             break;
     }
     // Kết thúc giao dịch
@@ -61,7 +59,33 @@ async function createProducts(productData, userId) {
     console.log('Sản phẩm và thông tin chi tiết đã được thêm thành công!');
 
 }
+async function getShopProducts(userId) {
+    const listProductShop = await Products.findAll({
+        where: { product_shop: userId },
+        attributes: ['id', 'product_name', 'product_thumb', 'product_description', 'product_price', 'product_quantity', 'product_start'],
+        include: [
+            { model: Clothings, as: "clothing", attributes: ["brand", "size", "color", "material"] },
+            { model: Electronic, as: 'electronic', attributes: ["manufacturer", "model", "color"] },
+            { model: ProductsType, as: 'productType', attributes: ["type_name"] },
+        ],
+        nest: true,
+        raw: true,
+    });
+    console.log(listProductShop);
+    return listProductShop;
+}
 
+async function getAllProducts() {
+    const listProductShop = await Products.findAll({
+        attributes: ['id', 'product_name', 'product_thumb', 'product_description', 'product_price', 'product_quantity', 'product_start'],
+        nest: true,
+        raw: true,
+    });
+    console.log(listProductShop);
+    return listProductShop;
+}
 module.exports = {
     createProducts,
+    getShopProducts,
+    getAllProducts
 };
