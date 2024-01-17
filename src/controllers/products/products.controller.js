@@ -1,7 +1,7 @@
 // controllers/productController.js
 
 const { SuccessResponse, OkResponse } = require("../../core/success.response");
-const { createProducts, getShopProducts, getAllProducts, createOrUpdateProduct, updateProduct } = require("../../services/product.service");
+const { createProducts, getShopProducts, getAllProducts, deleteProduct } = require("../../services/product.service");
 const HEADER = {
     CLIENT_ID: 'x-client-id',
 };
@@ -13,28 +13,17 @@ class ProductsController {
     }
 
     createProduct = async (req, res, next) => {
-        // const userId = req.headers[HEADER.CLIENT_ID];
         this.setUserId(req);
         const productData = req.body;
         new SuccessResponse({
-            message: 'create OK',
+            message: 'create orr update successfully',
             metadata: await createProducts(productData, this.userId),
             options: {
                 limit: 10,
             }
         }).send(res)
     }
-    updateProduct = async (req, res, next) => {
-        const userId = req.headers[HEADER.CLIENT_ID];
-        const productData = req.body;
-        const id = req.body?.id;
 
-        new SuccessResponse({
-            message: 'update OK',
-            metadata: await updateProduct(id, productData, userId),
-
-        }).send(res)
-    }
     ShopListProducts = async (req, res, next) => {
         this.setUserId(req);
         new SuccessResponse({
@@ -52,6 +41,14 @@ class ProductsController {
             options: {
                 limit: 10,
             }
+        }).send(res)
+    }
+    delete = async (req, res, next) => {
+        this.setUserId(req);
+        const id = req.body;
+        new SuccessResponse({
+            message: 'delete product OK',
+            metadata: await deleteProduct(id, this.userId),
         }).send(res)
     }
 }

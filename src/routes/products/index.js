@@ -7,7 +7,7 @@ const { authentication } = require('../../auth/authUtil');
 //authentication
 router.use(authentication)
 router.post('/products/create', asyncHandle(ProductController.createProduct));
-router.post('/products/update', asyncHandle(ProductController.updateProduct));
+router.post('/products/delete', asyncHandle(ProductController.delete));
 router.get('/products/shop-list', asyncHandle(ProductController.ShopListProducts));
 router.get('/products/list-all', asyncHandle(ProductController.ListAllProducts));
 

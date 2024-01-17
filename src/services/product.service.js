@@ -3,11 +3,13 @@
 const { BadRequestError } = require('../core/error.response');
 const { Products, Electronic, ProductsType, Clothings, db } = require('../models');
 const { sequelize } = require('../models/index');
-const addProduct = require("../models/reponsitorys/product.repo");
+const productReponsitory = require("../models/reponsitorys/product.repo");
 
 class product {
-    constructor({ id, product_name, product_thumb, product_description, product_price, product_shop, product_type, product_quantity, product_start, }) {
+    constructor({ id, product_name, product_slug, product_thumb, product_description, product_price, product_shop, product_type, product_quantity,
+        product_start, isDraft, isPublished }) {
         this.id = id,
+            this.product_slug = product_slug,
             this.product_name = product_name,
             this.product_thumb = product_thumb,
             this.product_description = product_description,
@@ -15,7 +17,9 @@ class product {
             this.product_shop = product_shop,
             this.product_type = product_type,
             this.product_quantity = product_quantity,
-            this.product_start = product_start
+            this.product_start = product_start,
+            this.isDraft = isDraft,
+            this.isPublished = isPublished
     }
     async createProduct() {
         return await Products.upsert(this)
@@ -56,9 +60,7 @@ class clothings extends Products {
         }
         return await Clothings.create(this);
     }
-    // async createProduct() {
-    //     addProduct(this);
-    // }
+
 }
 
 async function createProducts(productData, userId) {
@@ -67,19 +69,20 @@ async function createProducts(productData, userId) {
         where: { type_name: productData.product_type },
         transaction,
     });
+
     try {
         const productInstance = new product({ id: productData.id, ...productData, product_type: type_product.id, product_shop: userId });
-        // create/update Product
         const newProduct = await productInstance.createProduct(transaction);
-        //create/ update attribute
         const productId = newProduct[0].id;
         const attributeProduct = createAttributeProduct(productData, productId);
         await attributeProduct.createProduct(transaction);
         await transaction.commit();
         console.log('Sản phẩm đã được tạo hoặc cập nhật thành công!');
     } catch (error) {
-        console.log('error!', error);
+        console.log("Lỗi", error);
     }
+
+
 
 }
 
@@ -125,14 +128,14 @@ async function getAllProducts() {
     return listProductShop;
 }
 async function deleteProduct(id, userId) {
+    const productItem = await Products.findOne({ where: { id: id.id } });
+    productReponsitory.deleteAttributes(productItem.product_type, id.id);
     await Products.destroy({
-        where: { id: id, product_shop: userId },
+        where: { id: id.id, product_shop: userId },
     });
 }
 
 module.exports = {
-    // createProducts,
-    // updateProduct,
     createProducts,
     getShopProducts,
     getAllProducts,

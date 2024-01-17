@@ -12,6 +12,9 @@ module.exports = {
       product_name: {
         type: Sequelize.STRING
       },
+      product_slug: {
+        type: Sequelize.STRING
+      },
       product_thumb: {
         type: Sequelize.STRING
       },
@@ -30,8 +33,21 @@ module.exports = {
       product_shop: {
         type: Sequelize.INTEGER
       },
+
       product_start: {
         type: Sequelize.INTEGER
+      },
+      isDraft: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true,
+        index: true,
+        select: false
+      },
+      isPublished: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+        index: true,
+        select: false
       },
       createdAt: {
         allowNull: false,
