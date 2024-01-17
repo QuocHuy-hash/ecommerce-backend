@@ -1,0 +1,169 @@
+{
+	"info": {
+		"_postman_id": "1e0cd5c1-abc6-4aed-8af8-f3da0c1917bf",
+		"name": "NodeJs-ORM",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "26341686"
+	},
+	"item": [
+		{
+			"name": "{{api}}products/create",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE5LCJlbWFpbCI6InNob3BIdXkxQGdtYWlsLmNvbSIsImlhdCI6MTcwNDI5MDM5MCwiZXhwIjoxNzA0NDYzMTkwfQ.UzR-F7t9kva5tMbN_sPxNSxOa2Ibo5yFIn9fTKc9q3M"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-client-id",
+						"value": "2",
+						"type": "text"
+					},
+					{
+						"key": "athorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiaHV5MTIzQGdtYWlsLmNvbSIsImlhdCI6MTcwNTQwOTY2NiwiZXhwIjoxNzA1NTgyNDY2fQ.GdvFpVmoYiRf3T72U6XkzNDyow9WPR256ztnLXn7GD8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"id\": 1,\n  \"product_name\": \"Quần áo mùa đông ẤM áp2\",\n  \"product_thumb\": \"Quan-ao-mua-dong.png2\",\n  \"product_description\": \"Mô tả sản phẩm cho Quần áo mùa đông ẤM áp2\",\n  \"product_price\": 15000,\n  \"product_quantity\": 100,\n  \"product_start\": 5,\n  \"product_type\": \"clothings\",\n  \"size\" : [\"32\", \"31\" , \"22\"],\n  \"brand\": \"Hoodi\",\n  \"material\": \"đây là model của máy tính ẤM 2\",\n  \"color\": [\"Đen\", \"Trắng\" , \"2\"]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}products/create"
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateProduct",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE5LCJlbWFpbCI6InNob3BIdXkxQGdtYWlsLmNvbSIsImlhdCI6MTcwNDI5MDM5MCwiZXhwIjoxNzA0NDYzMTkwfQ.UzR-F7t9kva5tMbN_sPxNSxOa2Ibo5yFIn9fTKc9q3M"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-client-id",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "athorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiaHV5MUBnbWFpbC5jb20iLCJpYXQiOjE3MDQ5ODQwNzYsImV4cCI6MTcwNTE1Njg3Nn0.cxtl8I47qQdVGsI-0PiicA6o_WthVQuy3nQUIY4vRBg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\" : 7,\n  \"product_name\": \"MacBook Pro 2222\",\n  \"product_thumb\": \"Đường dẫn hình ảnh MacBook Pro 2222\",\n  \"product_description\": \"Mô tả sản phẩm cho MacBook Pro 2222 \",\n  \"product_price\": 20000,\n  \"product_quantity\": 100,\n  \"product_start\": 5,\n  \"product_type\": \"electronic\",\n  \"manufacturer\": \"Apple111\",\n  \"model\": \"đây là model của máy 222\",\n  \"color\": [\"Đen\", \"Trắng\" , \"Vàng\"]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}products/create"
+			},
+			"response": []
+		},
+		{
+			"name": "{{api}}shop/login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"",
+							"pm.globals.set(\"api\",",
+							" \"http://localhost:3055/v1/api/\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"huy123@gmail.com\",\n    \"password\" : \"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}shop/login"
+			},
+			"response": []
+		},
+		{
+			"name": "{{api}}shop/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"huy123@gmail.com\",\n     \"password\" : \"123456\",\n     \"firstName\" : \"Quoc\",\n    \"lastName\":\"Huy\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}shop/signup"
+			},
+			"response": []
+		},
+		{
+			"name": "{{api}}products/list-all",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "athorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiaHV5MUBnbWFpbC5jb20iLCJpYXQiOjE3MDQ5ODQwNzYsImV4cCI6MTcwNTE1Njg3Nn0.cxtl8I47qQdVGsI-0PiicA6o_WthVQuy3nQUIY4vRBg",
+						"type": "text"
+					},
+					{
+						"key": "x-client-id",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"url": "{{api}}products/list-all"
+			},
+			"response": []
+		},
+		{
+			"name": "{{api}}products/shop-list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-client-id",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "athorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiaHV5MUBnbWFpbC5jb20iLCJpYXQiOjE3MDUwMjQ5MDgsImV4cCI6MTcwNTE5NzcwOH0.kWoq13QDSxbrngJ9587UYSTpNo2ojK75SeDaP7c-A2Y",
+						"type": "text"
+					}
+				],
+				"url": "{{api}}products/shop-list"
+			},
+			"response": []
+		}
+	]
+}
