@@ -3,6 +3,7 @@
 const { BadRequestError } = require('../core/error.response');
 const { Products, Electronic, ProductsType, Clothings, db } = require('../models');
 const { sequelize } = require('../models/index');
+const addProduct = require("../models/reponsitorys/product.repo");
 
 class product {
     constructor({ id, product_name, product_thumb, product_description, product_price, product_shop, product_type, product_quantity, product_start, }) {
@@ -30,8 +31,12 @@ class electronic extends Products {
         this.color = color;
     }
     async createProduct() {
-        console.log("data : ", this);
-        return await Electronic.upsert(this)
+        const where = { where: { product_id: this.product_id } };
+        const existing = await Electronic.findOne(where);
+        if (existing) {
+            return await Electronic.update(this, where);
+        }
+        return await Electronic.create(this);
     }
 }
 class clothings extends Products {
@@ -44,9 +49,16 @@ class clothings extends Products {
         this.color = color;
     }
     async createProduct() {
-        console.log("data : ", this);
-        return await Clothings.upsert(this)
+        const where = { where: { product_id: this.product_id } }
+        const existing = await Clothings.findOne(where);
+        if (existing) {
+            return await Clothings.update(this, where);
+        }
+        return await Clothings.create(this);
     }
+    // async createProduct() {
+    //     addProduct(this);
+    // }
 }
 
 async function createProducts(productData, userId) {
@@ -55,20 +67,23 @@ async function createProducts(productData, userId) {
         where: { type_name: productData.product_type },
         transaction,
     });
+    try {
+        const productInstance = new product({ id: productData.id, ...productData, product_type: type_product.id, product_shop: userId });
+        // create/update Product
+        const newProduct = await productInstance.createProduct(transaction);
+        //create/ update attribute
+        const productId = newProduct[0].id;
+        const attributeProduct = createAttributeProduct(productData, productId);
+        await attributeProduct.createProduct(transaction);
+        await transaction.commit();
+        console.log('Sản phẩm đã được tạo hoặc cập nhật thành công!');
+    } catch (error) {
+        console.log('error!', error);
+    }
 
-    const productInstance = new product({ id: productData.id, ...productData, product_type: type_product.id, product_shop: userId });
-    // create/update Product
-    const newProduct = await productInstance.createProduct(transaction);
-    //create/ update attribute
-    const productId = newProduct[0].id;
-    const attributeProduct = createAttributeProduct(productData, productId);
-    await attributeProduct.createProduct(transaction);
-    await transaction.commit();
-    console.log('Sản phẩm đã được tạo hoặc cập nhật thành công!');
 }
 
 const createAttributeProduct = (productData, id) => {
-    console.log({ productData, id });
     switch (productData.product_type) {
         case 'electronic':
             return new electronic({ ...productData, product_id: id });
@@ -80,58 +95,6 @@ const createAttributeProduct = (productData, id) => {
 }
 
 
-// async function updateProduct(id, productData, userId) {
-//     const transaction = await sequelize.transaction();
-//     // Update general product information
-
-
-//     // Find the product type
-//     let type_product = await ProductsType.findOne({
-//         where: { type_name: productData.product_type },
-//         transaction,
-//     });
-//     productData.product_type = type_product.id;
-//     const updateResult = await Products.update(productData, {
-//         where: { id: id, product_shop: userId },
-//         transaction,
-//     });
-//     if (updateResult[0] === 0) {
-//         throw new BadRequestError('Error : not the shop who posted this');
-//     }
-
-
-//     // Update specific product information based on product type
-//     switch (type_product.type_name) {
-//         case 'electronic':
-//             await Electronic.update(
-//                 {
-//                     manufacturer: productData.manufacturer,
-//                     model: productData.model,
-//                     color: productData.color,
-//                 },
-//                 { where: { product_id: id }, transaction }
-//             );
-//             break;
-//         case 'clothings':
-//             await Clothings.update(
-//                 {
-//                     brand: productData.brand,
-//                     size: productData.size,
-//                     material: productData.material,
-//                     color: productData.color,
-//                 },
-//                 { where: { product_id: id }, transaction }
-//             );
-//             break;
-//         default:
-//             break;
-//     }
-
-//     // Commit the transaction
-//     await transaction.commit();
-
-
-// }
 
 async function getShopProducts(userId) {
     const listProductShop = await Products.findAll({
@@ -152,6 +115,9 @@ async function getShopProducts(userId) {
 async function getAllProducts() {
     const listProductShop = await Products.findAll({
         attributes: ['id', 'product_name', 'product_thumb', 'product_description', 'product_price', 'product_quantity', 'product_start'],
+        include: [
+            { model: ProductsType, as: 'productType', attributes: ["type_name"] },
+        ],
         nest: true,
         raw: true,
     });
