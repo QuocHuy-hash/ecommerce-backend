@@ -1,7 +1,7 @@
 // controllers/productController.js
 
-const { SuccessResponse } = require("../../core/success.response");
-const { createProducts, getShopProducts, getAllProducts } = require("../../services/product.service");
+const { SuccessResponse, OkResponse } = require("../../core/success.response");
+const { createProducts, getShopProducts, getAllProducts, createOrUpdateProduct, updateProduct } = require("../../services/product.service");
 const HEADER = {
     CLIENT_ID: 'x-client-id',
 };
@@ -23,8 +23,17 @@ class ProductsController {
                 limit: 10,
             }
         }).send(res)
+    }
+    updateProduct = async (req, res, next) => {
+        const userId = req.headers[HEADER.CLIENT_ID];
+        const productData = req.body;
+        const id = req.body?.id;
 
+        new SuccessResponse({
+            message: 'update OK',
+            metadata: await updateProduct(id, productData, userId),
 
+        }).send(res)
     }
     ShopListProducts = async (req, res, next) => {
         this.setUserId(req);

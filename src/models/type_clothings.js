@@ -16,7 +16,11 @@ module.exports = (sequelize, DataTypes) => {
   Clothings.init({
     product_id: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'Products',
+        key: 'id',
+      },
     },
     brand: DataTypes.STRING,
     size: {
