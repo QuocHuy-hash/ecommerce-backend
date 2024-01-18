@@ -38,7 +38,10 @@ module.exports = (sequelize, DataTypes) => {
 
   Products.init({
     product_name: DataTypes.STRING,
-    product_slug: DataTypes.STRING,
+    product_slug: {
+      type: DataTypes.STRING,
+      defaultValue: "",
+    },
     product_thumb: DataTypes.STRING,
     product_description: DataTypes.TEXT,
     product_price: DataTypes.DECIMAL(10, 2),
@@ -69,6 +72,15 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Products',
+    indexes: [
+      {
+        unique: true,
+        fields: ['product_name'],
+      },
+      {
+        fields: ['product_description'],
+      },
+    ],
     hooks: {
       beforeCreate: (product, options) => {
         product.product_slug = slugify(product.product_name, { lower: true });
@@ -76,7 +88,6 @@ module.exports = (sequelize, DataTypes) => {
       beforeUpdate: (product, options) => {
         product.product_slug = slugify(product.product_name, { lower: true });
       },
-
     },
   });
   return Products;

@@ -1,7 +1,7 @@
 // controllers/productController.js
 
 const { SuccessResponse, OkResponse } = require("../../core/success.response");
-const { createProducts, getShopProducts, getAllProducts, deleteProduct } = require("../../services/product.service");
+const { createProducts, getShopProducts, getAllProducts, deleteProduct, findAllIsDraftShop, findAllIsPublishShop, publishProductByShop, unPublishProductByShop, searchProductByUser } = require("../../services/product.service");
 const HEADER = {
     CLIENT_ID: 'x-client-id',
 };
@@ -24,14 +24,38 @@ class ProductsController {
         }).send(res)
     }
 
-    ShopListProducts = async (req, res, next) => {
+    findAllIsDraftShop = async (req, res, next) => {
         this.setUserId(req);
         new SuccessResponse({
-            message: 'get list  product shop OK',
-            metadata: await getShopProducts(this.userId),
-            options: {
-                limit: 10,
-            }
+            message: 'findAllIsDraftShop True',
+            metadata: await findAllIsDraftShop(this.userId),
+
+        }).send(res)
+    }
+    findAllIsPublishShop = async (req, res, next) => {
+        this.setUserId(req);
+        new SuccessResponse({
+            message: 'findAllIsDraftShop True',
+            metadata: await findAllIsPublishShop(this.userId),
+
+        }).send(res)
+    }
+    publishProductShop = async (req, res, next) => {
+        this.setUserId(req);
+        const product_id = req.body.id;
+        new SuccessResponse({
+            message: 'Publish product shop successfully',
+            metadata: await publishProductByShop(this.userId, product_id),
+
+        }).send(res)
+    }
+    unPublishProductShop = async (req, res, next) => {
+        this.setUserId(req);
+        const product_id = req.body.id;
+        new SuccessResponse({
+            message: 'UnPublish product shop successfully',
+            metadata: await unPublishProductByShop(this.userId, product_id),
+
         }).send(res)
     }
     ListAllProducts = async (req, res, next) => {
@@ -41,6 +65,12 @@ class ProductsController {
             options: {
                 limit: 10,
             }
+        }).send(res)
+    }
+    ListSearchAllProducts = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'ListSearchAllProducts OK',
+            metadata: await searchProductByUser(req.params),
         }).send(res)
     }
     delete = async (req, res, next) => {

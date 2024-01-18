@@ -60,7 +60,6 @@ class clothings extends Products {
         }
         return await Clothings.create(this);
     }
-
 }
 
 async function createProducts(productData, userId) {
@@ -81,9 +80,6 @@ async function createProducts(productData, userId) {
     } catch (error) {
         console.log("Lỗi", error);
     }
-
-
-
 }
 
 const createAttributeProduct = (productData, id) => {
@@ -97,35 +93,31 @@ const createAttributeProduct = (productData, id) => {
     }
 }
 
+async function findAllIsDraftShop(product_shop, limit = 50, skip = 0) {
+    const where = { where: { product_shop: product_shop, isDraft: true } }
+    const attribute = ['id', 'product_name', 'product_thumb', 'product_description', 'product_price', 'product_quantity', 'product_start'];
+    return await productReponsitory.findAllIsDraftShop(where, attribute, limit, skip);
 
+}
+async function findAllIsPublishShop(product_shop, limit = 50, skip = 0) {
+    const where = { where: { product_shop: product_shop, isPublished: true } }
+    const attribute = ['id', 'product_name', 'product_thumb', 'product_description', 'product_price', 'product_quantity', 'product_start'];
+    return await productReponsitory.findAllIsPublishShop(where, attribute, limit, skip);
 
-async function getShopProducts(userId) {
-    const listProductShop = await Products.findAll({
-        where: { product_shop: userId },
-        attributes: ['id', 'product_name', 'product_thumb', 'product_description', 'product_price', 'product_quantity', 'product_start'],
-        include: [
-            { model: Clothings, as: "clothing", attributes: ["brand", "size", "color", "material"] },
-            { model: Electronic, as: 'electronic', attributes: ["manufacturer", "model", "color"] },
-            { model: ProductsType, as: 'productType', attributes: ["type_name"] },
-        ],
-        nest: true,
-        raw: true,
-    });
-    console.log(listProductShop);
-    return listProductShop;
 }
 
 async function getAllProducts() {
-    const listProductShop = await Products.findAll({
+    const listProduct = await Products.findAll({
+        where: { isPublished: true },
         attributes: ['id', 'product_name', 'product_thumb', 'product_description', 'product_price', 'product_quantity', 'product_start'],
         include: [
             { model: ProductsType, as: 'productType', attributes: ["type_name"] },
         ],
         nest: true,
         raw: true,
-    });
-    console.log(listProductShop);
-    return listProductShop;
+    }).sort({ updateAt: -1 });
+
+    return listProduct;
 }
 async function deleteProduct(id, userId) {
     const productItem = await Products.findOne({ where: { id: id.id } });
@@ -134,11 +126,27 @@ async function deleteProduct(id, userId) {
         where: { id: id.id, product_shop: userId },
     });
 }
+// publishProductByShop
+async function publishProductByShop(product_shop, product_id) {
+    return productReponsitory.publishProductByShop(product_shop, product_id);
+}
+// unPublishProductByShop
+async function unPublishProductByShop(product_shop, product_id) {
+    return productReponsitory.unPublishProductByShop(product_shop, product_id);
+}
+// /searchProductByUser
+async function searchProductByUser(keySearch) {
+    return productReponsitory.searchProductByUser(keySearch);
+}
 
 module.exports = {
     createProducts,
-    getShopProducts,
     getAllProducts,
-    deleteProduct
+    deleteProduct,
+    publishProductByShop,
+    findAllIsDraftShop,
+    findAllIsPublishShop,
+    unPublishProductByShop,
+    searchProductByUser
 
 };
