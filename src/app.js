@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const compression = require('compression');
-
+require('dotenv').config();
 var app = express();
 
 // view engine setup

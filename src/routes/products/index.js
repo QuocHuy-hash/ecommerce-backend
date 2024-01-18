@@ -10,6 +10,7 @@ router.get('/list-all', asyncHandle(ProductController.ListAllProducts));
 
 //authentication
 router.use(authentication)
+
 router.post('/create', asyncHandle(ProductController.createProduct));
 router.post('/delete', asyncHandle(ProductController.delete));
 

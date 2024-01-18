@@ -7,8 +7,12 @@ const basename = path.basename(__filename);
 const config = require('../config/config.json')
 const db = {};
 
-const sequelize = new Sequelize('nodejs', 'root', '12345678', {
-  host: 'localhost',
+const sequelize = new Sequelize(
+  config.development.database,
+  config.development.username,
+  config.development.password, {
+  host: config.development.host,
+  port: config.development.port,
   dialect: 'mysql',
   logging: false,
 });
