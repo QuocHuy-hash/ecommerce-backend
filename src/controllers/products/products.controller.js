@@ -1,7 +1,8 @@
 // controllers/productController.js
 
 const { SuccessResponse, OkResponse } = require("../../core/success.response");
-const { createProducts, getShopProducts, getAllProducts, deleteProduct, findAllIsDraftShop, findAllIsPublishShop, publishProductByShop, unPublishProductByShop, searchProductByUser } = require("../../services/product.service");
+const { createProducts, getAllProducts, deleteProduct, findAllIsDraftShop, findAllIsPublishShop,
+    publishProductByShop, unPublishProductByShop, searchProductByUser, getDetailsProduct } = require("../../services/product.service");
 const HEADER = {
     CLIENT_ID: 'x-client-id',
 };
@@ -65,6 +66,13 @@ class ProductsController {
             options: {
                 limit: 10,
             }
+        }).send(res)
+    }
+    getDetailsProduct = async (req, res, next) => {
+        const product_id = req.body.id;
+        new SuccessResponse({
+            message: 'get detail product OK',
+            metadata: await getDetailsProduct(product_id),
         }).send(res)
     }
     ListSearchAllProducts = async (req, res, next) => {

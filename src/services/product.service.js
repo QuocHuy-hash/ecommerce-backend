@@ -4,6 +4,7 @@ const { BadRequestError } = require('../core/error.response');
 const { Products, Electronic, ProductsType, Clothings, db } = require('../models');
 const { sequelize } = require('../models/index');
 const productReponsitory = require("../models/reponsitorys/product.repo");
+const { removeEmptyFields } = require('../utils');
 
 class product {
     constructor({ id, product_name, product_slug, product_thumb, product_description, product_price, product_shop, product_type, product_quantity,
@@ -34,31 +35,41 @@ class electronic extends Products {
         this.model = model;
         this.color = color;
     }
-    async createProduct() {
-        const where = { where: { product_id: this.product_id } };
+    async createProduct(transaction, product_id) {
+        const where = { where: { product_id: product_id } };
         const existing = await Electronic.findOne(where);
         if (existing) {
             return await Electronic.update(this, where);
         }
-        return await Electronic.create(this);
+        if (!this.product_id) {
+            throw new BadRequestError('product_id is not set');
+        }
+        return await Electronic.create({ ...this, product_id: this.product_id }, { transaction });
     }
 }
 class clothings extends Products {
     constructor({ product_id, brand, size, material, color }) {
         super();
-        this.product_id = product_id;
+        this.product_id = product_id ? product_id : 0;
         this.brand = brand;
         this.size = size;
         this.material = material;
         this.color = color;
     }
-    async createProduct() {
-        const where = { where: { product_id: this.product_id } }
+    async createProduct(transaction, product_id) {
+        const where = { where: { product_id: product_id } }
         const existing = await Clothings.findOne(where);
         if (existing) {
             return await Clothings.update(this, where);
         }
-        return await Clothings.create(this);
+        if (existing) {
+            return await Clothings.update(this, where, { transaction });
+        }
+        if (!this.product_id) {
+            throw new BadRequestError('product_id is not set');
+        }
+        this.product_id = this.product_id;
+        return await Clothings.create({ ...this, product_id: this.product_id }, { transaction });
     }
 }
 
@@ -69,17 +80,13 @@ async function createProducts(productData, userId) {
         transaction,
     });
 
-    try {
-        const productInstance = new product({ id: productData.id, ...productData, product_type: type_product.id, product_shop: userId });
-        const newProduct = await productInstance.createProduct(transaction);
-        const productId = newProduct[0].id;
-        const attributeProduct = createAttributeProduct(productData, productId);
-        await attributeProduct.createProduct(transaction);
-        await transaction.commit();
-        console.log('Sản phẩm đã được tạo hoặc cập nhật thành công!');
-    } catch (error) {
-        console.log("Lỗi", error);
-    }
+    const productInstance = new product({ id: productData.id, ...productData, product_type: type_product.id, product_shop: userId });
+    const newProduct = await productInstance.createProduct(transaction);
+    const productId = newProduct[0].id;
+    const attributeProduct = createAttributeProduct(productData, productId);
+    await attributeProduct.createProduct(transaction, productId);
+    await transaction.commit();
+    console.log('Sản phẩm đã được tạo hoặc cập nhật thành công!');
 }
 
 const createAttributeProduct = (productData, id) => {
@@ -113,9 +120,11 @@ async function getAllProducts() {
         include: [
             { model: ProductsType, as: 'productType', attributes: ["type_name"] },
         ],
+        order: [['updatedAt', 'DESC']],
         nest: true,
         raw: true,
-    }).sort({ updateAt: -1 });
+
+    });
 
     return listProduct;
 }
@@ -138,6 +147,25 @@ async function unPublishProductByShop(product_shop, product_id) {
 async function searchProductByUser(keySearch) {
     return productReponsitory.searchProductByUser(keySearch);
 }
+// GetDetaills
+async function getDetailsProduct(product_id) {
+    const detailsProduct = await Products.findOne({
+        where: { id: product_id },
+        attributes: ['id', 'product_name', 'product_thumb', 'product_description', 'product_price', 'product_quantity', 'product_start'],
+        include: [
+            { model: Clothings, as: "clothing", attributes: ["brand", "size", "color", "material"] },
+            { model: Electronic, as: 'electronic', attributes: ["manufacturer", "model", "color"] },
+            { model: ProductsType, as: 'productType', attributes: ["type_name"] },
+        ],
+        nest: true,
+        raw: true,
+    });
+    const filteredDetailsProduct = removeEmptyFields(detailsProduct);
+
+    return filteredDetailsProduct;
+}
+
+
 
 module.exports = {
     createProducts,
@@ -147,6 +175,7 @@ module.exports = {
     findAllIsDraftShop,
     findAllIsPublishShop,
     unPublishProductByShop,
-    searchProductByUser
+    searchProductByUser,
+    getDetailsProduct
 
 };

@@ -91,15 +91,10 @@ const AccessService = async (shop) => {
             privateKey,
             refreshToken: '111'
         });
-        console.log(" keyStore", keyStore);
         if (!keyStore) {
-            console.log(" keyStore error");
             return;
         }
-
         const tokens = await createTokenPair({ userId: newShop.id, email }, publicKey, privateKey);
-        console.log("create token success", tokens);
-
         return {
             code: '201',
             metadata: {
@@ -108,7 +103,6 @@ const AccessService = async (shop) => {
             }
         }
     }
-    console.log(" null");
 
 };
 

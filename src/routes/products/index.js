@@ -18,6 +18,7 @@ router.post('/delete', asyncHandle(ProductController.delete));
 router.get('/shop/draft-all', asyncHandle(ProductController.findAllIsDraftShop));
 // get isPublished Shop
 router.get('/shop/publish-all', asyncHandle(ProductController.findAllIsPublishShop));
+router.get('/details', asyncHandle(ProductController.getDetailsProduct));
 //publish product shop 
 router.post('/shop/publish-product', asyncHandle(ProductController.publishProductShop));
 //unPublish product shop 

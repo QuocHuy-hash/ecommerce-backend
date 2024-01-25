@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) => {
       Products.hasOne(models.Clothings, { foreignKey: 'product_id', as: 'clothing' });
       Products.hasOne(models.Electronic, { foreignKey: 'product_id', as: 'electronic' });
       Products.belongsTo(models.Shops, { foreignKey: 'product_shop', as: 'shop' });
+      // Products.belongsTo(models.Discount, { foreignKey: 'discount_product_id', as: 'discount' });
+
+      // Products.belongsTo(models.Discount_Delete, { foreignKey: 'product_id', as: 'discount_delete' });
     }
     async getProductDetails() {
       if (this.productType) {

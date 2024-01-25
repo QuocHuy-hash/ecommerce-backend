@@ -17,6 +17,7 @@ const deleteAttributes = async (product_type, productId) => {
 const findAllIsDraftShop = async (where, attributes, limit, skip) => {
     return await queryProduct(where, attributes, limit, skip)
 }
+
 const findAllIsPublishShop = async (where, attributes, limit, skip) => {
     return await queryProduct(where, attributes, limit, skip)
 }
@@ -35,6 +36,7 @@ const searchProductByUser = async (searchKey) => {
     }, { $score: { $meta: 'textScore' } });
 
 }
+
 const queryProduct = async (where, attributes, limit, skip) => {
     return await Products.findAll({
         ...where,
@@ -55,11 +57,13 @@ const publishProduct = async (product_shop, product_id) => {
     );
     return overwriteCount;
 }
+
 module.exports = {
     deleteAttributes,
     publishProductByShop,
     findAllIsDraftShop,
     findAllIsPublishShop,
     unPublishProductByShop,
-    searchProductByUser
+    searchProductByUser,
+
 };
