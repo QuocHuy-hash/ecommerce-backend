@@ -1,5 +1,5 @@
 const { SuccessResponse } = require("../../core/success.response");
-const { createDiscountCode, getAllDiscountWithProduct, getDiscountCodeByShop, getDiscountAmount } = require("../../services/discount.service");
+const { createDiscountCode, getAllDiscountWithProduct, getDiscountCodeByShop, getDiscountAmount, deleteDiscountCode, cancelDiscountCode } = require("../../services/discount.service");
 const HEADER = {
     CLIENT_ID: 'x-client-id',
 };
@@ -31,17 +31,28 @@ class DiscountController {
         }).send(res)
     }
     getDiscountAmount = async (req, res, next) => {
+        this.setUserId(req);
+
         new SuccessResponse({
             message: 'getAllDiscountWithProduct successfully',
-            metadata: await getAllDiscountWithProduct(...req.body)
+            metadata: await getDiscountAmount(req.body, this.userId)
         }).send(res)
     }
-    // getDiscountCodeByShop = async (req, res, next) => {
-    //     new SuccessResponse = {
-    //         message: 'getDiscountCodeByShop successfully',
-    //         metadata: await getDiscountAmount(...req.body)
-    //     }
-    // }
+    getDiscountCodeByShop = async (req, res, next) => {
+        this.setUserId(req);
+        new SuccessResponse({
+            message: 'getDiscountCodeByShop successfully',
+            metadata: await getDiscountCodeByShop(this.userId)
+        }).send(res)
+    }
+    deleteDiscount = async (req, res, next) => {
+        this.setUserId(req);
+        new SuccessResponse({
+            message: 'deleteDiscount successfully',
+            metadata: await deleteDiscountCode(req.body, this.userId)
+        }).send(res)
+    }
+
 }
 
 module.exports = new DiscountController();

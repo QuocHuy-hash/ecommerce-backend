@@ -7,8 +7,10 @@ const router = express.Router();
 
 // router.use(permissions('0000'));
 router.use('/v1/api/', require('./users/users'));
-//product
+//discount
 router.use('/v1/api/discount', require('./discount/index'));
+//cart
+router.use('/v1/api/carts', require('./carts/index'));
 //product
 router.use('/v1/api/products', require('./products/index'));
 // signUp

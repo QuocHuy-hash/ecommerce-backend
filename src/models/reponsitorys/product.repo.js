@@ -57,6 +57,9 @@ const publishProduct = async (product_shop, product_id) => {
     );
     return overwriteCount;
 }
+const getById = async (product_id) => {
+    return await Products.findOne({ where: { id: product_id } });
+}
 
 module.exports = {
     deleteAttributes,
@@ -65,5 +68,6 @@ module.exports = {
     findAllIsPublishShop,
     unPublishProductByShop,
     searchProductByUser,
+    getById
 
 };

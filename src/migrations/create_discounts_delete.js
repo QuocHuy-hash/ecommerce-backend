@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Discount_Delete', {
+    await queryInterface.createTable('Discount_Deletes', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -28,7 +28,11 @@ module.exports = {
         defaultValue: 'fixed_amount',
       },
       discount_value: {
-        type: Sequelize.DECIMAL(10, 2),
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      discount_max_value: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       discount_code: {

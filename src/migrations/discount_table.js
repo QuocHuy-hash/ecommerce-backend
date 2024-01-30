@@ -27,7 +27,7 @@ module.exports = {
         defaultValue: 'fixed_amount',
       },
       discount_value: {
-        type: Sequelize.DECIMAL(10, 2), // Adjust precision and scale as needed
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       discount_code: {
