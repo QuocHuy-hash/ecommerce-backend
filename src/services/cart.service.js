@@ -3,7 +3,7 @@ const { Op } = require('sequelize');
 
 const { BadRequestError, NotFoundError } = require("../core/error.response");
 const { getById } = require('../models/reponsitorys/product.repo');
-const { findCart, findCartDetails } = require('../models/reponsitorys/cart.repo');
+const { findCart, findCartDetails, findAllCartsUser } = require('../models/reponsitorys/cart.repo');
 
 class CartInstance {
     constructor({ id, cart_state, cart_count_prod, cart_user_id, details }) {
@@ -64,7 +64,7 @@ const addToCartV2 = async (body, userId) => {
     const newTotal = newQuantity * price;
 
     if (newQuantity === 0) {
-        await deleteCart(product_id, userId)
+        await deleteCartProductV1(product_id, userId)
     }
     if (foundCartDetails) {
         await CartDetails.update({ ...CartDetails, quantity: newQuantity, total: newTotal }, { where: { id: id } });
@@ -72,7 +72,9 @@ const addToCartV2 = async (body, userId) => {
     }
 
 }
-const deleteCart = async (product_id, userId) => {
+
+// delete a product in the cart
+const deleteCartProductV1 = async (product_id, userId) => {
     const where = { where: { cart_user_id: userId } }
     const foundCart = await findCart(where);
     if (!foundCart) throw new NotFoundError('not found cart user');
@@ -81,10 +83,45 @@ const deleteCart = async (product_id, userId) => {
     if (!foundCartDetails) throw new NotFoundError('not found cart details');
 
     await CartDetails.destroy({ where: { id: foundCartDetails.id } })
-
 }
 
+// delete mutiple product in the cart
+const deleteCartProductV2 = async (body, userId) => {
+
+    const { product_id } = body
+    console.log(product_id);
+    const where = { where: { cart_user_id: userId } }
+    const foundCart = await findCart(where);
+    if (!foundCart) throw new NotFoundError('not found cart user');
+    let foundCartDetails;
+    for (const item of product_id) {
+        const findDetails = {
+            where: {
+                cart_id: foundCart.id,
+                product_id: item,
+            }
+        }
+        foundCartDetails = await findCartDetails(findDetails);
+        if (!foundCartDetails) throw new NotFoundError('not found cart details');
+        await CartDetails.destroy({ where: { id: foundCartDetails.id } })
+    }
+}
+const getListCartsUser = async (userId) => {
+    const where = { where: { cart_user_id: userId } }
+    const foundCart = await findCart(where);
+    if (!foundCart) throw new NotFoundError('not found cart user');
+    const find_where = { where: { cart_id: foundCart.id } };
+    const attributes = ['product_id', 'quantity', 'price', 'total'];
+    const include = [
+        { model: Products, as: "products", attributes: ["product_name", "product_thumb", "product_type"] },
+    ]
+    const listCartsUser = await findAllCartsUser({ attributes, where: find_where, include });
+    return listCartsUser;
+}
 module.exports = {
     createCart,
-    addToCartV2
+    addToCartV2,
+    deleteCartProductV1,
+    deleteCartProductV2,
+    getListCartsUser
 };

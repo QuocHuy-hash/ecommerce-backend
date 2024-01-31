@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
     class CartDetails extends Model {
         static associate(models) {
             CartDetails.belongsTo(models.Cart, { foreignKey: 'cart_id', as: 'carts' });
-
+            CartDetails.belongsTo(models.Products, { foreignKey: 'product_id', as: 'products' });
         }
     }
     CartDetails.init({
