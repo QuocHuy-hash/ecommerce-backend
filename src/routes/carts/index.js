@@ -12,6 +12,10 @@ router.post('/updateCart', asyncHandle(CartController.addToCartV2));
 router.post('/delete-product-v1', asyncHandle(CartController.deleteCartProductV1));
 router.post('/delete-product-v2', asyncHandle(CartController.deleteCartProductV2));
 router.get('/list-cart-user', asyncHandle(CartController.getListCartsUser));
+router.post('/delete-product-v2', asyncHandle(CartController.deleteCartProductV2));
+
+//checkout review order usser;
+router.post('/review-order', asyncHandle(CartController.checkoutReviewOrder));
 
 
 module.exports = router;

@@ -119,18 +119,28 @@ const getDiscountCodeByShop = async (shopId, limit = 10, page = 0) => {
 //get discount code amount after apply
 const getDiscountAmount = async (body, userId) => {
     const { code, shopId, products } = body;
+    console.log({ code, shopId, products });
     const where = { where: { discount_shopId: shopId, discount_code: code } }
     const foundDiscount = await checkDiscountExists({ model: Discount, where: where });
+    if (!foundDiscount) {
+        return {
+            totalOrder: 0,
+            discount: 0,
+            totalPrice: 0
+        }
+    };
 
-    if (!foundDiscount) throw new NotFoundError('discount not exists');
-
-    const { discount_is_active, discount_max_uses, discount_value, discount_end_date, discount_min_order_value, discount_max_uses_per_user
+    const { discount_is_active, discount_max_uses, discount_value, discount_min_order_value, discount_max_uses_per_user, discount_applies_to
         , discount_users_used, discount_type } = foundDiscount;
     if (!discount_is_active) throw new NotFoundError('discount expried!');
     if (!discount_max_uses) throw new NotFoundError('discount are out!');
-    // if (new Date() < new Date(discount_start_date) || new Date() > new Date(discount_end_date)) throw new NotFoundError('discount code has expried!')
 
     let totalOrder = 0;
+    // if(discount_applies_to == 'specific') {
+
+    // }else {
+
+    // }
     //check value require to use discount
     if (discount_min_order_value > 0) {
         totalOrder = products.reduce((acc, product) => {
@@ -140,13 +150,10 @@ const getDiscountAmount = async (body, userId) => {
     }
     //check users just use one
     if (discount_max_uses_per_user > 0) {
-        console.log({ foundDiscount });
         const userDiscount = discount_users_used && discount_users_used.map(user => user.userId === userId);
         if (userDiscount) throw new NotFoundError('you are use this discount!')
     }
     //check discount is fixed_amount or specific and get values of the discount
-    console.log(totalOrder);
-    console.log(discount_value);
     const amount = discount_type === 'fixed_amount' ? discount_value : totalOrder * (discount_value / 100);
 
     return {

@@ -1,5 +1,6 @@
 const { SuccessResponse } = require("../../core/success.response");
 const { createCart, addToCartV2, deleteCartProductV1, deleteCartProductV2, getListCartsUser } = require("../../services/cart.service");
+const { checkoutReviewOrder } = require("../../services/checkout.service");
 
 const HEADER = {
     CLIENT_ID: 'x-client-id',
@@ -46,6 +47,14 @@ class CartController {
         new SuccessResponse({
             message: 'getListCartsUser successfully',
             metadata: await getListCartsUser(this.userId)
+        }).send(res)
+    }
+    checkoutReviewOrder = async (req, res, next) => {
+        this.setUserId(req);
+
+        new SuccessResponse({
+            message: 'review ordering',
+            metadata: await checkoutReviewOrder(req.body, this.userId)
         }).send(res)
     }
 }

@@ -2,7 +2,6 @@ const { Cart, Products, CartDetails, sequelize } = require('../models');
 const { Op } = require('sequelize');
 
 const { BadRequestError, NotFoundError } = require("../core/error.response");
-const { getById } = require('../models/reponsitorys/product.repo');
 const { findCart, findCartDetails, findAllCartsUser } = require('../models/reponsitorys/cart.repo');
 
 class CartInstance {
@@ -113,11 +112,12 @@ const getListCartsUser = async (userId) => {
     const find_where = { where: { cart_id: foundCart.id } };
     const attributes = ['product_id', 'quantity', 'price', 'total'];
     const include = [
-        { model: Products, as: "products", attributes: ["product_name", "product_thumb", "product_type"] },
+        { model: Products, as: "products", attributes: ["product_name", "product_thumb", "product_type", "product_shop"] },
     ]
     const listCartsUser = await findAllCartsUser({ attributes, where: find_where, include });
     return listCartsUser;
 }
+
 module.exports = {
     createCart,
     addToCartV2,
