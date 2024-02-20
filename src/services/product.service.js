@@ -3,6 +3,7 @@
 const { BadRequestError } = require('../core/error.response');
 const { Products, Electronic, ProductsType, Clothings, db } = require('../models');
 const { sequelize } = require('../models/index');
+const { insertInventory } = require('../models/reponsitorys/eventorys.repo');
 const productReponsitory = require("../models/reponsitorys/product.repo");
 const { removeEmptyFields } = require('../utils');
 
@@ -23,7 +24,12 @@ class product {
             this.isPublished = isPublished
     }
     async createProduct() {
-        return await Products.upsert(this)
+        const newProduct = await Products.upsert(this);
+        if (newProduct) {
+            const productId = newProduct[0].id;
+            await insertInventory(productId, this.product_shop, this.product_quantity,)
+        }
+        return newProduct;
     }
 
 }

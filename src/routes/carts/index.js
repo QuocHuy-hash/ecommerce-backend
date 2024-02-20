@@ -16,6 +16,7 @@ router.post('/delete-product-v2', asyncHandle(CartController.deleteCartProductV2
 
 //checkout review order usser;
 router.post('/review-order', asyncHandle(CartController.checkoutReviewOrder));
+router.post('/orders', asyncHandle(CartController.orderByUser));
 
 
 module.exports = router;

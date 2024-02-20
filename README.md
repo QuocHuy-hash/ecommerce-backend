@@ -9,3 +9,6 @@
 3: Open project and Run Command Line : [npm install]
 4: Continue Run : [npx sequelize db:migrate]
 5: Open Postman and import [NodeJs-ORM.postman_collection.json] into Postman
+
+
+Run redis server => ['brew services restart redis']

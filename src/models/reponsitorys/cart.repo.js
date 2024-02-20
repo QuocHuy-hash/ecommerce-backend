@@ -6,6 +6,7 @@ const findCart = async (where) => {
 const findCartDetails = async (where) => {
     return await CartDetails.findOne(where);
 }
+
 const findAllCartsUser = async ({
     limit = 10, page = 1, attributes, where, include
 }) => {

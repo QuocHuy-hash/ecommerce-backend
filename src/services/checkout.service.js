@@ -1,14 +1,15 @@
-const { Cart, Products, CartDetails, sequelize } = require('../models');
+const { Order, OrdersDetails, Products, CartDetails } = require('../models');
 
 const { BadRequestError, NotFoundError } = require("../core/error.response");
 const { findCart, findCartDetails } = require('../models/reponsitorys/cart.repo');
 const { findAllIsPublishShop } = require('../models/reponsitorys/product.repo');
 const { getDiscountAmount } = require('./discount.service');
+const { acquireLock, releaseLock } = require('./redis.service');
+const { checkAvailableStock } = require('../models/reponsitorys/eventorys.repo');
 
 const checkoutReviewOrder = async (body, userId) => {
     const { product_id, discount_code } = body;
     const order_ids_new = [];
-
     const where = { where: { cart_user_id: userId } }
     const foundCart = await findCart(where);
     if (!foundCart) throw new BadRequestError('cart does not exists');
@@ -75,6 +76,76 @@ const checkoutReviewOrder = async (body, userId) => {
 
 }
 
-module.exports = {
-    checkoutReviewOrder
+const orderByUser = async (body, userId) => {
+    const { product, totalPrice, totalDiscount, street, wards, district, city, country } = body
+    // Kiểm tra số lượng sản phẩm có sẵn trong kho
+    let availableStock = 0;
+    for (let i = 0; i < product.length; i++) {
+        const productId = product[i].product_id;
+        availableStock = await checkAvailableStock(productId);
+        if (availableStock < product[i].quantity) {
+            throw new BadRequestError(`Not enough stock available for product with ID ${productId}`);
+        }
+    }
+
+    // Khóa các sản phẩm trong kho để đảm bảo không ai đặt hàng cùng lúc
+    const lockKeys = [];
+    for (let i = 0; i < product.length; i++) {
+        const productId = product[i].product_id;
+        const lockKey = await acquireLock(productId, product[i].quantity);
+        if (!lockKey) {
+            // Release các lock đã được lấy trước đó
+            await releaseLock(lockKeys);
+            throw new BadRequestError(`Failed to acquire lock for product with ID ${productId}`);
+
+        }
+        lockKeys.push(lockKey);
+    }
+
+    // Thực hiện đặt hàng cho từng sản phẩm
+    let orders = [];
+    const newOrder = await Order.create({
+        order_userId: userId,
+        order_shopId: 0,
+        order_total_price: totalPrice,
+        order_total_discount: totalDiscount,
+        order_freeShip: 0,
+        order_ship_street: street,
+        order_ship_wards: wards,
+        order_ship_district: district,
+        order_ship_city: city,
+        order_ship_country: country,
+        order_payment: 'afterReceiver',
+        order_tracking_number: ''
+    });
+    orders.push(newOrder);
+    for (let i = 0; i < product.length; i++) {
+        const productId = product[i].product_id;
+        orders = await OrdersDetails.create({
+            order_id: newOrder.id,
+            product_id: productId,
+            quantity: product[i].quantity,
+            price: product[i].price
+        });
+    }
+
+    // Release các lock đã lấy sau khi đặt hàng hoàn tất
+    await releaseLock(lockKeys);
+    if (orders) {
+        for (let i = 0; i < product.length; i++) {
+            const productId = product[i].product_id;
+            await Products.update({ product_quantity: availableStock - product[i].quantity }, { where: { id: productId } });
+            await CartDetails.destroy({ where: { product_id: productId, cart_id: userId } });
+        }
+
+    }
+    return orders;
+    // const updatedEventory = await Inventory.update(
+    //     { inven_stock: eventory.inven_stock - quantity },
+    //     { where: { inven_product_id: productId } }
+    // );
 }
+module.exports = {
+    checkoutReviewOrder,
+    orderByUser
+} 
