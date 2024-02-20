@@ -19,20 +19,18 @@
 				"header": [
 					{
 						"key": "x-client-id",
-						"value": "2",
-						"type": "text",
-						"disabled": true
+						"value": "1",
+						"type": "text"
 					},
 					{
 						"key": "athorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiaHV5MTIzQGdtYWlsLmNvbSIsImlhdCI6MTcwNTU0Njk4NCwiZXhwIjoxNzA1NzE5Nzg0fQ.Yn7ACrbkmN3B_KLl3A4FKuTqP1XayAlBJ_JBo41u7SQ",
-						"type": "text",
-						"disabled": true
+						"value": "{{token}}",
+						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    //  \"id\": 1,\n  \"product_name\": \"Quần jean ống xuông \",\n  \"product_thumb\": \"ao-khoac-vai-du.png\",\n  \"product_description\": \"Áo khoác vải dù \",\n  \"product_price\": 15000,\n  \"product_quantity\": 100,\n  \"product_type\": \"clothings\",\n  \"size\" : [\"32\", \"31\" , \"22\"],\n  \"brand\": \"Jeans\",\n  \"material\": \"đây là model của máy Quần jean ống xuông \",\n  \"color\": [\"Đen\", \"Trắng\" , \"Vàng\"]\n}\n",
+					"raw": "{\n    //  \"id\": 1,\n  \"product_name\": \"Macbook Pro M2 shop2\",\n  \"product_thumb\": \"macbook-pro-m2.png\",\n  \"product_description\": \"Macbook Pro M2 shop2\",\n  \"product_price\": 50000000,\n  \"product_quantity\": 223,\n  \"product_type\": \"electronic\",\n    \"manufacturer\":\"Apple\",\n    \"model\": \"y là model của macbook-pro-m1 32gb ,1T , chip M1 2025 shop2\",\n    \"color\": [\"Black\", \"White\" , \"Gold\"]\n  \n\n// \"product_name\": \"Quấn Áo Nam Nữ 222\",\n//   \"product_thumb\": \"macbook-pro-m1.png\",\n//   \"product_description\": \"Quấn Áo Nam Nữ222\",\n//   \"product_price\": 50000000,\n//   \"product_quantity\": 223,\n//   \"product_type\": \"clothings\",\n//    \"size\" : [\"32\", \"31\" , \"22\"],\n//   \"brand\": \"Jeans\",\n//   \"material\": \"đây là model của máy Quần jean ống xuông 222\",\n//   \"color\": [\"Đen\", \"Trắng\" , \"RED\"]\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -40,6 +38,111 @@
 					}
 				},
 				"url": "{{api}}products/create"
+			},
+			"response": []
+		},
+		{
+			"name": "{{api}}discount/create",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE5LCJlbWFpbCI6InNob3BIdXkxQGdtYWlsLmNvbSIsImlhdCI6MTcwNDI5MDM5MCwiZXhwIjoxNzA0NDYzMTkwfQ.UzR-F7t9kva5tMbN_sPxNSxOa2Ibo5yFIn9fTKc9q3M"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-client-id",
+						"value": "2",
+						"type": "text"
+					},
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"name percentage discount\",\n  \"description\": \"description discount\",\n  \"type\": \"percentage\",\n  \"value\": 20000,\n  \"max_value\": 30000,\n  \"code\": \"SHOP-102\",\n  \"start_date\": \"2024-01-30 09:00:00\",\n  \"end_date\": \"2024-01-23 09:00:00\",\n  \"max_uses\": 100,\n  \"uses_count\": 0,\n  \"users_used\":[],\n  \"max_uses_per_user\": 1,\n  \"min_order_value\": 200000,\n  \"is_active\": true,\n  \"applies_to\": \"all\",\n  \"discount_product_id\": [4]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}discount/create"
+			},
+			"response": []
+		},
+		{
+			"name": "Add To Cart V1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE5LCJlbWFpbCI6InNob3BIdXkxQGdtYWlsLmNvbSIsImlhdCI6MTcwNDI5MDM5MCwiZXhwIjoxNzA0NDYzMTkwfQ.UzR-F7t9kva5tMbN_sPxNSxOa2Ibo5yFIn9fTKc9q3M"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-client-id",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"product_id\": 1,\n  \"quantity\": 3\n  \n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}carts/create"
+			},
+			"response": []
+		},
+		{
+			"name": "{{api}}carts/update V2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE5LCJlbWFpbCI6InNob3BIdXkxQGdtYWlsLmNvbSIsImlhdCI6MTcwNDI5MDM5MCwiZXhwIjoxNzA0NDYzMTkwfQ.UzR-F7t9kva5tMbN_sPxNSxOa2Ibo5yFIn9fTKc9q3M"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-client-id",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"product_id\": 1,\n  \"newQuantity\": 3\n  \n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}carts/updateCart"
 			},
 			"response": []
 		},
@@ -61,13 +164,13 @@
 					},
 					{
 						"key": "athorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiaHV5MTIzQGdtYWlsLmNvbSIsImlhdCI6MTcwNTU0MzQzOSwiZXhwIjoxNzA1NzE2MjM5fQ.OSfXVRTO6cvy25XmMXU3RsuNT2GxTDpLmDQKtqzW3sg",
+						"value": "{{token}}",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n     \"id\": 3\n  \n}\n",
+					"raw": "{\n    \"id\": 4\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -96,13 +199,13 @@
 					},
 					{
 						"key": "athorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiaHV5MTIzQGdtYWlsLmNvbSIsImlhdCI6MTcwNTU0MzQzOSwiZXhwIjoxNzA1NzE2MjM5fQ.OSfXVRTO6cvy25XmMXU3RsuNT2GxTDpLmDQKtqzW3sg",
+						"value": "{{token}}",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n     \"id\": 2\n  \n}\n",
+					"raw": "{\n     \"id\": 6\n  \n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -131,7 +234,7 @@
 					},
 					{
 						"key": "athorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiaHV5MTIzQGdtYWlsLmNvbSIsImlhdCI6MTcwNTQwOTY2NiwiZXhwIjoxNzA1NTgyNDY2fQ.GdvFpVmoYiRf3T72U6XkzNDyow9WPR256ztnLXn7GD8",
+						"value": "{{token}}",
 						"type": "text"
 					}
 				],
@@ -149,6 +252,181 @@
 			"response": []
 		},
 		{
+			"name": "Delete Discount",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE5LCJlbWFpbCI6InNob3BIdXkxQGdtYWlsLmNvbSIsImlhdCI6MTcwNDI5MDM5MCwiZXhwIjoxNzA0NDYzMTkwfQ.UzR-F7t9kva5tMbN_sPxNSxOa2Ibo5yFIn9fTKc9q3M"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-client-id",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"code\" : \"SHOP-101\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}discount/delete"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Cart Product V2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE5LCJlbWFpbCI6InNob3BIdXkxQGdtYWlsLmNvbSIsImlhdCI6MTcwNDI5MDM5MCwiZXhwIjoxNzA0NDYzMTkwfQ.UzR-F7t9kva5tMbN_sPxNSxOa2Ibo5yFIn9fTKc9q3M"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-client-id",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"product_id\" : [1 ,3]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}carts/delete-product-v2"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Cart Product V1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE5LCJlbWFpbCI6InNob3BIdXkxQGdtYWlsLmNvbSIsImlhdCI6MTcwNDI5MDM5MCwiZXhwIjoxNzA0NDYzMTkwfQ.UzR-F7t9kva5tMbN_sPxNSxOa2Ibo5yFIn9fTKc9q3M"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-client-id",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"code\" : \"SHOP-101\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}cart/delete-product-v1"
+			},
+			"response": []
+		},
+		{
+			"name": "Cart Review Checkout Orders",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE5LCJlbWFpbCI6InNob3BIdXkxQGdtYWlsLmNvbSIsImlhdCI6MTcwNDI5MDM5MCwiZXhwIjoxNzA0NDYzMTkwfQ.UzR-F7t9kva5tMbN_sPxNSxOa2Ibo5yFIn9fTKc9q3M"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-client-id",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"product_id\" : [28],\n    \"discount_code\" : \"SHOP-105\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}carts/review-order"
+			},
+			"response": []
+		},
+		{
+			"name": "Cart Orders",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE5LCJlbWFpbCI6InNob3BIdXkxQGdtYWlsLmNvbSIsImlhdCI6MTcwNDI5MDM5MCwiZXhwIjoxNzA0NDYzMTkwfQ.UzR-F7t9kva5tMbN_sPxNSxOa2Ibo5yFIn9fTKc9q3M"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-client-id",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"product\" :[{\n        \"product_id\" : 28,\n        \"quantity\" :3,\n        \"price\" : \"135000000\"\n    }],\n    \"totalPrice\" : \"135000000\",\n    \"totalDiscount\" : \"15000000\",\n    \"street\" : \"thôn 22\",\n    \"wards\" : \"earok\",\n    \"district\" : \"easuop\",\n    \"city\" : \"Đắk Lắk\",\n    \"country\" : \"Việt Nam\"\n    // \"order_tracking_number\" : \"\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}carts/orders"
+			},
+			"response": []
+		},
+		{
 			"name": "{{api}}shop/login",
 			"event": [
 				{
@@ -157,7 +435,23 @@
 						"exec": [
 							"",
 							"pm.globals.set(\"api\",",
-							" \"http://localhost:3055/v1/api/\");"
+							" \"http://localhost:3055/v1/api/\");",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"let token = pm.response.json().message.metadata.tokens.accessToken;",
+							"pm.environment.set(\"token\" , token)",
+							"",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -186,7 +480,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\" : \"huy123@gmail.com\",\n     \"password\" : \"123456\",\n     \"firstName\" : \"Quoc\",\n    \"lastName\":\"Huy\"\n}",
+					"raw": "{\n    \"email\" : \"huy1@gmail.com\",\n     \"password\" : \"123456\",\n     \"firstName\" : \"Quoc\",\n    \"lastName\":\"Huy\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -205,15 +499,180 @@
 					{
 						"key": "athorization",
 						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiaHV5MTIzQGdtYWlsLmNvbSIsImlhdCI6MTcwNTQwOTY2NiwiZXhwIjoxNzA1NTgyNDY2fQ.GdvFpVmoYiRf3T72U6XkzNDyow9WPR256ztnLXn7GD8",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					},
 					{
 						"key": "x-client-id",
 						"value": "2",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"url": "{{api}}products/list-all"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Cart Products User",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "x-client-id",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"url": "{{api}}carts/list-cart-user"
+			},
+			"response": []
+		},
+		{
+			"name": "{{api}}Discount/List_Code_Product",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "x-client-id",
+						"value": "2",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"code\" : \"SHOP-103\",\n    \"shopId\" : 2,\n    \"limit\" : 50,\n    \"page\" : 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}discount/list_product_code"
+			},
+			"response": []
+		},
+		{
+			"name": "{{api}}Discount/List_Code_Shop",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "x-client-id",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"code\" : \"SHOP-104\",\n    \"shopId\" : 2,\n    \"limit\" : 50,\n    \"page\" : 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}discount/list_shop_code"
+			},
+			"response": []
+		},
+		{
+			"name": "{{api}}Discount/Amount",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "x-client-id",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"code\" : \"SHOP-104\",\n    \"shopId\" : 2,\n    \"products\" : [{\n        \"productId\" : 1,\n        \"quantity\" : 5,\n        \"price\" : 200000\n    }]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}discount/amount"
+			},
+			"response": []
+		},
+		{
+			"name": "{{api}}products/details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var res = pm.response.json();",
+							"pm.environment.set('token', res.message.metadata.access_token);",
+							"pm.environment.get(\"token\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "x-client-id",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\" : 4\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}products/details"
 			},
 			"response": []
 		},
@@ -224,36 +683,18 @@
 				"header": [
 					{
 						"key": "athorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiaHV5MTIzQGdtYWlsLmNvbSIsImlhdCI6MTcwNTU0Njk4NCwiZXhwIjoxNzA1NzE5Nzg0fQ.Yn7ACrbkmN3B_KLl3A4FKuTqP1XayAlBJ_JBo41u7SQ",
-						"type": "text"
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiaHV5MTIzQGdtYWlsLmNvbSIsImlhdCI6MTcwNTU0NzkyNywiZXhwIjoxNzA1NzIwNzI3fQ.LdCWtzjYBtiM4W5G6f-uTvSVzIfqAHZUJSJvN6BwZu8",
+						"type": "text",
+						"disabled": true
 					},
 					{
 						"key": "x-client-id",
 						"value": "2",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"url": "{{api}}products/search/ao"
-			},
-			"response": []
-		},
-		{
-			"name": "{{api}}products/shop-list",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "x-client-id",
-						"value": "2",
-						"type": "text"
-					},
-					{
-						"key": "athorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiaHV5MTIzQGdtYWlsLmNvbSIsImlhdCI6MTcwNTQwOTY2NiwiZXhwIjoxNzA1NTgyNDY2fQ.GdvFpVmoYiRf3T72U6XkzNDyow9WPR256ztnLXn7GD8",
-						"type": "text"
-					}
-				],
-				"url": "{{api}}products/shop-list"
 			},
 			"response": []
 		},
@@ -269,7 +710,7 @@
 					},
 					{
 						"key": "athorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiaHV5MTIzQGdtYWlsLmNvbSIsImlhdCI6MTcwNTU0MzQzOSwiZXhwIjoxNzA1NzE2MjM5fQ.OSfXVRTO6cvy25XmMXU3RsuNT2GxTDpLmDQKtqzW3sg",
+						"value": "{{token}}",
 						"type": "text"
 					}
 				],
@@ -289,13 +730,19 @@
 					},
 					{
 						"key": "athorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiaHV5MTIzQGdtYWlsLmNvbSIsImlhdCI6MTcwNTU0MzQzOSwiZXhwIjoxNzA1NzE2MjM5fQ.OSfXVRTO6cvy25XmMXU3RsuNT2GxTDpLmDQKtqzW3sg",
+						"value": "{{token}}",
 						"type": "text"
 					}
 				],
 				"url": "{{api}}products/shop/publish-all"
 			},
 			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "jwt-token",
+			"value": "var res = pm.response.json(); pm.environment.set('jwt-token', res.data.access_token);"
 		}
 	]
 }

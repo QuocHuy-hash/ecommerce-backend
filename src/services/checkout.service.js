@@ -140,10 +140,7 @@ const orderByUser = async (body, userId) => {
 
     }
     return orders;
-    // const updatedEventory = await Inventory.update(
-    //     { inven_stock: eventory.inven_stock - quantity },
-    //     { where: { inven_product_id: productId } }
-    // );
+
 }
 module.exports = {
     checkoutReviewOrder,
