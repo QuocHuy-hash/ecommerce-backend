@@ -122,7 +122,7 @@ async function findAllIsPublishShop(product_shop, limit = 50, skip = 0) {
 async function getAllProducts() {
     const listProduct = await Products.findAll({
         where: { isPublished: true },
-        attributes: ['id', 'product_name', 'product_thumb', 'product_description', 'product_price', 'product_quantity', 'product_start'],
+        attributes: ['id', 'product_name', 'product_shop', 'product_thumb', 'product_description', 'product_price', 'product_quantity', 'product_start'],
         include: [
             { model: ProductsType, as: 'productType', attributes: ["type_name"] },
         ],

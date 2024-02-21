@@ -2,7 +2,7 @@ const { Order, OrdersDetails, Products, CartDetails } = require('../models');
 
 const { BadRequestError, NotFoundError } = require("../core/error.response");
 const { findCart, findCartDetails } = require('../models/reponsitorys/cart.repo');
-const { findAllIsPublishShop } = require('../models/reponsitorys/product.repo');
+const { findAllIsPublishShop, getById } = require('../models/reponsitorys/product.repo');
 const { getDiscountAmount } = require('./discount.service');
 const { acquireLock, releaseLock } = require('./redis.service');
 const { checkAvailableStock } = require('../models/reponsitorys/eventorys.repo');
@@ -102,11 +102,13 @@ const orderByUser = async (body, userId) => {
         lockKeys.push(lockKey);
     }
 
+
+    const foundShop = await getById(product[0].product_id);
     // Thực hiện đặt hàng cho từng sản phẩm
     let orders = [];
     const newOrder = await Order.create({
         order_userId: userId,
-        order_shopId: 0,
+        order_shopId: foundShop.product_shop,
         order_total_price: totalPrice,
         order_total_discount: totalDiscount,
         order_freeShip: 0,

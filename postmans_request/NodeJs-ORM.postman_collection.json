@@ -100,7 +100,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"product_id\": 1,\n  \"quantity\": 3\n  \n}\n",
+					"raw": "{\n  \"product_id\": 28,\n  \"quantity\": 5\n  \n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -492,7 +492,7 @@
 			"response": []
 		},
 		{
-			"name": "{{api}}products/list-all",
+			"name": "Get All Product",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -510,6 +510,136 @@
 					}
 				],
 				"url": "{{api}}products/list-all"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Orders For Shop",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "x-client-id",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"url": "{{api}}orders/list-shop"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Orders For User",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "x-client-id",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"url": "{{api}}orders/list-user"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Orders Details",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "x-client-id",
+						"value": "2",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"orderId\" : 2\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}orders/list-user"
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Order By User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "x-client-id",
+						"value": "2",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"orderId\" : 2\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}orders/cancel-order"
+			},
+			"response": []
+		},
+		{
+			"name": "Udate Status Order By Shop",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "x-client-id",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"orderId\" :2,\n    \"status\" : \"successed\"\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}orders/change-status"
 			},
 			"response": []
 		},
