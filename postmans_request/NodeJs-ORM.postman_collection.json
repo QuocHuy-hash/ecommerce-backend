@@ -586,6 +586,38 @@
 			"response": []
 		},
 		{
+			"name": "Comments Get By Parent Id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "x-client-id",
+						"value": "4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productId\" : 1,\n    \"parentCommentId\" : 2\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}comments/list"
+			},
+			"response": []
+		},
+		{
 			"name": "Cancel Order By User",
 			"request": {
 				"method": "POST",
@@ -640,6 +672,64 @@
 					}
 				},
 				"url": "{{api}}orders/change-status"
+			},
+			"response": []
+		},
+		{
+			"name": "Comment Create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "x-client-id",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n//     \"productId\": 1,\n//     \"content\": \"comment 1\",\n//     \"parentCommentId\": null\n// } \n{\n    \"productId\": 1,\n    \"content\": \"comment 1.1\",\n    \"parentCommentId\": 1\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}comments/create"
+			},
+			"response": []
+		},
+		{
+			"name": "Comment Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "x-client-id",
+						"value": "4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n    \"productId\": 1,\n    \"commentId\" : 3\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}comments/delete"
 			},
 			"response": []
 		},

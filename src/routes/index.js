@@ -14,6 +14,8 @@ router.use('/v1/api/carts', require('./carts/index'));
 router.use('/v1/api/products', require('./products/index'));
 //order
 router.use('/v1/api/orders', require('./orders/index'));
+//order
+router.use('/v1/api/comments', require('./comment/index'));
 // signUp
 router.use('/v1/api/', require('./access/index'));
 

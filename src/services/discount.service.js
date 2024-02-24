@@ -6,7 +6,7 @@ const { findAllIsPublishShop } = require('../models/reponsitorys/product.repo');
 const { findAllDiscount, checkDiscountExists } = require('../models/reponsitorys/discount.repo');
 
 
-
+//all function feature of discount
 /**
  * Discount service 
  * 1 - Generator Discount code [shop/admin]
@@ -181,22 +181,25 @@ const deleteDiscountCode = async (body, shopId) => {
 
 }
 
-// const cancelDiscountCode = async (shopId, code, userId) => {
-//     const where = { where: { discount_shopId: shopId, discount_code: code } }
-//     const foundDiscount = await checkDiscountExists({ model: Discount, where: where });
-//     if (!foundDiscount) throw new NotFoundError('not not exitst');
-//     const result = await Discount.update(
-//         {
-//             discount_users_used: Sequelize.fn('array_remove', Sequelize.col('discount_users_used'), userId),
-//             discount_max_uses: Sequelize.literal('discount_max_uses + 1'),
-//             discount_use_count: Sequelize.literal('discount_use_count - 1'),
-//         },
-//         {
-//             where: { id: foundDiscount.id },
-//         }
-//     );
-//     return result;
-// }
+/**
+ * const cancelDiscountCode = async (shopId, code, userId) => {
+    const where = { where: { discount_shopId: shopId, discount_code: code } }
+    const foundDiscount = await checkDiscountExists({ model: Discount, where: where });
+    if (!foundDiscount) throw new NotFoundError('not not exitst');
+    const result = await Discount.update(
+        {
+            discount_users_used: Sequelize.fn('array_remove', Sequelize.col('discount_users_used'), userId),
+            discount_max_uses: Sequelize.literal('discount_max_uses + 1'),
+            discount_use_count: Sequelize.literal('discount_use_count - 1'),
+        },
+        {
+            where: { id: foundDiscount.id },
+        }
+    );
+    return result;
+}
+ */
+
 
 module.exports = {
     createDiscountCode,
