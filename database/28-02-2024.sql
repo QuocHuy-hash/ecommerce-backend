@@ -24,9 +24,9 @@ DROP TABLE IF EXISTS `apiKeys`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `apiKeys` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `key` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `key` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `status` tinyint(1) DEFAULT '1',
-  `permissions` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `permissions` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -82,7 +82,7 @@ DROP TABLE IF EXISTS `Carts`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Carts` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `cart_state` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'active',
+  `cart_state` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'active',
   `cart_count_prod` int DEFAULT NULL,
   `cart_user_id` int NOT NULL,
   `createdAt` datetime NOT NULL,
@@ -111,14 +111,14 @@ DROP TABLE IF EXISTS `Clothings`;
 CREATE TABLE `Clothings` (
   `id` int NOT NULL AUTO_INCREMENT,
   `product_id` int DEFAULT NULL,
-  `brand` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `brand` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `size` json DEFAULT NULL,
-  `material` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `material` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `color` json DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +127,7 @@ CREATE TABLE `Clothings` (
 
 LOCK TABLES `Clothings` WRITE;
 /*!40000 ALTER TABLE `Clothings` DISABLE KEYS */;
-INSERT INTO `Clothings` VALUES (2,3,'Jeans','[\"32\", \"31\", \"22\"]','đây là model của máy Quần jean ống xuông 222','[\"Đen\", \"Trắng\", \"RED\"]','2024-01-25 09:03:21','2024-01-31 04:24:19'),(3,4,'Jeans','[\"32\", \"31\", \"22\"]','đây là model của máy Quần jean ống xuông 1111111','[\"Đen\", \"Trắng\", \"RED\"]','2024-01-25 13:08:44','2024-01-25 13:08:44'),(4,1,'Jeans','[\"32\", \"31\", \"22\"]','đây là model của máy Quần jean ống xuông 1111111','[\"Đen\", \"Trắng\", \"RED\"]','2024-01-31 04:21:45','2024-01-31 04:21:45'),(5,2,'Jeans','[\"32\", \"31\", \"22\"]','đây là model của máy Quần jean ống xuông 222','[\"Đen\", \"Trắng\", \"RED\"]','2024-01-31 04:21:53','2024-01-31 04:21:53');
+INSERT INTO `Clothings` VALUES (2,3,'Jeans','[\"32\", \"31\", \"22\"]','đây là model của máy Quần jean ống xuông 222','[\"Đen\", \"Trắng\", \"RED\"]','2024-01-25 09:03:21','2024-01-31 04:24:19'),(3,4,'Jeans','[\"32\", \"31\", \"22\"]','đây là model của máy Quần jean ống xuông 1111111','[\"Đen\", \"Trắng\", \"RED\"]','2024-01-25 13:08:44','2024-01-25 13:08:44'),(4,1,'Jeans','[\"32\", \"31\", \"22\"]','đây là model của máy Quần jean ống xuông 1111111','[\"Đen\", \"Trắng\", \"RED\"]','2024-01-31 04:21:45','2024-01-31 04:21:45'),(5,2,'Jeans','[\"32\", \"31\", \"22\"]','đây là model của máy Quần jean ống xuông 222','[\"Đen\", \"Trắng\", \"RED\"]','2024-01-31 04:21:53','2024-01-31 04:21:53'),(24,52,'Jeans','[\"32\", \"31\", \"22\"]','đây là model của máy Quần jean ống xuông 222','[\"Đen\", \"Trắng\", \"RED\"]','2024-02-25 03:18:49','2024-02-25 03:18:49'),(25,53,'Jeans','[\"32\", \"31\", \"22\"]','đây là model của máy Quần jean ống xuông 111111','[\"Đen\", \"Trắng\", \"RED\"]','2024-02-25 03:19:19','2024-02-25 03:19:19');
 /*!40000 ALTER TABLE `Clothings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,9 +140,9 @@ DROP TABLE IF EXISTS `Comments`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Comments` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `comment_productId` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `comment_userId` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `comment_content` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `comment_productId` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `comment_userId` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `comment_content` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `comment_left` decimal(10,0) DEFAULT NULL,
   `comment_right` decimal(10,0) DEFAULT NULL,
   `comment_parentId` decimal(10,0) DEFAULT NULL,
@@ -150,7 +150,7 @@ CREATE TABLE `Comments` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -159,7 +159,7 @@ CREATE TABLE `Comments` (
 
 LOCK TABLES `Comments` WRITE;
 /*!40000 ALTER TABLE `Comments` DISABLE KEYS */;
-INSERT INTO `Comments` VALUES (1,'1','4','comment 1',1,4,NULL,0,'2024-02-23 12:29:45','2024-02-24 13:59:15'),(2,'1','4','comment 1.1',2,3,1,0,'2024-02-23 12:30:08','2024-02-24 13:54:09'),(3,'1','4','comment 1.1.1',3,8,2,0,'2024-02-23 12:30:28','2024-02-23 12:30:59'),(6,'1','4','comment 1.2',4,3,1,0,'2024-02-23 12:31:18','2024-02-24 13:59:15'),(7,'1','4','comment 1.2.1',5,4,6,0,'2024-02-23 12:31:34','2024-02-24 13:58:33'),(8,'1','4','comment 1.2.2',8,6,6,0,'2024-02-23 12:31:46','2024-02-24 13:58:33'),(9,'1','4','comment 1.2.3',4,8,6,0,'2024-02-23 12:31:50','2024-02-24 13:59:15'),(11,'1','4','comment 1.2.1.2',8,3,7,0,'2024-02-23 12:32:24','2024-02-24 13:58:33');
+INSERT INTO `Comments` VALUES (1,'1','4','comment 1',1,16,NULL,0,'2024-02-24 14:05:55','2024-02-24 14:15:43'),(2,'1','4','comment 1.1',2,3,1,0,'2024-02-24 14:06:25','2024-02-24 14:15:43'),(6,'1','4','comment 1.2',4,15,1,0,'2024-02-24 14:07:17','2024-02-24 14:15:43'),(7,'1','4','comment 1.2.1',5,10,6,0,'2024-02-24 14:07:38','2024-02-24 14:15:43'),(8,'1','4','comment 1.2.2',14,12,6,0,'2024-02-24 14:07:49','2024-02-24 14:15:43'),(9,'1','4','comment 1.2.3',16,14,6,0,'2024-02-24 14:07:53','2024-02-24 14:15:43'),(10,'1','4','comment 1.2.1.1',6,7,7,0,'2024-02-24 14:08:12','2024-02-24 14:15:43'),(11,'1','4','comment 1.2.1.2',8,9,7,0,'2024-02-24 14:08:17','2024-02-24 14:15:43');
 /*!40000 ALTER TABLE `Comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,13 +172,13 @@ DROP TABLE IF EXISTS `Discount_Deletes`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Discount_Deletes` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `discount_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `discount_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `discount_shopId` int NOT NULL,
-  `discount_description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `discount_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'fixed_amount',
+  `discount_description` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `discount_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'fixed_amount',
   `discount_value` int NOT NULL,
   `discount_max_value` int NOT NULL,
-  `discount_code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `discount_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `discount_start_date` datetime NOT NULL,
   `discount_end_date` datetime NOT NULL,
   `discount_max_uses` json DEFAULT NULL,
@@ -213,12 +213,12 @@ DROP TABLE IF EXISTS `Discounts`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Discounts` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `discount_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `discount_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `discount_shopId` int NOT NULL,
-  `discount_description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `discount_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'fixed_amount',
+  `discount_description` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `discount_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'fixed_amount',
   `discount_value` int NOT NULL,
-  `discount_code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `discount_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `discount_start_date` datetime NOT NULL,
   `discount_end_date` datetime NOT NULL,
   `discount_max_uses` int DEFAULT NULL,
@@ -228,7 +228,7 @@ CREATE TABLE `Discounts` (
   `discount_min_order_value` decimal(10,2) NOT NULL,
   `discount_max_value` decimal(10,2) NOT NULL,
   `discount_is_active` tinyint(1) DEFAULT '1',
-  `discount_applies_to` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `discount_applies_to` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `discount_product_id` json DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
@@ -256,8 +256,8 @@ DROP TABLE IF EXISTS `Electronics`;
 CREATE TABLE `Electronics` (
   `id` int NOT NULL AUTO_INCREMENT,
   `product_id` int DEFAULT NULL,
-  `manufacturer` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `model` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `manufacturer` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `model` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `color` json DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
@@ -285,7 +285,7 @@ DROP TABLE IF EXISTS `Inventories`;
 CREATE TABLE `Inventories` (
   `id` int NOT NULL AUTO_INCREMENT,
   `inven_product_id` int NOT NULL,
-  `inven_location` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'unKnow',
+  `inven_location` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'unKnow',
   `inven_stock` int NOT NULL,
   `inven_shopId` int DEFAULT NULL,
   `inven_temporary_order` json NOT NULL,
@@ -296,7 +296,7 @@ CREATE TABLE `Inventories` (
   KEY `inven_shopId` (`inven_shopId`),
   CONSTRAINT `inventories_ibfk_1` FOREIGN KEY (`inven_product_id`) REFERENCES `Products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `inventories_ibfk_2` FOREIGN KEY (`inven_shopId`) REFERENCES `Shops` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -305,7 +305,7 @@ CREATE TABLE `Inventories` (
 
 LOCK TABLES `Inventories` WRITE;
 /*!40000 ALTER TABLE `Inventories` DISABLE KEYS */;
-INSERT INTO `Inventories` VALUES (4,28,'unKnow',215,1,'5','2024-02-17 03:40:45','2024-02-20 09:07:28');
+INSERT INTO `Inventories` VALUES (4,28,'unKnow',215,1,'5','2024-02-17 03:40:45','2024-02-20 09:07:28'),(28,52,'unknown',100,4,'[]','2024-02-25 03:18:49','2024-02-25 03:18:49'),(29,53,'unknown',100,4,'[]','2024-02-25 03:19:19','2024-02-25 03:19:19');
 /*!40000 ALTER TABLE `Inventories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -322,7 +322,7 @@ CREATE TABLE `Keytokens` (
   `publicKey` json NOT NULL,
   `privateKey` json NOT NULL,
   `refreshTokensUsed` json DEFAULT NULL,
-  `refreshToken` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `refreshToken` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -337,7 +337,7 @@ CREATE TABLE `Keytokens` (
 
 LOCK TABLES `Keytokens` WRITE;
 /*!40000 ALTER TABLE `Keytokens` DISABLE KEYS */;
-INSERT INTO `Keytokens` VALUES (1,1,'\"ac195d38de90a6cad0ce7ecbbe3378001d1eab7c257ea3219fb7a36e2f8aec8ef384e99aa5ad5a70d702f830e81b48eb7288824e73b33810793c999e905df4ef\"','\"c02c2c97fbd4b9078bbd52a93e5829278c7f4a1e66ad70d7c30f773bbd4bb3c1b6ce4da80f2973ed25a2088bea69f3ed524771cce2fd818c65af589dddecd456\"',NULL,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiaHV5MTIzQGdtYWlsLmNvbSIsImlhdCI6MTcwODQ3ODUyNCwiZXhwIjoxNzA5MDgzMzI0fQ.27l8smNHjddxv1M2u-dciKzX9dRcTq2BjUeJhOjkWcY','2024-01-23 03:07:05','2024-02-21 01:22:04'),(2,2,'\"f0781d871e6ac6b02fa26149228e8fb0a76dbf14d5b20d4ffbfebfec30acb69720db0957811d1d7b9cec1aa6ef01381a95ac42cd00544d2290bd9930eac4076a\"','\"822973c903678313a31c1c1852b616845e7c723fcf03eac1bf0092bf1f91a097ee0d4c29bedab4f0de5792e916192bd8cfb737226af4e9107095035d3d670851\"',NULL,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiaHV5MUBnbWFpbC5jb20iLCJpYXQiOjE3MDg0Nzg0NzksImV4cCI6MTcwOTA4MzI3OX0.q7jyzyDj4yoBh83hqaBVETMfVrBMympSJtQ83mwbqic','2024-01-23 03:07:18','2024-02-21 01:21:19'),(3,4,'\"fd2abe28bd8276b4890e95b6b87a5c3897cfcab4085850247e8d953ba7241d64ea921eeb56bc4476d93b063cd4cee0055f2f0e78007dae9539f8403b2e95e608\"','\"e0464899c32ff2c9b48d717dc859eba2fda073ff65a9fe503d33650b8e8b01dee3165a76755baa0b1270b6653186355b259e38f0d39b3ac7c5b5a3bdd578383f\"',NULL,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiaHV5MTExQGdtYWlsLmNvbSIsImlhdCI6MTcwODc4MjA5NywiZXhwIjoxNzA5Mzg2ODk3fQ.IDirf49SXxhD8lwnVMiTNkcsEha3wbHau6Psxa3396s','2024-02-23 12:25:29','2024-02-24 13:41:37');
+INSERT INTO `Keytokens` VALUES (1,1,'\"ac195d38de90a6cad0ce7ecbbe3378001d1eab7c257ea3219fb7a36e2f8aec8ef384e99aa5ad5a70d702f830e81b48eb7288824e73b33810793c999e905df4ef\"','\"c02c2c97fbd4b9078bbd52a93e5829278c7f4a1e66ad70d7c30f773bbd4bb3c1b6ce4da80f2973ed25a2088bea69f3ed524771cce2fd818c65af589dddecd456\"',NULL,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiaHV5MTIzQGdtYWlsLmNvbSIsImlhdCI6MTcwODQ3ODUyNCwiZXhwIjoxNzA5MDgzMzI0fQ.27l8smNHjddxv1M2u-dciKzX9dRcTq2BjUeJhOjkWcY','2024-01-23 03:07:05','2024-02-21 01:22:04'),(2,2,'\"f1c7cf2d6f42adb3cc9e18a9d14c9ca200bb16283aedf81aa722e46732ae32103530b766f96aee0fecf8680f39a276da6b29aa8f16f9722a3e68db7c997d0707\"','\"6879867541f1498e8e172e92b6f9c00b97f93278d055abbfa099d9234d4cf064017ba41a6c2e36b5c43bfd36c42d6fc6077fe0c68d06231515a04f65a9d558cf\"',NULL,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiaHV5MUBnbWFpbC5jb20iLCJpYXQiOjE3MDkwOTMyNDgsImV4cCI6MTcwOTY5ODA0OH0.4dyltgFpfqySts0Z3Srud-2lFK7EJtOrziC7iNWGkXg','2024-01-23 03:07:18','2024-02-28 04:07:28'),(3,4,'\"fd2abe28bd8276b4890e95b6b87a5c3897cfcab4085850247e8d953ba7241d64ea921eeb56bc4476d93b063cd4cee0055f2f0e78007dae9539f8403b2e95e608\"','\"e0464899c32ff2c9b48d717dc859eba2fda073ff65a9fe503d33650b8e8b01dee3165a76755baa0b1270b6653186355b259e38f0d39b3ac7c5b5a3bdd578383f\"',NULL,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiaHV5MTExQGdtYWlsLmNvbSIsImlhdCI6MTcwODc4MjA5NywiZXhwIjoxNzA5Mzg2ODk3fQ.IDirf49SXxhD8lwnVMiTNkcsEha3wbHau6Psxa3396s','2024-02-23 12:25:29','2024-02-24 13:41:37');
 /*!40000 ALTER TABLE `Keytokens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -355,14 +355,14 @@ CREATE TABLE `Orders` (
   `order_total_price` decimal(10,0) NOT NULL,
   `order_total_discount` decimal(10,0) NOT NULL,
   `order_freeShip` decimal(10,0) NOT NULL,
-  `order_ship_street` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `order_ship_wards` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `order_ship_district` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `order_ship_city` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `order_ship_country` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `order_payment` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'afterReceiver',
-  `order_tracking_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT '',
-  `status` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'pendding',
+  `order_ship_street` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `order_ship_wards` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `order_ship_district` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `order_ship_city` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `order_ship_country` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `order_payment` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'afterReceiver',
+  `order_tracking_number` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '',
+  `status` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'pendding',
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`)
@@ -417,10 +417,10 @@ DROP TABLE IF EXISTS `Products`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Products` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `product_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `product_slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `product_thumb` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `product_description` text COLLATE utf8_unicode_ci,
+  `product_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `product_slug` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `product_thumb` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `product_description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `product_price` double DEFAULT NULL,
   `product_quantity` int DEFAULT NULL,
   `product_type` int DEFAULT NULL,
@@ -431,7 +431,7 @@ CREATE TABLE `Products` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -440,7 +440,7 @@ CREATE TABLE `Products` (
 
 LOCK TABLES `Products` WRITE;
 /*!40000 ALTER TABLE `Products` DISABLE KEYS */;
-INSERT INTO `Products` VALUES (1,'Macbook Pro M2 ','','macbook-pro-m2.png','Macbook Pro M2',50000000,223,2,1,4,0,1,'2024-01-31 04:23:59','2024-01-31 04:23:59'),(2,'Macbook Pro M1 ','','macbook-pro-m1.png','Macbook Pro M1',50000000,223,2,1,4,0,1,'2024-01-31 04:24:09','2024-01-31 04:24:09'),(3,'Quấn Áo Nam Nữ 222','','macbook-pro-m1.png','Quấn Áo Nam Nữ222',50000000,223,1,1,4,0,1,'2024-01-31 04:24:19','2024-01-31 04:24:19'),(4,'Macbook Pro M2 shop2','','macbook-pro-m2.png','Macbook Pro M2 shop2',50000000,223,2,2,4,0,1,'2024-02-05 08:32:30','2024-02-05 08:37:30'),(28,'Macbook Pro M2 shop2222','','macbook-pro-m2.png','Macbook Pro M2 shop222222',50000000,215,2,1,4,0,1,'2024-02-17 03:40:45','2024-02-20 09:07:28');
+INSERT INTO `Products` VALUES (1,'Macbook Pro M2 ','','macbook-pro-m2.png','Macbook Pro M2',50000000,223,2,1,4,0,1,'2024-01-31 04:23:59','2024-01-31 04:23:59'),(2,'Macbook Pro M1 ','','macbook-pro-m1.png','Macbook Pro M1',50000000,223,2,1,4,0,1,'2024-01-31 04:24:09','2024-01-31 04:24:09'),(3,'Quấn Áo Nam Nữ 222','','macbook-pro-m1.png','Quấn Áo Nam Nữ222',50000000,223,1,1,4,0,1,'2024-01-31 04:24:19','2024-01-31 04:24:19'),(4,'Macbook Pro M2 shop2','','macbook-pro-m2.png','Macbook Pro M2 shop2',50000000,223,2,2,4,0,1,'2024-02-05 08:32:30','2024-02-05 08:37:30'),(28,'Macbook Pro M2 shop2222','','macbook-pro-m2.png','Macbook Pro M2 shop222222',50000000,215,2,1,4,0,1,'2024-02-17 03:40:45','2024-02-20 09:07:28'),(52,'Giay Da bong ToniKroos','','Giay Da bong ToniKroos.png','Giay Da bong ToniKroos- bền bỉ , thoải mãi . ôm chân',600000,100,1,4,4,1,0,'2024-02-25 03:18:49','2024-02-25 03:18:49'),(53,'Giay Da bong ToniKroos11111','','Giay Da bong ToniKroos.png','Giay Da bong ToniKroos- bền bỉ , thoải mãi . ôm chân1111',600000,100,1,4,4,1,0,'2024-02-25 03:19:19','2024-02-25 03:19:19');
 /*!40000 ALTER TABLE `Products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -453,7 +453,7 @@ DROP TABLE IF EXISTS `ProductsTypes`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ProductsTypes` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `type_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`)
@@ -468,6 +468,38 @@ LOCK TABLES `ProductsTypes` WRITE;
 /*!40000 ALTER TABLE `ProductsTypes` DISABLE KEYS */;
 INSERT INTO `ProductsTypes` VALUES (1,'clothings','2024-01-23 16:33:42','2024-01-23 16:33:42'),(2,'electronic','2024-01-23 16:33:57','2024-01-23 16:33:57');
 /*!40000 ALTER TABLE `ProductsTypes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Pushnotifications`
+--
+
+DROP TABLE IF EXISTS `Pushnotifications`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Pushnotifications` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `noti_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `noti_senderId` int DEFAULT NULL,
+  `noti_receivedId` json DEFAULT NULL,
+  `noti_content` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `noti_product_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `noti_shop_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` varchar(255) COLLATE utf8_unicode_ci DEFAULT '',
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Pushnotifications`
+--
+
+LOCK TABLES `Pushnotifications` WRITE;
+/*!40000 ALTER TABLE `Pushnotifications` DISABLE KEYS */;
+INSERT INTO `Pushnotifications` VALUES (1,'ADD_PRODUCT_SHOP',4,'[4]','Shop- huy111@gmail.com vừa thêm 1 sản phẩm mới: Giay Da bong ToniKroos','Giay Da bong ToniKroos',NULL,'','2024-02-25 03:18:49','2024-02-25 03:18:49'),(2,'ADD_PRODUCT_SHOP',4,'[1]','Shop- huy111@gmail.com vừa thêm 1 sản phẩm mới: Giay Da bong ToniKroos11111','Giay Da bong ToniKroos11111',NULL,'','2024-02-25 03:19:19','2024-02-25 03:19:19');
+/*!40000 ALTER TABLE `Pushnotifications` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -490,7 +522,7 @@ CREATE TABLE `SequelizeMeta` (
 
 LOCK TABLES `SequelizeMeta` WRITE;
 /*!40000 ALTER TABLE `SequelizeMeta` DISABLE KEYS */;
-INSERT INTO `SequelizeMeta` VALUES ('20231127070927-Shops.js'),('20231127071015-KeyToken.js'),('20231129132928-create-api-key.js'),('20240103130114-create-products.js'),('20240103131419-create-products-type.js'),('20240103132710-create-type-clothings.js'),('20240217030246-create-inventorys.js'),('20240219082515-create-orders.js'),('20240219082531-create-orders-details.js'),('20240221015522-create-comment.js'),('create_discounts_delete.js'),('create-cart-details.js'),('create-cart.js'),('discount_table.js'),('type-electronic.js');
+INSERT INTO `SequelizeMeta` VALUES ('20231127070927-Shops.js'),('20231127071015-KeyToken.js'),('20231129132928-create-api-key.js'),('20240103130114-create-products.js'),('20240103131419-create-products-type.js'),('20240103132710-create-type-clothings.js'),('20240217030246-create-inventorys.js'),('20240219082515-create-orders.js'),('20240219082531-create-orders-details.js'),('20240221015522-create-comment.js'),('20240225020752-create-notifications.js'),('create_discounts_delete.js'),('create-cart-details.js'),('create-cart.js'),('discount_table.js'),('type-electronic.js');
 /*!40000 ALTER TABLE `SequelizeMeta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -503,12 +535,12 @@ DROP TABLE IF EXISTS `Shops`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Shops` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `firstName` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `lastName` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `firstName` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `lastName` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `role` json DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'inactive',
+  `status` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'inactive',
   `verify` tinyint(1) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
@@ -526,6 +558,31 @@ LOCK TABLES `Shops` WRITE;
 INSERT INTO `Shops` VALUES (1,'Quoc','Huy','$2b$10$2f8COe9eU/VUKlqKy7kluudZu6iZ8k5BXqlMalVKvN7CLvyLnNL4S','huy123@gmail.com','[\"ADMIN\", \"SHOP\"]','inactive',NULL,'2024-01-23 03:07:05','2024-01-23 03:07:05'),(2,'Quoc','Huy','$2b$10$.ObWT4eTcnu/DYfMkUgC2OqgEGhZrI5DGyoFeLmff5wxxIkOh/PoW','huy1@gmail.com','[\"ADMIN\", \"SHOP\"]','inactive',NULL,'2024-01-23 03:07:18','2024-01-23 03:07:18'),(3,'John','Doe',NULL,'example@example.com','[\"admin\"]','active',NULL,'2024-02-19 07:08:19','2024-02-19 07:08:19'),(4,'Quoc','Huy','$2b$10$U.pW0u1ocm9a4.A8IuEuMe1P7kDEnngNtYIIoK.HFQfnfVsLeLWVO','huy111@gmail.com','[\"ADMIN\", \"SHOP\"]','inactive',NULL,'2024-02-23 12:25:29','2024-02-23 12:25:29');
 /*!40000 ALTER TABLE `Shops` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `test_insert_data`
+--
+
+DROP TABLE IF EXISTS `test_insert_data`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `test_insert_data` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `age` int DEFAULT NULL,
+  `address` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `test_insert_data`
+--
+
+LOCK TABLES `test_insert_data` WRITE;
+/*!40000 ALTER TABLE `test_insert_data` DISABLE KEYS */;
+/*!40000 ALTER TABLE `test_insert_data` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -536,4 +593,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-24 21:00:56
+-- Dump completed on 2024-02-28 11:11:24

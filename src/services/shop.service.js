@@ -11,5 +11,13 @@ const findByEmail = async ({ email }) => {
         attributes: attributes, // Only select the specified attributes
     });
 }
-
-module.exports = { findByEmail }
+const findById = async ({ shopId }) => {
+    // Specify the attributes you want to retrieve
+    const attributes = ['id', 'email',];
+    // Use the attributes in the findOne query
+    return await Shops.findOne({
+        where: { id: shopId },
+        attributes: attributes, // Only select the specified attributes
+    });
+}
+module.exports = { findByEmail, findById }

@@ -6,7 +6,13 @@ const { sequelize } = require('../models/index');
 const { insertInventory } = require('../models/reponsitorys/eventorys.repo');
 const productReponsitory = require("../models/reponsitorys/product.repo");
 const { removeEmptyFields } = require('../utils');
+const { createNotiMessage } = require('./notifications.service');
+const { findById } = require('./shop.service');
+const TypeNoti = {
+    ADD: 'ADD_PRODUCT_SHOP',
+    VOUCHER: 'PROMOTION'
 
+}
 class product {
     constructor({ id, product_name, product_slug, product_thumb, product_description, product_price, product_shop, product_type, product_quantity,
         product_start, isDraft, isPublished }) {
@@ -26,8 +32,16 @@ class product {
     async createProduct() {
         const newProduct = await Products.upsert(this);
         if (newProduct) {
-            const productId = newProduct[0].id;
-            await insertInventory(productId, this.product_shop, this.product_quantity,)
+            try {
+
+
+                const productId = newProduct[0].id;
+                const shop = await findById({ shopId: this.product_shop });
+                await insertInventory(productId, this.product_shop, this.product_quantity,);
+                await createNotiMessage({ type: TypeNoti.ADD, receivedId: [1], senderId: this.product_shop, product_name: this.product_name, product_shop: shop.email })
+            } catch (error) {
+                console.log("error :::", error);
+            }
         }
         return newProduct;
     }

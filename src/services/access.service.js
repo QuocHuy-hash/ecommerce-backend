@@ -7,6 +7,7 @@ const { createTokenPair, verifyJWT } = require('../auth/authUtil');
 const { getInfoData } = require('../utils');
 const { BadRequestError } = require('../core/error.response');
 const { findByEmail } = require('./shop.service');
+const { loginSuccess, setAuthorizationHeaders } = require('../auth/checkAuth');
 
 const RoleShop = {
     SHOP: 'SHOP',
@@ -48,7 +49,9 @@ const login = async ({ email, password, refreshToken = null }) => {
         userId: foundShop.id,
         refreshToken: tokens.refreshToken,
         privateKey, publicKey
-    })
+    });
+    //set for swagger docs-api
+
     return {
         shop: getInfoData({ filled: ['id', 'name', 'email'], object: foundShop }),
         tokens

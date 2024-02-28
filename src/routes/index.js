@@ -18,5 +18,7 @@ router.use('/v1/api/orders', require('./orders/index'));
 router.use('/v1/api/comments', require('./comment/index'));
 // signUp
 router.use('/v1/api/', require('./access/index'));
+// notification
+router.use('/v1/api/notifications', require('./notifications/index'));
 
 module.exports = router;

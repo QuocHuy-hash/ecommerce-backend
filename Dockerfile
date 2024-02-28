@@ -1,4 +1,3 @@
-
 FROM node:18
 
 WORKDIR /src
@@ -10,5 +9,7 @@ RUN npm install
 
 COPY . .
 
-CMD [ "npm", "start" ]
+EXPOSE 3055
+
+CMD [ "npm", "start" , "npm start"]
 # CMD [ "pm2-runtime", "start", "npm", "--", "run", "start" ]

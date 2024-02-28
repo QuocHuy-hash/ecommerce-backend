@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3055:3055"
+    # networks:
+    #   - app-tier 
     environment:
       - DB_HOST=db
       - DB_USER=root
@@ -20,7 +22,9 @@ services:
       - MYSQL_ROOT_PASSWORD=12345678
       - MYSQL_DATABASE=nodejs
     ports:
-      - "3307:3306"
+      - "3307:3306"  
+    # networks:
+    #   - app-tier 
     volumes:
       - db-data:/var/lib/mysql
 

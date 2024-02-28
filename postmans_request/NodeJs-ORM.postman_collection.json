@@ -19,7 +19,7 @@
 				"header": [
 					{
 						"key": "x-client-id",
-						"value": "1",
+						"value": "4",
 						"type": "text"
 					},
 					{
@@ -30,7 +30,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    //  \"id\": 1,\n  \"product_name\": \"Macbook Pro M2 shop2\",\n  \"product_thumb\": \"macbook-pro-m2.png\",\n  \"product_description\": \"Macbook Pro M2 shop2\",\n  \"product_price\": 50000000,\n  \"product_quantity\": 223,\n  \"product_type\": \"electronic\",\n    \"manufacturer\":\"Apple\",\n    \"model\": \"y là model của macbook-pro-m1 32gb ,1T , chip M1 2025 shop2\",\n    \"color\": [\"Black\", \"White\" , \"Gold\"]\n  \n\n// \"product_name\": \"Quấn Áo Nam Nữ 222\",\n//   \"product_thumb\": \"macbook-pro-m1.png\",\n//   \"product_description\": \"Quấn Áo Nam Nữ222\",\n//   \"product_price\": 50000000,\n//   \"product_quantity\": 223,\n//   \"product_type\": \"clothings\",\n//    \"size\" : [\"32\", \"31\" , \"22\"],\n//   \"brand\": \"Jeans\",\n//   \"material\": \"đây là model của máy Quần jean ống xuông 222\",\n//   \"color\": [\"Đen\", \"Trắng\" , \"RED\"]\n}\n",
+					"raw": "{\n    //  \"id\": 1,\n//   \"product_name\": \"Giay Da bong ToniKroos\",\n//   \"product_thumb\": \"Giay Da bong ToniKroos.png\",\n//   \"product_description\": \"Giay Da bong ToniKroos- bền bỉ , thoải mãi . ôm chân\",\n//   \"product_price\": 600000,\n//   \"product_quantity\": 100,\n//   \"product_type\": \"clothings\",\n//     \"manufacturer\":\"TONIKROOS\",\n//     \"model\": \"y là model Giay Da bong ToniKroos- bền bỉ , thoải mãi . ôm chân\",\n//     \"color\": [\"Black\", \"White\" , \"Gold\"]\n  \n\n\"product_name\": \"Giay Da bong ToniKroos\",\n  \"product_thumb\": \"Giay Da bong ToniKroos.png\",\n  \"product_description\": \"Giay Da bong ToniKroos- bền bỉ , thoải mãi . ôm chân\",\n  \"product_price\": 600000,\n  \"product_quantity\": 100,\n  \"product_type\": \"clothings\",\n   \"size\" : [\"32\", \"31\" , \"22\"],\n  \"brand\": \"Jeans\",\n  \"material\": \"đây là model của máy Quần jean ống xuông 222\",\n  \"color\": [\"Đen\", \"Trắng\" , \"RED\"]\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -510,6 +510,38 @@
 					}
 				],
 				"url": "{{api}}products/list-all"
+			},
+			"response": []
+		},
+		{
+			"name": "Notification Get By User",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "athorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "x-client-id",
+						"value": "4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}notifications/getByUser"
 			},
 			"response": []
 		},
