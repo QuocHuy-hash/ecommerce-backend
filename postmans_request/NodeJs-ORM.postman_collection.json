@@ -492,6 +492,24 @@
 			"response": []
 		},
 		{
+			"name": "Verify Email",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"huyhqpk02638@fpt.edu.vn\",\n     \"otp\" : \"942448\",",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{api}}shop/verify-email"
+			},
+			"response": []
+		},
+		{
 			"name": "Get All Product",
 			"request": {
 				"method": "GET",

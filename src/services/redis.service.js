@@ -3,9 +3,7 @@ const { createClient } = require('redis');
 const { promisify } = require('util');
 const { reservationInventory } = require('../models/reponsitorys/eventorys.repo');
 
-const redisClient = createClient({
-    // console.log("connect redis success");
-});
+const redisClient = createClient({});
 
 redisClient.on('error', err => console.log('Redis Client Error', err));
 
@@ -29,13 +27,11 @@ const acquireLock = async (productId, quantity) => {
                 await redisClient.expire(key, expireTime);
                 return key;
             }
-            console.log("vào đây 2222 : null");
             return null;
         } else {
             await new Promise((resolve) => {
                 setTimeout(resolve, 50)
             });
-            console.log("vào đây 33333 : ");
         }
     }
 

@@ -8,12 +8,14 @@ const { getInfoData } = require('../utils');
 const { BadRequestError } = require('../core/error.response');
 const { findByEmail } = require('./shop.service');
 const { loginSuccess, setAuthorizationHeaders } = require('../auth/checkAuth');
+const { sendMail } = require('./sendMailer/send.mail.service');
 
 const RoleShop = {
     SHOP: 'SHOP',
     WRITER: 'WRITER',
     EDITOR: 'EDITOR',
-    ADMIN: 'ADMIN'
+    ADMIN: 'ADMIN',
+    USER: 'USER'
 }
 
 /*
@@ -31,6 +33,7 @@ const login = async ({ email, password, refreshToken = null }) => {
     if (!foundShop) {
         throw new BadRequestError('Shop not registed');
     }
+    if (!foundShop.verify) throw new BadRequestError('Shop is not verify account')
     //2.
     const match = await bcrypt.compare(password, foundShop.password);
     if (!match) {
@@ -50,7 +53,7 @@ const login = async ({ email, password, refreshToken = null }) => {
         refreshToken: tokens.refreshToken,
         privateKey, publicKey
     });
-    //set for swagger docs-api
+    //Send Mail
 
     return {
         shop: getInfoData({ filled: ['id', 'name', 'email'], object: foundShop }),
@@ -70,21 +73,10 @@ const AccessService = async (shop) => {
         throw new BadRequestError('Error : Shop already register');
     }
     const newShop = await Shops.create({
-        email, password: passwordHash, firstName, lastName, role: [RoleShop.ADMIN, RoleShop.SHOP]
+        email, password: passwordHash, firstName, lastName, role: [RoleShop.USER]
     });
     if (newShop) {
-        //create publicKey and Private Key
-        // const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
-        //     modulusLength: 4096,
-        //     publicKeyEncoding: {
-        //         type: 'pkcs1',
-        //         format: 'pem'
-        //     },
-        //     privateKeyEncoding: {
-        //         type: 'pkcs1',
-        //         format: 'pem'
-        //     }
-        // })
+
         const privateKey = crypto.randomBytes(64).toString('hex');
         const publicKey = crypto.randomBytes(64).toString('hex');
 
@@ -98,6 +90,8 @@ const AccessService = async (shop) => {
             return;
         }
         const tokens = await createTokenPair({ userId: newShop.id, email }, publicKey, privateKey);
+        const subject = 'Verify Your Account'
+        sendMail({ to: email, subject, text: email })
         return {
             code: '201',
             metadata: {
