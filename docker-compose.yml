@@ -1,5 +1,9 @@
 version: '3.8'
 services:
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
   app:
     build: 
       context: ./
@@ -27,6 +31,13 @@ services:
     #   - app-tier 
     volumes:
       - db-data:/var/lib/mysql
-
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - app
 volumes:
   db-data:
