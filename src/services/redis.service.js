@@ -1,11 +1,8 @@
 // //redis check order
-const { createClient } = require('redis');
+const redisClient = require('../config/redis.config');
 const { promisify } = require('util');
 const { reservationInventory } = require('../models/reponsitorys/eventorys.repo');
 
-const redisClient = createClient({});
-
-redisClient.on('error', err => console.log('Redis Client Error', err));
 
 // promisify(redisClient.connect());
 
@@ -50,6 +47,8 @@ const releaseLock = async (keyLock) => {
     } catch (error) {
         console.error("Error releasing lock:", error);
         throw error;
+    } finally {
+        await redisClient.quit();
     }
 }
 

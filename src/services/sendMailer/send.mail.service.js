@@ -1,12 +1,9 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
-const { createClient } = require('redis');
 const { BadRequestError } = require('../../core/error.response');
 const { updateverifyShop } = require('../shop.service');
-const redisClient = createClient({
-});
+const redisClient = require('../../config/redis.config');
 
-redisClient.on('error', err => console.log('Redis Client Error', err));
 const sendMail = async (body) => {
     await redisClient.connect();
     try {
