@@ -19,7 +19,7 @@ const uploadFromLocal = async (path, userId) => {
         })
     }
 }
-module.exports = { uploadFromLocal };
+
 // delete image
 const deleteImage = async (body, userId) => {
     const { publicId } = body;

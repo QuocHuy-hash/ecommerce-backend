@@ -1,10 +1,11 @@
 1: setup docker container for mys
 2: cmd: docker exec -it container_id bash
 --show database 
--->>> coppy database from local into docker container ;
+-->>> COPPY DATABASE FROM LOCAL INTO DOCKER CONTAINER ;
 1:cmd:  <mysqldump -u username -p database_name > backup_file_name.sql> //backup file mysql
 
 2: cmd: <docker cp backup.sql container_id:/path/to/backup.sql>  //coppy file backup into folder container docker
+        ---docker cp nodejs.sql container_id:/home/backup.sql
 
 3: connect into docker container 
 4: cmd: <mysql -u username -p database_name < /path/to/backup_file_name.sql>
@@ -39,3 +40,26 @@ cmd : <sudo apt-get update && sudo apt-get install nginx>
 
     -------if choose HTTP-----
     <sudo ufw delete allow 'Nginx HTTP'>
+
+
+-------->>>SETUP NGINX CONFIG--------
+step 1: bash into container nginx 
+step 2: vim /etc/nginx/nginx.conf
+step 3: http {
+                server {
+                        listen 80;
+                        server_name mydomain.com www.mydomain.com;
+
+                        location / {
+                        proxy_pass http://localhost:3000; // Chuyển hướng đến ứng dụng Node.js của bạn
+                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                        proxy_set_header Host $host;
+                        proxy_set_header X-Real-IP $remote_addr;
+                        proxy_set_header X-Forwarded-Proto $scheme;
+                        }
+                }
+
+                # Các cấu hình khác...
+                }
+step 4: nginx -t // check 
+step 5: service nginx restart 

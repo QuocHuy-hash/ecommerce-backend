@@ -4,7 +4,6 @@ const { createClient } = require('redis');
 const { BadRequestError } = require('../../core/error.response');
 const { updateverifyShop } = require('../shop.service');
 const redisClient = createClient({
-    // console.log("connect redis success");
 });
 
 redisClient.on('error', err => console.log('Redis Client Error', err));
