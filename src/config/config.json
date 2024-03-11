@@ -4,22 +4,26 @@
         "password": "12345678",
         "database": "nodejs",
         "port": "3306",
-        "host": "127.0.0.1",
+        "host": "db",
         "dialect": "mysql",
         "connectionLimit": 10
     },
     "test": {
         "username": "root",
-        "password": null,
-        "database": "database_test",
-        "host": "127.0.0.1",
-        "dialect": "mysql"
+        "password": "12345678",
+        "database": "nodejs",
+        "port": "3306",
+        "host": "db",
+        "dialect": "mysql",
+        "connectionLimit": 10
     },
     "production": {
         "username": "root",
-        "password": null,
-        "database": "database_production",
+        "password": "12345678",
+        "database": "nodejs",
+        "port": "3307",
         "host": "127.0.0.1",
-        "dialect": "mysql"
+        "dialect": "mysql",
+        "connectionLimit": 10
     }
 }
