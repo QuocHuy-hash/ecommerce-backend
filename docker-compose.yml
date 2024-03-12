@@ -21,8 +21,6 @@ services:
     depends_on:
       - db
       - redis
-    networks:
-      - mynetwork
 
   db:
     image: mysql:8.1
@@ -33,32 +31,27 @@ services:
       - "3307:3306"
     volumes:
       - db-data:/var/lib/mysql
-    networks:
-      - mynetwork
 
   nginx:
     image: nginx:latest
     container_name: nginx
-    build:
-      context: .
-    volumes:
-      - ./ssl:/ssl
-      - ./be-ssl:/be-ssl
     ports:
       - "80:80"
       - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro  # Mount file cấu hình Nginx
     depends_on:
       - app
-    networks:
-      - mynetwork
 
   redis:
-    image: redis:alpine
+    image: redis:latest
+    command: redis-server /usr/local/etc/redis/redis.conf  # Chỉ định file cấu hình khi khởi động
     ports:
       - "6379:6379"
-    networks:
-      - mynetwork
+    volumes:
+      - redis-data:/data
+      - ./redis.conf:/usr/local/etc/redis/redis.conf:ro  # Mount file cấu hình Redis
+
 volumes:
   db-data:
-networks:
-  mynetwork:
+  redis-data:
