@@ -50,7 +50,10 @@ const sendMail = async (body) => {
     } catch (error) {
         console.log("error ::", error);
     } finally {
-        await redisClient.quit();
+        if (isRedisConnected) {
+            await redisClient.quit();
+            isRedisConnected = false;
+        }
     }
 };
 const verifyOtp = async (body) => {
@@ -66,7 +69,10 @@ const verifyOtp = async (body) => {
         await redisClient.quit();
         return true;
     } else {
-        await redisClient.quit();
+        if (isRedisConnected) {
+            await redisClient.quit();
+            isRedisConnected = false;
+        }
         throw new BadRequestError("Invalid OTP");
     }
 

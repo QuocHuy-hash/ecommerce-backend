@@ -51,6 +51,7 @@ services:
     volumes:
       - redis-data:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
+      - ./redis.conf:/var/log/redis
 
 volumes:
   db-data:
