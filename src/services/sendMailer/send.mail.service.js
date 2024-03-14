@@ -3,9 +3,26 @@ require('dotenv').config();
 const { BadRequestError } = require('../../core/error.response');
 const { updateverifyShop } = require('../shop.service');
 const redisClient = require('../../config/redis.config');
+let isRedisConnected = false;
+
+redisClient.on('connect', () => {
+    console.log('Connected to Redis');
+    isRedisConnected = true;
+});
+
+redisClient.on('error', (err) => {
+    console.log('Redis Client Error', err);
+    isRedisConnected = false;
+});
+
+const ensureRedisConnection = async () => {
+    if (!isRedisConnected) {
+        await redisClient.connect();
+    }
+};
 
 const sendMail = async (body) => {
-    await redisClient.connect();
+    await ensureRedisConnection();
     try {
         const { to, subject, text } = body;
         let transporter = nodemailer.createTransport({
@@ -40,7 +57,7 @@ const verifyOtp = async (body) => {
     const { email, otp } = body;
 
     // Get the OTP from the store
-    await redisClient.connect();
+    await ensureRedisConnection();
     const storedOtp = await redisClient.get(email);
     console.log(storedOtp);
     if (storedOtp && storedOtp === otp) {

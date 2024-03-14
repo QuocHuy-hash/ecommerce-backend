@@ -3,8 +3,8 @@
         "username": "root",
         "password": "12345678",
         "database": "nodejs",
-        "port": "3306",
-        "host": "db",
+        "port": "3307",
+        "host": "14.225.207.2",
         "dialect": "mysql",
         "connectionLimit": 10
     },
