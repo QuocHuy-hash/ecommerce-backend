@@ -13,11 +13,6 @@ services:
       DB_PASS: 12345678
       DB_NAME: nodejs
       DB_PORT: 3307
-      MAIL: huy343536@gmail.com
-      MAIL_PASSWORD: swsa axux pgyc ljvy
-      CLOUD_NAME: ecommercegroup
-      CLOUDINARY_API_KEY: 772858273968731
-      CLOUDINARY_API_SECRET: NdLAr1tYR9QDwlRZZB-LDJZXtvk
     depends_on:
       - db
       - redis

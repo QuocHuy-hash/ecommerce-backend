@@ -1,0 +1,17 @@
+version: "3"
+services:
+  your_app-letsencrypt:
+    image: linuxserver/letsencrypt
+    container_name: your_app-letsencrypt
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./config:/config
+    environment:
+      - EMAIL=huy343536@gmail.com
+      - URL=shop-ecommerce.click
+      - VALIDATION=http
+      - TZ=Europe/Stockholm
+      - PUID=1000
+      - PGID=1000
