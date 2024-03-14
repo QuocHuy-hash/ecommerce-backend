@@ -3,21 +3,21 @@ version: '3.8'
 services:
   app:
     build: 
-      context: ./
+      context: .
       dockerfile: Dockerfile
     ports:
       - "3055:3055"
     environment:
       DB_HOST: db
       DB_USER: root
-      DB_PASS: ${DB_PASS}  
+      DB_PASS: 12345678
       DB_NAME: nodejs
-      DB_PORT: 3307  
-      MAIL: ${MAIL}  
-      MAIL_PASSWORD: ${MAIL_PASSWORD}  
+      DB_PORT: 3307
+      MAIL: huy343536@gmail.com
+      MAIL_PASSWORD: swsa axux pgyc ljvy
       CLOUD_NAME: ecommercegroup
-      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}  
-      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}  
+      CLOUDINARY_API_KEY: 772858273968731
+      CLOUDINARY_API_SECRET: NdLAr1tYR9QDwlRZZB-LDJZXtvk
     depends_on:
       - db
       - redis
@@ -25,7 +25,7 @@ services:
   db:
     image: mysql:8.1
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASS}  
+      MYSQL_ROOT_PASSWORD: 12345678
       MYSQL_DATABASE: nodejs
     ports:
       - "3307:3306"
@@ -34,23 +34,23 @@ services:
 
   nginx:
     image: nginx:latest
-    container_name: nginx
+    volumes:
+      - ./ssl:/ssl
+      - ./be-ssl:/be-ssl
     ports:
       - "80:80"
       - "443:443"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro  # Mount file cấu hình Nginx
     depends_on:
       - app
 
   redis:
     image: redis:latest
-    command: redis-server /usr/local/etc/redis/redis.conf  # Chỉ định file cấu hình khi khởi động
+    command: redis-server /usr/local/etc/redis/redis.conf
     ports:
       - "6379:6379"
     volumes:
       - redis-data:/data
-      - ./redis.conf:/usr/local/etc/redis/redis.conf:ro  # Mount file cấu hình Redis
+      - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
 
 volumes:
   db-data:
