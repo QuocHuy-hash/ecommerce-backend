@@ -34,6 +34,8 @@ services:
 
   nginx:
     image: nginx:latest
+    build:
+      context: .
     volumes:
       - ./ssl:/ssl
       - ./be-ssl:/be-ssl

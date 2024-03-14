@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:18 as builder
 WORKDIR /src
 
 COPY package*.json ./
@@ -18,7 +18,6 @@ FROM nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
-COPY --from=builder /app/build .
+COPY --from=builder /src/ .
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
 
-RUN mkdir -p /var/log/redis && chown redis:redis /var/log/redis
