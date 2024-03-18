@@ -32,8 +32,8 @@ services:
     build:
       context: .
     volumes:
-      - ./ssl:/ssl
-      - ./be-ssl:/be-ssl
+      - ./ssl:ssl
+      - ./be-ssl:be-ssl
     ports:
       - "80:80"
       - "443:443"

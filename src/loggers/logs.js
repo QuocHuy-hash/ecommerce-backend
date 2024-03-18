@@ -50,7 +50,7 @@ class Logger {
             context = context.toString();
             metadata = metadata ? this.serializeObject(metadata) : {};
         }
-        const requestId = req && req.requestId ? req.requestId : uuidv4();
+        const requestId = req && req.userID ? req.userID : uuidv4();
         return { context, requestId, metadata };
     }
 

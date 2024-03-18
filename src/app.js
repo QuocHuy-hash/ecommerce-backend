@@ -35,6 +35,10 @@ app.use('/', require('./routes/index'));
 app.use(function (error, req, res, next) {
   next(createError(404));
   console.log(error.message)
+  const strError = JSON.stringify(error.message);
+  const body = JSON.stringify(req.body);
+  const errorMessage = `${req.method} ${req.path} - ${strError} - Body::${body}`;
+  logs.error(errorMessage, req.body);
 });
 
 // init handle exceptions
@@ -46,10 +50,6 @@ app.use((req, res, next) => {
 
 app.use((error, req, res, next) => {
   const statusCode = error.status || 500;
-  const strError = JSON.stringify(error.message);
-  const errorMessage = `${req.method} ${req.path} - ${strError}`;
-  logs.error(errorMessage, req.body);
-
   return res.status(statusCode).json({
     status: 'error',
     code: statusCode,
