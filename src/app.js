@@ -8,7 +8,7 @@ const swaggerDocs = require('./utils/swagger');
 const cors = require('cors');
 require('dotenv').config();
 var app = express();
-
+const logs = require('./loggers/logs');
 
 // view engine setup
 app.use(express.json());
@@ -46,6 +46,10 @@ app.use((req, res, next) => {
 
 app.use((error, req, res, next) => {
   const statusCode = error.status || 500;
+  const strError = JSON.stringify(error.message);
+  const errorMessage = `${req.method} ${req.path} - ${strError}`;
+  logs.error(errorMessage, req.body);
+
   return res.status(statusCode).json({
     status: 'error',
     code: statusCode,
