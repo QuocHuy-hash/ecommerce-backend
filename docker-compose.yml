@@ -33,7 +33,7 @@ services:
     volumes: 
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-    command: certonly --webroot -w /var/www/certbot --force-renewal --email huy343536@gmail.com -d shop-ecommerce.click
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email huy343536@gmail.com -d shop-ecommerce.click --agree-tos --non-interactive -d shop-ecommerce.click --force-renewal
 
   nginx:
     container_name: nginx
