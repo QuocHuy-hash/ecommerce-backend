@@ -26,22 +26,6 @@ cmd :   <curl -fsSL https://get.docker.com -o get-docker.sh>
         <sudo chmod +x /usr/local/bin/docker-compose>
 
 
-------->>> SETUP NGINX 
-link document: <https://duthanhduoc.com/blog/deploy-website-nextjs-hoac-nodejs-len-vps
-cmd : <sudo apt-get update && sudo apt-get install nginx>
-        < Mở port 22 (ssh), Nginx Full mở rồi không cần mở lại
-        cmd <sudo ufw allow ssh>
-        # Bật tường lửa, nhưng cái này chỉ bật trong phiên làm việc hiện tại thôi, reboot là nó tự tắt
-        cmd :<sudo ufw enable>
-        # Kiểm tra trạng thái tường lửa
-        cmd : <sudo ufw status>
-        # Yêu cầu tường lửa lên mỗi khi khởi động lại server
-        cmd: <sudo systemctl enable ufw>  
-
-    -------if choose HTTP-----
-    <sudo ufw delete allow 'Nginx HTTP'>
-
-
 -------->>>SETUP NGINX CONFIG--------
 step 1: bash into container nginx 
 step 2: vim /etc/nginx/nginx.conf
@@ -51,11 +35,12 @@ step 3: http {
                         server_name mydomain.com www.mydomain.com;
 
                         location / {
-                        proxy_pass http://localhost:3000; // Chuyển hướng đến ứng dụng Node.js của bạn
-                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                        proxy_set_header Host $host;
-                        proxy_set_header X-Real-IP $remote_addr;
-                        proxy_set_header X-Forwarded-Proto $scheme;
+                                proxy_pass http://localhost:3055;
+                                proxy_http_version 1.1;
+                                proxy_set_header Upgrade $http_upgrade;
+                                proxy_set_header Connection 'upgrade';
+                                proxy_set_header Host $host;
+                                proxy_cache_bypass $http_upgrade;
                         }
                 }
 
@@ -63,3 +48,12 @@ step 3: http {
                 }
 step 4: nginx -t // check 
 step 5: service nginx restart 
+
+add SSL 
+1:
+sudo apt update
+sudo apt install software-properties-common
+sudo add-apt-reponsitory ppa:certbot/certbot
+sudo apt-update
+sudo apt-get install python3-certbot-nginx
+sudo certbot --nginx -d shop-ecommerce.click
