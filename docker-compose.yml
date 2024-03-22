@@ -6,30 +6,11 @@ services:
       context: ./
       dockerfile: Dockerfile
     environment:
-<<<<<<< Updated upstream
-      DB_HOST: db
-      DB_USER: root
-      DB_PASS: ${DB_PASS}  
-      DB_NAME: nodejs
-      DB_PORT: 3307  
-      MAIL: ${MAIL}  
-      MAIL_PASSWORD: ${MAIL_PASSWORD}  
-      CLOUD_NAME: ecommercegroup
-      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}  
-      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}  
-    depends_on:
-      - db
-      - redis
-    networks:
-      - mynetwork
-=======
       - DB_HOST=db
       - DB_USER=root
       - DB_PASS=12345678
       - DB_NAME=nodejs
       - DB_PORT=3307
->>>>>>> Stashed changes
-
   db:
     image: mysql:8.1
     environment:
@@ -39,19 +20,7 @@ services:
       - "3307:3306"
     volumes:
       - db-data:/var/lib/mysql
-<<<<<<< Updated upstream
-    networks:
-      - mynetwork
 
-  nginx:
-    image: nginx:latest
-    container_name: nginx
-    build:
-      context: .
-    volumes:
-      - ./ssl:/ssl
-      - ./be-ssl:/be-ssl
-=======
 
   certbot:
     image: certbot/certbot
@@ -62,31 +31,18 @@ services:
 
   nginx:
     image: nginx:alpine
->>>>>>> Stashed changes
     ports:
       - "80:80"
       - "443:443"
     depends_on:
       - app
-<<<<<<< Updated upstream
-    networks:
-      - mynetwork
-=======
->>>>>>> Stashed changes
-
   redis:
     image: redis:alpine
     ports:
       - "6379:6379"
-<<<<<<< Updated upstream
-    networks:
-      - mynetwork
-=======
     volumes:
       - redis-data:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
-
->>>>>>> Stashed changes
 volumes:
   db-data:
 networks:
