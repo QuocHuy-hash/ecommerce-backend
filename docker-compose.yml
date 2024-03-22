@@ -27,18 +27,27 @@ services:
     volumes:
       - db-data:/var/lib/mysql
 
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes: 
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email huy343536@gmail.com -d shop-ecommerce.click --agree-tos
+
   nginx:
-    image: nginx:latest
-    build:
-      context: .
-    volumes:
-      - ./ssl:ssl
-      - ./be-ssl:be-ssl
+    container_name: nginx
+    restart: unless-stopped  # Sửa lỗi từ "estart" thành "restart"
+    image: nginx
     ports:
       - "80:80"
       - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
     depends_on:
-      - app
+      - app  # Chuyển depends_on vào trong service nginx
 
   redis:
     image: redis:latest
@@ -48,7 +57,7 @@ services:
     volumes:
       - redis-data:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
-      - ./redis.conf:/var/log/redis
+      - ./redis.log:/var/log/redis/redis.log  # Sửa lỗi đường dẫn và định dạng cho file log
 
 volumes:
   db-data:
