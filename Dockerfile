@@ -8,10 +8,3 @@ COPY . .
 EXPOSE 3055
 CMD [ "npm", "start" , "npm start"]
 
-FROM nginx
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-WORKDIR /usr/share/nginx/html
-RUN rm -rf ./*
-COPY --from=builder /src/ .
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
-
