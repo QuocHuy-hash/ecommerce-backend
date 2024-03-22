@@ -15,7 +15,7 @@ CMD [ "npm", "start" , "npm start"]
 # CMD [ "pm2-runtime", "start", "npm", "--", "run", "start" ]
 
 FROM nginx
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 COPY --from=builder /app/build .
