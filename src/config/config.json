@@ -3,8 +3,8 @@
         "username": "root",
         "password": "12345678",
         "database": "nodejs",
-        "port": "3306",
-        "host": "127.0.0.1",
+        "port": "3307",
+        "host": "db",
         "dialect": "mysql",
         "connectionLimit": 10
     },
@@ -13,7 +13,7 @@
         "password": "12345678",
         "database": "nodejs",
         "port": "3307",
-        "host": "14.225.207.2",
+        "host": "db",
         "dialect": "mysql",
         "connectionLimit": 10
     },
@@ -22,7 +22,7 @@
         "password": "12345678",
         "database": "nodejs",
         "port": "3307",
-        "host": "14.225.207.2",
+        "host": "db",
         "dialect": "mysql",
         "connectionLimit": 10
     }

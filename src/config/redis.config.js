@@ -3,7 +3,12 @@ const { createClient } = require('redis');
 const logs = require('../loggers/logs');
 const path = require('path');
 const redisClient = createClient({
-    url: 'redis://default:12345678@127.0.0.1:6379'
+    legacyMode: true,
+    socket: {
+        port: 6379,
+        host: 'redis',
+    }
+    // url: 'redis://default:12345678@redis:6379'
 });
 
 redisClient.on('error', err => console.log('Redis Client Error', err),

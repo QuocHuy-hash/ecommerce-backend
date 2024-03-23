@@ -13,10 +13,13 @@ services:
       DB_PASS: 12345678
       DB_NAME: nodejs
       DB_PORT: 3307
+      REDIS_HOST: redis
+      Redis_PORT: 6379
     depends_on:
       - db
       - redis
-
+    networks:
+      - mynetwork
   db:
     image: mysql:8.1
     environment:
@@ -24,17 +27,22 @@ services:
       MYSQL_DATABASE: nodejs
     ports:
       - "3307:3306"
-    volumes:
-      - db-data:/var/lib/mysql
+    networks:
+      - mynetwork
   redis:
     image: redis:latest
-    command: redis-server /usr/local/etc/redis/redis.conf
     ports:
       - "6379:6379"
     volumes:
       - redis-data:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
       - ./redis.log:/var/log/redis/redis.log  # Sửa lỗi đường dẫn và định dạng cho file log
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
 
 volumes:
   db-data:
