@@ -2,31 +2,15 @@ const nodemailer = require('nodemailer');
 require('dotenv').config();
 const { BadRequestError } = require('../../core/error.response');
 const { updateverifyShop } = require('../shop.service');
+const { set, get, expire, del } = require('../../utils/redis.util');
 const redisClient = require('../../config/redis.config');
-let isRedisConnected = false;
-
-redisClient.on('connect', () => {
-    console.log('Connected to Redis');
-    isRedisConnected = true;
-});
-
-redisClient.on('error', (err) => {
-    console.log('Redis Client Error', err);
-    isRedisConnected = false;
-});
-
-const ensureRedisConnection = async () => {
-    if (!isRedisConnected) {
-        await redisClient.connect();
-    }
-};
-
+const { cli } = require('winston/lib/winston/config');
 const sendMail = async (body) => {
-    await ensureRedisConnection();
+    await redisClient.connect();
     try {
         const { to, subject, text } = body;
         let transporter = nodemailer.createTransport({
-            host: "localhost:3055",
+            host: "shop-ecommerce.click",
             port: 3055,
             service: 'gmail',
             auth: {
@@ -36,8 +20,8 @@ const sendMail = async (body) => {
         });
         const otp = Math.floor(100000 + Math.random() * 900000);
         // Save the OTP
-        await redisClient.set(to, otp);
-        await redisClient.expire(to, 120);
+        await set(to, otp);
+        await expire(to, 120);
         const mailOptions = {
             from: 'admin.ecommerce@gmail.com',
             to: to,
@@ -46,35 +30,33 @@ const sendMail = async (body) => {
         };
         let info = await transporter.sendMail(mailOptions);
         console.log("Send mail successfuly");
+        await redisClient.disconnect();
         return info;
     } catch (error) {
-        console.log("error ::", error);
-    } finally {
-        if (isRedisConnected) {
-            await redisClient.quit();
-            isRedisConnected = false;
-        }
+        await redisClient.disconnect();
+        throw new BadRequestError("An error occurred while sending the email::" + error);
     }
 };
 const verifyOtp = async (body) => {
     const { email, otp } = body;
-
-    // Get the OTP from the store
-    await ensureRedisConnection();
-    const storedOtp = await redisClient.get(email);
-    console.log(storedOtp);
-    if (storedOtp && storedOtp === otp) {
-        await updateverifyShop({ email, verify: 1 });
-        redisClient.del(email); // Delete OTP after verification
-        await redisClient.quit();
-        return true;
-    } else {
-        if (isRedisConnected) {
-            await redisClient.quit();
-            isRedisConnected = false;
+    await redisClient.connect();
+    try {
+        const reply = await get(email)
+        if (!reply) throw new BadRequestError('OTP Invalid');
+        if (reply === otp) {
+            await updateverifyShop({ email: email, verify: 1 });
+            await del(email);
+            await redisClient.disconnect();
+            return true;
+        } else {
+            await redisClient.disconnect();
+            return false;
         }
-        throw new BadRequestError("Invalid OTP");
+    } catch (error) {
+        await redisClient.disconnect();
+        throw new Error('Error verifi OTP account.');
     }
 
 };
 module.exports = { sendMail, verifyOtp }
+

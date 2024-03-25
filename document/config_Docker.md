@@ -1,5 +1,7 @@
 1: setup docker container for mys
 2: cmd: docker exec -it container_id bash
+//Link DockerFile
+[https://elroydevops.tech/mau-dockerfile-cac-du-an/#Dockerfile_Nodejs]
 --show database 
 -->>> COPPY DATABASE FROM LOCAL INTO DOCKER CONTAINER ;
 1:cmd:  <mysqldump -u username -p database_name > backup_file_name.sql> //backup file mysql
@@ -57,3 +59,9 @@ sudo add-apt-reponsitory ppa:certbot/certbot
 sudo apt-update
 sudo apt-get install python3-certbot-nginx
 sudo certbot --nginx -d shop-ecommerce.click
+
+
+IF ERROR MEMORIS 
+ExecStart=/usr/bin/dockerd --exec-opt native.cgroupdriver=systemd --memory-swap-enable=true
+sudo systemctl daemon-reload
+sudo systemctl restart docker

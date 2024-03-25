@@ -1,6 +1,15 @@
 version: '3.8'
 
 services:
+  db:
+    image: mysql:8.1
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_DATABASE: nodejs
+    ports:
+      - "3307:3306"
+    networks:
+      - mynetwork
   app:
     build: 
       context: .
@@ -20,17 +29,6 @@ services:
       - redis
     networks:
       - mynetwork
-  db:
-    image: mysql:8.1
-    environment:
-      MYSQL_ROOT_PASSWORD: 12345678
-      MYSQL_DATABASE: nodejs
-    volumes:
-      - db-data:/var/lib/mysql
-    ports:
-      - "3307:3306"
-    networks:
-      - mynetwork
   redis:
     image: redis:latest
     ports:
@@ -38,14 +36,12 @@ services:
     volumes:
       - redis-data:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
-      - ./redis.log:/var/log/redis/redis.log  # Sửa lỗi đường dẫn và định dạng cho file log
+      - ./redis.log:/var/log/redis/redis.log  
     networks:
       - mynetwork
-
 networks:
   mynetwork:
     driver: bridge
-
 volumes:
   db-data:
   redis-data:
