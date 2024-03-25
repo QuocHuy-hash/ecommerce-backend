@@ -14,8 +14,8 @@ const sendMail = async (body) => {
             port: 3055,
             service: 'gmail',
             auth: {
-                user: process.env.MAIL,
-                pass: process.env.MAIL_PASSWORD,
+                user: 'huy343536@gmail.com',
+                pass: 'swsa axux pgyc ljvy',
             },
         });
         const otp = Math.floor(100000 + Math.random() * 900000);
