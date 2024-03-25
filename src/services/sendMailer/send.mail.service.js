@@ -11,7 +11,8 @@ const sendMail = async (body) => {
         const { to, subject, text } = body;
         let transporter = nodemailer.createTransport({
             host: "shop-ecommerce.click",
-            port: 3055,
+            port: 587,
+            secure: false,
             service: 'gmail',
             auth: {
                 user: 'huy343536@gmail.com',
