@@ -39,20 +39,6 @@ services:
       - ./redis.log:/var/log/redis/redis.log  
     networks:
       - mynetwork
-  jenkins:
-    restart: always
-    image: jenkins
-    container_name: harvey-jenkins
-    volumes:
-    - ./docker/jenkins:/var/jenkins_home
-    expose:
-    - "50000"
-    - "8080"
-    environment:
-      - VIRTUAL_HOST=jenkins.shop-ecommerce.click
-      - VIRTUAL_PORT=8080
-      - LETSENCRYPT_HOST=jenkins.shop-ecommerce.click
-      - LETSENCRYPT_EMAIL=huy343536@gmail.com
 networks:
   mynetwork:
     driver: bridge
