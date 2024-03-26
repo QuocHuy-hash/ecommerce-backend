@@ -2,7 +2,7 @@
 const redisClient = require('../config/redis.config');
 const { promisify } = require('util');
 const { reservationInventory } = require('../models/reponsitorys/eventorys.repo');
-
+const { set, get, expire, del } = require('../utils/redis.util');
 
 // promisify(redisClient.connect());
 
@@ -14,14 +14,14 @@ const acquireLock = async (productId, quantity) => {
     const retryTimes = 10;
     const expireTime = 10;
     for (let i = 0; i < retryTimes; i++) {
-        const result = await redisClient.set(key, expireTime);
+        const result = await set(key, expireTime);
         console.log("result :: ", result);
         if (result === 'OK') {
             // Thực hiện các thao tác với inventory
             const isReservation = await reservationInventory(productId, quantity);
             console.log("isReservation : ", isReservation);
             if (isReservation) {
-                await redisClient.expire(key, expireTime);
+                await expire(key, expireTime);
                 return key;
             }
             return null;
@@ -40,7 +40,7 @@ const releaseLock = async (keyLock) => {
             throw new Error("Missing keyLock argument");
         }
 
-        const result = await redisClient.del(keyLock);
+        const result = await del(keyLock);
         if (result !== 1) {
             console.error(`Error releasing lock for key '${keyLock}' (result: ${result})`);
         }
