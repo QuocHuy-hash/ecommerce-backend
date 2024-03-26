@@ -1,0 +1,18 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "release" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    # Bước để xây dựng và chạy Docker Compose
+    - name: Build and Run Docker Compose
+      run: |
+        docker-compose up -d --build
+        docker-compose ps
