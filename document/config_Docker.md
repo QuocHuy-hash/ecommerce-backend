@@ -28,28 +28,6 @@ cmd :   <curl -fsSL https://get.docker.com -o get-docker.sh>
         <sudo chmod +x /usr/local/bin/docker-compose>
 
 
--------->>>SETUP NGINX CONFIG--------
-step 1: bash into container nginx 
-step 2: vim /etc/nginx/nginx.conf
-step 3: http {
-                server {
-                        listen 80;
-                        server_name mydomain.com www.mydomain.com;
-
-                        location / {
-                                proxy_pass http://localhost:3055;
-                                proxy_http_version 1.1;
-                                proxy_set_header Upgrade $http_upgrade;
-                                proxy_set_header Connection 'upgrade';
-                                proxy_set_header Host $host;
-                                proxy_cache_bypass $http_upgrade;
-                        }
-                }
-
-                # Các cấu hình khác...
-                }
-step 4: nginx -t // check 
-step 5: service nginx restart 
 
 add SSL 
 1:

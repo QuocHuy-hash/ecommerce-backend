@@ -44,10 +44,10 @@ sudo systemctl restart nginx
 
 
 ```bash
-server_name shopdev.anonystick.com www.shopdev.anonystick.com;
+server_name shop-ecommerce.click www.shop-ecommerce.click;
 
 location / {
-    proxy_pass http://localhost:3000; 
+    proxy_pass http://localhost:3055; 
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection 'upgrade';
@@ -62,7 +62,7 @@ location / {
 sudo add-apt-repository ppa:certbot/certbot
 sudo apt-get update
 sudo apt-get install python3-certbot-nginx
-sudo certbot --nginx -d shopdev.anonystick.com
+sudo certbot --nginx -d shop-ecommerce.click
 sudo certbot renew --dry-run
 sudo systemctl status certbot.timer
 ```
