@@ -15,7 +15,7 @@ pipeline {
                     sshagent(['ssh-vps']) {
                         sh 'ssh root@14.225.207.2 "cd /app/Nodejs-MySql && git pull origin release"'
 
-                        // Sử dụng Docker Compose trên server để build và khởi chạy containers dmmmm
+                        // Sử dụng Docker Compose trên server để build và khởi chạy containers aaaaaaa
                         sh 'ssh root@14.225.207.2 "cd /app/Nodejs-MySql && sudo docker compose up -d"'
                         sh 'ssh root@14.225.207.2 "cd /app/Nodejs-MySql && sudo docker compose up -d --build" > deploy.log 2>&1'
 
