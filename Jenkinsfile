@@ -17,6 +17,8 @@ pipeline {
 
                         // Sử dụng Docker Compose trên server để build và khởi chạy containers
                         sh 'ssh root@14.225.207.2 "cd /app/Nodejs-MySql && sudo docker compose up -d"'
+                        sh 'ssh root@14.225.207.2 "cd /app/Nodejs-MySql && sudo docker compose up -d --build" > deploy.log 2>&1'
+
                     }
                 }
             }
