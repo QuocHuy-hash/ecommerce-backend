@@ -17,8 +17,8 @@ const options = {
         },
         servers: [
             {
-                url: "http://localhost:3055",
-                description: "Local server"
+                url: "https://shop-ecommerce.click",
+                description: "server"
             },
         ],
         components: {
