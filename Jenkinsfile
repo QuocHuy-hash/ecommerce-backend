@@ -16,7 +16,8 @@ pipeline {
                         sh 'ssh -o StrictHostKeyChecking=no root@14.225.207.2 "cd /root/app/Nodejs-MySql && git pull origin release"'
 
                         // Sử dụng Docker Compose trên server để build và khởi chạy containers du ma . dit con memmmmmmm
-                        sh 'ssh root@14.225.207.2 "cd /root/app/Nodejs-MySql && sudo docker compose up --build -d"'
+                        sh 'ssh root@14.225.207.2 "cd /root/app/Nodejs-MySql && sudo docker compose down"'
+                        sh 'ssh root@14.225.207.2 "cd /root/app/Nodejs-MySql && sudo docker compose up -d --build"'
 
                     }
                 }
