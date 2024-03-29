@@ -7,3 +7,6 @@
             =>[`PubkeyAuthentication yes` ;
             `AuthorizedKeysFile .ssh/authorized_keys`]
     3... `restart service` =>>[service sshd restart]
+
+
+```NOTE``` download plugin [SSH Agent Plugin]
