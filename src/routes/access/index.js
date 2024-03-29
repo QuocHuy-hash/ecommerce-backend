@@ -36,7 +36,7 @@ const EmailController = require('../../controllers/verify_email/verify.controlle
 *               email:
 *                 type: string
 *                 format: email
-*                 default: huy1@gmail.com
+*                 default: huy123@gmail.com
 *               roles:
 *                 type: array
 *                 items:
@@ -74,7 +74,7 @@ router.post('/shop/signup', asyncHandle(AccessController.signUp));
  *               email:
  *                 type: string
  *                 format: email
- *                 default: huy1@gmail.com
+ *                 default: huy123@gmail.com
  *               password:
  *                 type: string
  *                 default: 123456
@@ -85,6 +85,33 @@ router.post('/shop/signup', asyncHandle(AccessController.signUp));
  *         description: Bad request
  */
 router.post('/shop/login', asyncHandle(AccessController.login));
+
+/**
+ * @swagger
+ * /v1/api/shop/verify-email:
+ *   post:
+ *     summary: verify-email
+ *     tags: [Shop]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 default: huy123@gmail.com
+ *               password:
+ *                 type: string
+ *                 default: 123456
+ *     responses:
+ *       '200':
+ *         description: OK
+ *       '400':
+ *         description: Bad request
+ */
 router.post('/shop/verify-email', asyncHandle(EmailController.verifyOtp));
 //authentication
 router.use(authentication);
@@ -95,8 +122,20 @@ router.use(authentication);
  *     summary: Logout from shop account
  *     tags: [Shop]
  *     security:
- *       - x-api-key: 
- *       - athorization:[]
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: header
+ *         name: x-client-id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: User ID
+ *       - in: header
+ *         name: athorization
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: JWT token for authentication
  *     responses:
  *       '200':
  *         description: OK
@@ -104,6 +143,7 @@ router.use(authentication);
  *         description: Unauthorized
  */
 router.post('/shop/logout', asyncHandle(AccessController.logout));
+
 
 // router.post('/shop/refresh-token', asyncHandle(AccessController.handleRefreshToken));
 
