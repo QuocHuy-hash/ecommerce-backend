@@ -6,8 +6,8 @@ const options = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'Demo Swagger Api',
-            description: "API endpoints for a mini blog services documented on swagger",
+            title: 'Ecommerce Api',
+            description: "API endpoints for Shop Ecommerce",
             // contact: {
             //     name: "Desmond Obisi",
             //     email: "info@miniblog.com",
