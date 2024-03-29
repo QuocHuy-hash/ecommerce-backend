@@ -31,7 +31,6 @@ class CartInstance {
 
 const createCart = async (body, userId) => {
     const { product_id, quantity } = body;
-
     const product = await Products.findOne({ where: { id: product_id } });
     if (!product) throw new NotFoundError('not found product');
     const { product_price } = product;
@@ -49,6 +48,7 @@ const createCart = async (body, userId) => {
     });
 
     await cartInstance.createCartAndDetails();
+
 };
 const addToCartV2 = async (body, userId) => {
     const { product_id, newQuantity } = body;

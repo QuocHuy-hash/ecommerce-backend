@@ -29,7 +29,7 @@ const unPublishProductByShop = async (product_shop, product_id) => {
 }
 const searchProductByUser = async (searchKey) => {
     const keySearch = searchKey.keysearch
-    const regexSearch = new RegExp(keySearch);
+    const regexSearch = new RegExp(keySearch, 'i');
     return await Products.findAll({
         where: { isPublished: true },
         $text: { $search: regexSearch }
