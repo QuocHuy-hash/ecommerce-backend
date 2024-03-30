@@ -27,8 +27,11 @@ app.use(cors(corsOptions));
 // Swagger setup
 swaggerDocs.swaggerDocs(app, 3055);
 //router
-app.use('/', require('./routes/index'));
 
+app.use('/', require('./routes/index'));
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, 'views', 'index.html'));
+});
 
 
 // catch 404 and forward to error handler
