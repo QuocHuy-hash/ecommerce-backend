@@ -35,8 +35,6 @@ const listNotiByUser = async (body, userId) => {
 
     console.log(userNotifications);
     return userNotifications;
-
-
 }
 module.exports = {
     createNotiMessage,

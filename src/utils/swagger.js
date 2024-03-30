@@ -12,8 +12,8 @@ const options = {
         },
         servers: [
             {
-                url: "https://shop-ecommerce.click",
-                description: "server"
+                url: "https://shop-ecommerce.click/",
+                description: "Development Server"
             },
         ],
         components: {
@@ -22,68 +22,38 @@ const options = {
                     type: 'http',
                     scheme: 'bearer',
                     bearerFormat: 'JWT',
-                }
-            },
-            parameters: {
+                    description: 'JWT token for authentication',
+                },
                 ClientIdHeader: {
+                    type: 'apiKey',
                     in: 'header',
                     name: 'x-client-id',
-                    schema: {
-                        type: 'string'
-                    },
-                    required: true,
                     description: 'Unique identifier for the client/user'
                 },
-                AuthorizationHeader: {
+                Authorization: {
+                    type: 'apiKey',
                     in: 'header',
-                    name: 'authorization',
-                    schema: {
-                        type: 'string'
-                    },
-                    required: true,
-                    description: 'JWT token for authentication'
+                    name: 'athorization',
+                    description: 'Token'
                 }
-            },
-            responses: {
-                Success: {
-                    description: 'Successful operation',
-                    content: {
-                        message: {
-                            type: 'string',
-                            example: 'Success'
-                        }
-                    }
-                },
-                NotFound: {
-                    description: 'Resource not found',
-                    message: {
-                        type: 'string',
-                        example: 'Resource not found'
-                    }
-                },
-                Unauthorized: {
-                    description: 'Unauthorized access',
-                    message: {
-                        type: 'string',
-                        example: 'Unauthorized'
-                    }
-
-                },
-                BadRequest: {
-                    description: 'Invalid request parameters',
-                    message: {
-                        type: 'string',
-                        example: 'Invalid request parameters'
-                    }
-                }
-            },
-
+            }
         },
+        // Global security for all APIs, requiring both JWT Token and Client ID
+        security: [
+            {
+                Authorization: [],
+                ClientID: []
+            }
+        ],
     },
     apis: [
         path.resolve(__dirname, '../routes/access/*.js'),
-        path.resolve(__dirname, '../routes/products/*.js'),
+        path.resolve(__dirname, '../routes/products/*.yml'),
         path.resolve(__dirname, '../routes/carts/*.js'),
+        path.resolve(__dirname, '../routes/comment/*.yml'),
+        path.resolve(__dirname, '../routes/carts/*.yml'),
+        path.resolve(__dirname, '../routes/discount/*.yml'),
+        path.resolve(__dirname, '../routes/orders/*.yml'),
     ],
 };
 

@@ -35,7 +35,7 @@ class OrdersController {
     getDetailsOrder = async (req, res, next) => {
         new SuccessResponse({
             message: 'getDetailsOrder successfully',
-            metadata: await getDetailsOrder(req.body),
+            metadata: await getDetailsOrder(req.query),
             options: {
                 limit: 10,
             }

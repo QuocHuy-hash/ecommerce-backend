@@ -23,6 +23,7 @@ const getDetailsOrder = async (body) => {
 
 const cancelOrderByUser = async (userId, body) => {
     const { orderId } = body;
+    console.log({ orderId, userId });
     const where = { where: { id: orderId, order_userId: userId } }
     const order = await findOneOrder({ model: Order, where });
 
@@ -36,14 +37,15 @@ const cancelOrderByUser = async (userId, body) => {
 }
 // //for shop
 const updateOrderStatusByShop = async (userId, body) => {
+
     const { orderId, status } = body;
+    console.log({ orderId, status });
     const where = { where: { id: orderId, order_shopId: userId } }
     const order = await findOneOrder({ model: Order, where });
 
     if (!order) throw new NotFoundError(`not found order with order Id ${orderId}`);
     if (order.status === 'canceled') throw new BadRequestError('This orrder was canceled ')
     return await Order.update({ status: status }, { where: { id: orderId } })
-
 }
 module.exports = {
     getListOrderShop,

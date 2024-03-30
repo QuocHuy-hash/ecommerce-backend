@@ -25,9 +25,10 @@ class DiscountController {
         }).send(res)
     }
     getAllDiscountWithProduct = async (req, res, next) => {
+        const body = req.query;
         new SuccessResponse({
             message: 'getAllDiscountWithProduct successfully',
-            metadata: await getAllDiscountWithProduct(req.body)
+            metadata: await getAllDiscountWithProduct(body)
         }).send(res)
     }
     getDiscountAmount = async (req, res, next) => {

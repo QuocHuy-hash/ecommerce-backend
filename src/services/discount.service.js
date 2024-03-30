@@ -4,6 +4,7 @@ const { Op } = require('sequelize');
 const { BadRequestError, NotFoundError } = require("../core/error.response");
 const { findAllIsPublishShop } = require('../models/reponsitorys/product.repo');
 const { findAllDiscount, checkDiscountExists } = require('../models/reponsitorys/discount.repo');
+const { log } = require('winston');
 
 
 //all function feature of discount
@@ -25,7 +26,7 @@ const createDiscountCode = async (body, userId) => {
     const shopId = userId;
     console.log(body);
 
-    if (new Date(end_date) > new Date(start_date)) throw new BadRequestError('start date must be before end_date');
+    if (new Date(end_date) < new Date(start_date)) throw new BadRequestError('start date must be before end_date');
 
     //create index for discount code 
     const foundDiscount = await Discount.findOne({
@@ -67,30 +68,37 @@ const createDiscountCode = async (body, userId) => {
 
 }
 const getAllDiscountWithProduct = async (body) => {
-    const { code, shopId, limit, page } = body
-    const foundDiscount = await Discount.findOne({
-        where: {
-            discount_code: code, discount_shopId: shopId
+    const { code, shopId, limit = 10, page = 1 } = body
+    console.log({ code, shopId });
+    try {
+
+
+        const foundDiscount = await Discount.findOne({
+            where: {
+                discount_code: code, discount_shopId: shopId
+            }
+        });
+
+        if (!foundDiscount && !foundDiscount.discount_is_active) throw new NotFoundError('discount not exists');
+        const { discount_applies_to, discount_product_id } = foundDiscount;
+        let products;
+        const skip = page - 1;
+        if (discount_applies_to === 'all') {
+            const where = { where: { product_shop: shopId, isPublished: true } }
+            const attribute = ['id', 'product_name'];
+            products = await findAllIsPublishShop(where, attribute, +limit, skip);
         }
-    });
+        if (discount_applies_to === 'specific') {
+            const productIds = discount_product_id.map(id => parseInt(id, 10));
+            const where = { where: { id: { [Op.in]: productIds }, isPublished: true } }
+            const attribute = ['id', 'product_name'];
+            products = await findAllIsPublishShop(where, attribute, +limit, skip);
 
-    if (!foundDiscount && !foundDiscount.discount_is_active) throw new NotFoundError('discount not exists');
-    const { discount_applies_to, discount_product_id } = foundDiscount;
-    let products;
-    const skip = page - 1;
-    if (discount_applies_to === 'all') {
-        const where = { where: { product_shop: shopId, isPublished: true } }
-        const attribute = ['id', 'product_name'];
-        products = await findAllIsPublishShop(where, attribute, +limit, skip);
+        }
+        return products;
+    } catch (error) {
+        console.log("error ::", error);
     }
-    if (discount_applies_to === 'specific') {
-        const productIds = discount_product_id.map(id => parseInt(id, 10));
-        const where = { where: { id: { [Op.in]: productIds }, isPublished: true } }
-        const attribute = ['id', 'product_name'];
-        products = await findAllIsPublishShop(where, attribute, +limit, skip);
-
-    }
-    return products;
 }
 
 const getDiscountCodeByShop = async (shopId, limit = 10, page = 0) => {
