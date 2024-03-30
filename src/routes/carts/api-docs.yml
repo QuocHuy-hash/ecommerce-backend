@@ -1,0 +1,223 @@
+openapi: 3.0.0
+info:
+  title: Ecommerce API
+  description: API endpoints for Shop Ecommerce including Cart Management
+  version: 1.0.0
+servers:
+  - url: "https://shop-ecommerce.click/"
+    description: Development Server
+paths:
+  /v1/api/carts/create:
+    post:
+      tags:
+        - Cart
+      summary: Create Cart (Add to Cart V1)
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: integer
+                  default: 1
+                  description: ID of the product to add to the cart.
+                quantity:
+                  type: integer
+                  default: 2
+                  description: Quantity of the product to add.
+              required:
+                - productId
+                - quantity
+      responses:
+        '200':
+          description: Product added to the cart successfully.
+        '400':
+          description: Bad request
+
+  /v1/api/carts/update:
+    post:
+      tags:
+        - Cart
+      summary: Add to Cart V2
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: integer
+                  default: 1
+                  description: ID of the product to update in the cart.
+                newQuantity:
+                  type: integer
+                  default: 4
+                  description: New quantity of the product.
+              required:
+                - productId
+                - newQuantity
+      responses:
+        '200':
+          description: Cart updated successfully.
+        '400':
+          description: Bad request
+
+  /v1/api/carts/delete-product-v1:
+    post:
+      tags:
+        - Cart
+      summary: Delete a product from the cart version 1
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: integer
+                  default: 1
+                  description: ID of the product to delete from the cart.
+              required:
+                - productId
+      responses:
+        '200':
+          description: Product removed from the cart successfully.
+        '400':
+          description: Bad request
+
+  /v1/api/carts/delete-product-v2:
+    post:
+      tags:
+        - Cart
+      summary: Delete a product from the cart version 2 (decrease)
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: integer
+                  default: 1
+                  description: ID of the product to delete from the cart.
+              required:
+                - productId
+      responses:
+        '200':
+          description: Product removed from the cart successfully.
+        '400':
+          description: Bad request
+
+  /v1/api/carts/list:
+    get:
+      tags:
+        - Cart
+      summary: Get a list of all products in the user's cart
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      responses:
+        '200':
+          description: A list of cart items.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    productId:
+                      type: integer
+                      description: ID of the product in the cart.
+                    quantity:
+                      type: integer
+                      description: Quantity of the product in the cart.
+                    price:
+                      type: number
+                      format: float
+                      description: Price of the product.
+                    total:
+                      type: number
+                      format: float
+                      description: Total price for the product quantity.
+        '400':
+          description: Bad request
+
+  /v1/api/carts/review-order:
+    post:
+      tags:
+        - Cart
+      summary: Checkout before Order
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: integer
+                  default: 1
+                  description: ID of the product to review from the cart.
+                discount_code:
+                  type: string
+                  default: "SHOP-109"
+                  description: Discount code or Null.
+              required:
+                - product_id
+      responses:
+        '200':
+          description: Review order successfully.
+        '400':
+          description: Bad request
+
+  /v1/api/carts/orders:
+    post:
+      tags:
+        - Cart
+      summary: Order From Cart
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: integer
+                  default: 1
+                  description: ID of the product to order from the cart.
+                discount_code:
+                  type: string
+                  default: "SHOP-109"
+                  description: Discount code or Null.
+              required:
+                - product_id
+      responses:
+        '200':
+          description: Order placed successfully.
+        '400':
+          description: Bad request

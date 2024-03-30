@@ -1,0 +1,321 @@
+openapi: 3.0.0
+info:
+  title: Ecommerce API
+  description: API endpoints for Shop Ecommerce
+  version: 1.0.0
+servers:
+  - url: "https://shop-ecommerce.click/"
+    description: Server
+paths:
+  /v1/api/discount/list_product_code:
+    get:
+      tags:
+        - Discount
+      summary: Get all discount codes with associated products
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      parameters:
+        - in: query
+          name: code
+          schema:
+            type: string
+            default: SHOP-109
+          required: true
+        - in: query
+          name: shopId
+          schema:
+            type: integer
+            default: 1
+          required: true 
+      responses:
+        '200':
+          description: Get Discount successfully.
+        '400':
+          description: Bad request
+        '401':
+          description: Author
+  /v1/api/discount/amount:
+    post:
+      tags:
+        - Discount
+      summary: Get discount amount after applying a discount code
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - code
+                - shopId
+                - products
+              properties:
+                code:
+                  type: string
+                  default: SHOP-109
+                shopId:
+                  type: integer
+                  default: 1
+                products:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      productId:
+                        type: integer
+                        default: 1
+                      quantity:
+                        type: integer
+                        default: 5
+                      price:
+                        type: integer
+                        default: 200000
+      responses:
+        '200':
+          description: Get Discount successfully.
+        '400':
+          description: Bad request
+        '401':
+          description: Author
+        '404':
+          description: Not Found
+  /v1/api/discount/create:
+    post:
+      tags:
+        - Discount
+      summary: Create a new discount code
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/CreateDiscountCode"
+      responses:
+        '200':
+          description: Get Discount successfully.
+        '400':
+          description: Bad request
+        '401':
+          description: Author
+        '404':
+          description: Not Found
+  /v1/api/discount/list_shop_code:
+    get:
+      tags:
+        - Discount
+      summary: Get all discount codes for a specific shop
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      responses:
+        '200':
+          description:  successfully.
+        '400':
+          description: Bad request
+        '401':
+          description: Author
+        '404':
+          description: Not Found
+  /v1/api/discount/delete:
+    post:
+      tags:
+        - Discount
+      summary: Delete a discount code
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/DeleteDiscountCode"
+      responses:
+        '200':
+          description:  successfully.
+        '400':
+          description: Bad request
+        '401':
+          description: Author
+        '404':
+          description: Not Found
+definitions:
+  Discount:
+    type: object
+    properties:
+      discount_name:
+        type: string
+        default: name percentage discount
+        description: Name of the discount code
+      discount_description:
+        type: string
+        default: null
+        description: Description of the discount code
+      discount_type:
+        type: string
+        default: fixed_amount
+        description: Type of the discount code (fixed_amount or percentage)
+      discount_value:
+        type: number
+        default: 20000
+        description: Value of the discount code
+      discount_code:
+        type: string
+        default: SH-001
+        description: Code of the discount code
+      discount_start_date:
+        type: string
+        default: 2024-01-30 09:00:00
+        format: date-time
+        description: Start date of the discount code
+      discount_end_date:
+        type: string
+        default: 2024-02-30 09:00:00
+        format: date-time
+        description: End date of the discount code
+      discount_max_uses:
+        type: integer
+        default: 100000
+        description: Maximum number of uses for the discount code
+      discount_use_count:
+        type: integer
+        default: 1000
+        description: Number of times the discount code has been used
+      discount_users_used:
+        type: array
+        items:
+          type: string
+        description: Array of user IDs who have used the discount code
+      discount_max_uses_per_user:
+        type: integer
+        description: Maximum number of times a user can use the discount code
+      discount_min_order_value:
+        type: number
+        description: Minimum order value required to use the discount code
+      discount_max_value:
+        type: number
+        description: Maximum discount value
+      discount_is_active:
+        type: boolean
+        default: true
+        description: Indicates if the discount codeis active or not
+      discount_applies_to:
+        type: string
+        default: all
+        description: Applies to which products (all or specific)
+      discount_product_id:
+        type: array
+        default: [1,3,2]
+        items:
+          type: integer
+        description: Array of product IDs to which the discount code applies
+  DiscountWithProduct:
+    type: object
+    properties:
+      discount:
+        $ref: "#/definitions/Discount"
+      products:
+        type: array
+        items:
+          $ref: "#/definitions/Product"
+  DiscountAmount:
+    type: object
+    properties:
+      discount:
+        $ref: "#/definitions/Discount"
+      amount:
+        type: number
+        description: Discounted amount
+  CreateDiscountCode:
+    type: object
+    properties:
+      name:
+        type: string
+        default: "name percentage discount"
+        description: Name of the discount code
+      description:
+        type: string
+        default: discount may
+        description: Description of the discount code
+      type:
+        type: string
+        default: "fixed_amount"
+        description: Type of the discount (fixed_amount or percentage)
+      value:
+        type: number
+        default: 20000
+        description: Value of the discount
+      code:
+        type: string
+        default: "SH-001"
+        description: Discount code
+      start_date:
+        type: string
+        default: "2024-01-30 09:00:00"
+        format: date-time
+        description: Start date of the discount
+      end_date:
+        type: string
+        default: "2024-02-30 09:00:00"
+        format: date-time
+        description: End date of the discount
+      max_uses:
+        type: integer
+        default: 100000
+        description: Maximum number of uses for the discount
+      uses_count:
+        type: integer
+        default: 1000
+        description: Number of times the discount has been used
+      users_used:
+        type: array
+        default: []
+        items:
+          type: string
+        description: Array of user IDs who have used the discount
+      max_uses_per_user:
+        type: integer
+        default: 1000
+        description: Maximum number of uses per user
+      min_order_value:
+        type: number
+        default: 100000
+        description: Minimum order value to use the discount
+      max_value:
+        type: number
+        default: 50000
+        description: Maximum discount value
+      is_active:
+        type: boolean
+        default: true
+        description: Indicates if the discount is active
+      applies_to:
+        type: string
+        default: "all"
+        description: Applies to which products (all or specific)
+      product_id:
+        type: array
+        default: [1,3,2]
+        items:
+          type: integer
+        description: Array of product IDs the discount applies to
+  DeleteDiscountCode:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: ID of the discount to be deleted
+# responses:
+#   Unauthorized:
+#     description: Unauthorized request
+#   NotFound:
+#     description: Resource not found
+#   BadRequest:
+#     description: Bad request

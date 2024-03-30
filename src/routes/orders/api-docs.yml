@@ -1,0 +1,147 @@
+openapi: 3.0.0
+info:
+  title: Ecommerce API
+  description: API endpoints for Shop Ecommerce
+  version: 1.0.0
+servers:
+  - url: "https://shop-ecommerce.click/"
+    description: Server
+
+paths:
+  /v1/api/orders/list-shop:
+    get:
+      tags:
+        - Orders
+      summary: Get list of orders for a shop
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Order'
+  /v1/api/orders/list-user:
+    get:
+      tags:
+        - Orders
+      summary: Get list of orders for a user
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Order'
+  /v1/api/orders/details:
+    get:
+      tags:
+        - Orders
+      summary: Get details of a specific order
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      parameters:
+        - name: orderId
+          in: query
+          required: true
+          type: string
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/OrderDetails'
+  /v1/api/orders/cancel-order:
+    post:
+      tags:
+        - Orders
+      summary: Cancel an order by user . Can not cancel an order that is already shipped
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - orderId
+              properties:
+                orderId:
+                  type: integer
+                  default: 2
+      responses:
+        200:
+          description: Order cancelled successfully
+  /v1/api/orders/change-status:
+    post:
+      tags:
+        - Orders
+      summary: Change the status of an order by shop ['pendding', 'confirm', 'shipping', 'successed', 'canceled'],
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - orderId
+                - status
+              properties:
+                orderId:
+                  type: integer
+                  default: 2
+                status:
+                  type: string
+                  default: confirm
+      responses:
+        200:
+          description: Order status updated successfully
+
+definitions:
+  Order:
+    type: object
+    properties:
+      id:
+        type: string
+      status:
+        type: string
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+  OrderDetails:
+    type: object
+    properties:
+      id:
+        type: integer
+        default: 2
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/OrderItem'
+      status:
+        type: string
+        default: 'confirm'
+      total:
+        type: number
+  OrderItem:
+    type: object
+    properties:
+      productId:
+        type: string
+      quantity:
+        type: integer
+      price:
+        type: number

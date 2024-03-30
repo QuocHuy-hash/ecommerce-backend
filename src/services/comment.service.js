@@ -116,7 +116,7 @@ const getCommentByParentId = async (body) => {
 
 const deleteComment = async (body, userId) => {
     const { productId, commentId } = body;
-    console.log({ body });
+    console.log({ productId, commentId });
     const comment = await Comment.findOne({ where: { comment_userId: userId, id: commentId } });
     if (!comment) throw new NotFoundError(`not found Comment with id ${commentId} and userID ${userId}`);
     //1 : get left and right values

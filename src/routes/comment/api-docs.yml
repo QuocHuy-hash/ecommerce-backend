@@ -1,0 +1,141 @@
+openapi: 3.0.0
+info:
+  title: Ecommerce API
+  description: API endpoints for Shop Ecommerce
+  version: 1.0.0
+servers:
+  - url: "https://shop-ecommerce.click/"
+    description: Server
+paths:
+  /v1/api/comments/list:
+    get:
+      tags:
+        - Comment
+      summary: Get list of comments
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      parameters:
+        - in: query
+          name: productId
+          schema:
+            type: integer
+          required: true
+          description: ID of the product to get comments for.
+        - in: query
+          name: parentCommentId
+          schema:
+            type: integer
+          required: false
+          description: ID of the parent comment to get replies for (optional). 
+      responses:
+        '200':
+          description: A list of comments.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '400':
+          description: Bad request
+  /v1/api/comments/create:
+    post:
+      tags:
+        - Comment
+      summary: Create a comment
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - productId
+              properties:
+                productId:
+                  type: integer
+                  description: ID of the product to comment on.
+                parentCommentId:
+                  type: integer
+                  description: ID of the parent comment (optional).
+                content:
+                  type: string
+                  description: Content of the comment.
+              example:
+                productId: 1
+                parentCommentId: null
+                content: "This is a sample comment."
+      responses:
+        '200':
+          description: Comment created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '400':
+          description: Bad request
+  /v1/api/comments/delete:
+    delete:  
+      tags:
+        - Comment
+      summary: Delete a comment
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - commentId
+                - productId
+              properties:
+                commentId:
+                  type: integer
+                  default: 12
+                  description: The ID of the comment to delete.
+                productId:
+                  type: integer
+                  default: 1
+                  description: The ID of the product to delete.
+      responses:
+        '200':
+          description: Comment deleted successfully.
+        '400':
+          description: Bad request
+components:
+  schemas:
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        comment_content:
+          type: string
+          example: "This is a sample comment."
+        comment_userId:
+          type: integer
+          example: 123
+        comment_productId:
+          type: integer
+          example: 1
+        comment_parentId:
+          type: integer
+          example: null
+        comment_left:
+          type: integer
+          example: 0
+        comment_right:
+          type: integer
+          example: 1
+        isDelete:
+          type: boolean
+          example: false
+

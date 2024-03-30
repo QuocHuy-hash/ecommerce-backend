@@ -24,6 +24,7 @@ class CommentController {
     }
     deleteComment = async (req, res, next) => {
         this.setUserId(req);
+        console.log("req.body", req.body);
         new SuccessResponse({
             message: 'delete Comment successfully',
             metadata: await deleteComment(req.body, this.userId),
@@ -35,7 +36,7 @@ class CommentController {
     getCommentByParentId = async (req, res, next) => {
         new SuccessResponse({
             message: 'getCommentByParentId successfully',
-            metadata: await getCommentByParentId(req.body),
+            metadata: await getCommentByParentId(req.query),
             options: {
                 limit: 10,
             }
