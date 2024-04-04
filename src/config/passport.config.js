@@ -12,7 +12,7 @@ passport.use(
         tokenURL: TOKEN_URL,
         clientID: FACEBOOK_CLIENT_ID,
         clientSecret: FACEBOOK_CLIENT_SECRET,
-        callbackURL: 'http://localhost:3055', 
+        callbackURL: 'https://shop-ecommerce.click', 
         profileFields: ['id', 'email', 'first_name', 'last_name'],
     },
         (accessToken, refreshToken, profile, done) => {

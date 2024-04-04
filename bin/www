@@ -86,5 +86,5 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind + ' --- http://localhost:3055');
+  debug('Listening on ' + bind + ' --- https://shop-ecommerce.click');
 }

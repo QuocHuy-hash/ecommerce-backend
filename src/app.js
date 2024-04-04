@@ -20,7 +20,7 @@ app.use(logger('dev'));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 var corsOptions = {
-  origin: ['http://localhost.3055', '*', 'http:127.0.0.1:3055', 'http://localhost:3055/'],
+  origin: ['http://localhost.3055', '*', 'http:127.0.0.1:3055', 'https://shop-ecommerce.click/'],
   optionsSuccessStatus: 200
 }
 app.use(cors(corsOptions));
