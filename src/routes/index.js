@@ -4,7 +4,7 @@ const express = require('express');
 
 const router = express.Router();
 
-
+router.use('/v1/api/oauth', require('./oauth/index'));
 router.use('/v1/api/', require('./users/users'));
 //discounts
 // signUp

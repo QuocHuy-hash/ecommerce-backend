@@ -1,6 +1,6 @@
 pipeline {
     agent any
-
+//crontab -e: setup auto clean cache in server
     stages {
         stage('Checkout') {
             steps {
@@ -13,6 +13,7 @@ pipeline {
                 script {
                   
                     sshagent(['ssh-vps']) {
+
                         sh 'ssh -o StrictHostKeyChecking=no root@14.225.207.2 "cd /root/app/Nodejs-MySql && git pull origin release"'
                         sh 'ssh root@14.225.207.2 "cd /root/app/Nodejs-MySql && sudo docker compose up -d --build"'
 

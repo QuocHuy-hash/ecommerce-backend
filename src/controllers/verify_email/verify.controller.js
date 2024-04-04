@@ -1,6 +1,6 @@
 'use strict'
 
-const { verifyOtp } = require("../../services/sendMailer/send.mail.service");
+const { verifyOtp, reSendMail } = require("../../services/sendMailer/send.mail.service");
 const { SuccessResponse, OkResponse } = require("../../core/success.response");
 class EmailController {
     verifyOtp = async (req, res, next) => {
@@ -10,7 +10,13 @@ class EmailController {
         }).send(res)
 
     }
+    reSendMail = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'reSend Mail Success',
+            metadata: await reSendMail(req.body,),
+        }).send(res)
 
+    }
 }
 
 module.exports = new EmailController();

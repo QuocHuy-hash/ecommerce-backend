@@ -103,7 +103,7 @@ router.post('/shop/login', asyncHandle(AccessController.login));
  *                 type: string
  *                 format: email
  *                 default: huy123@gmail.com
- *               password:
+ *               otp:
  *                 type: string
  *                 default: 123456
  *     responses:
@@ -113,6 +113,31 @@ router.post('/shop/login', asyncHandle(AccessController.login));
  *         description: Bad request
  */
 router.post('/shop/verify-email', asyncHandle(EmailController.verifyOtp));
+
+/**
+ * @swagger
+ * /v1/api/shop/resend-email:
+ *   post:
+ *     summary: resend-email
+ *     tags: [Shop]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 default: huy123@gmail.com
+ *     responses:
+ *       '200':
+ *         description: OK
+ *       '400':
+ *         description: Bad request
+ */
+router.post('/shop/resend-email', asyncHandle(EmailController.reSendMail));
 //authentication
 router.use(authentication);
 /**
