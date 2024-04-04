@@ -1,0 +1,44 @@
+
+paths:
+  /v1/api/upload/products/multiple:
+    post:
+      summary: Upload a product image
+      tags: [Upload]
+      description: This route allows you to upload a product image.
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: file
+          type: file
+          description: The file to upload.
+      responses:
+        200:
+          description: Image uploaded successfully
+        400:
+          description: Error message
+  /v1/api/upload/products/delete:
+    post:
+      summary: Delete a product image
+      tags: [Upload]
+      description: This route allows you to delete a product image.
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      parameters:
+        - in: body
+          name: body
+          description: The public ID of the image to delete.
+          schema:
+            type: object
+            properties:
+              publicId:
+                type: string
+      responses:
+        200:
+          description: Image deleted successfully
+        400:
+          description: Error message

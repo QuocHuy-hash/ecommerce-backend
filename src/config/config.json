@@ -4,8 +4,8 @@
         "password": "12345678",
         "database": "nodejs",
         "port": "3306",
-        "host": "db",
-        "host_redis": "redis",
+        "host": "127.0.0.1",
+        "host_redis": "127.0.0.1",
         "port_redis": "6379",
         "dialect": "mysql",
         "connectionLimit": 10

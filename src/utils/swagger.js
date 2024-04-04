@@ -12,7 +12,7 @@ const options = {
         },
         servers: [
             {
-                url: "https://shop-ecommerce.click/",
+                url: "http://localhost:3055/",
                 description: "Development Server"
             },
         ],
@@ -54,6 +54,8 @@ const options = {
         path.resolve(__dirname, '../routes/carts/*.yml'),
         path.resolve(__dirname, '../routes/discount/*.yml'),
         path.resolve(__dirname, '../routes/orders/*.yml'),
+        path.resolve(__dirname, '../routes/upload/*.yml'),
+        // path.resolve(__dirname, '../routes/oauth/*.yml'),
     ],
 };
 
