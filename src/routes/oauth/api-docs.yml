@@ -4,7 +4,7 @@ info:
   description: API endpoints for Shop Ecommerce
   version: 1.0.0
 servers:
-  - url: "http://localhost:3055/"
+  - url: "https://shop-ecommerce.click/"
     description: Server
 paths:
   /v1/api/oauth/facebook-login:

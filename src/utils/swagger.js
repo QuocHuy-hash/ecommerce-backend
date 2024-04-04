@@ -12,7 +12,7 @@ const options = {
         },
         servers: [
             {
-                url: "http://localhost:3055/",
+                url: "https://shop-ecommerce.click/",
                 description: "Development Server"
             },
         ],

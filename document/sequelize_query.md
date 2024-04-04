@@ -47,7 +47,7 @@ sudo systemctl restart nginx
 server_name shop-ecommerce.click www.shop-ecommerce.click;
 
 location / {
-    proxy_pass http://localhost:3055; 
+    proxy_pass https://shop-ecommerce.click; 
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection 'upgrade';
