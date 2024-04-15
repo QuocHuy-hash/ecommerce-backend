@@ -2,7 +2,7 @@
 
 const { SuccessResponse, OkResponse } = require("../../core/success.response");
 const { createProducts, getAllProducts, deleteProduct, findAllIsDraftShop, findAllIsPublishShop,
-    publishProductByShop, unPublishProductByShop, searchProductByUser, getDetailsProduct } = require("../../services/product.service");
+    publishProductByShop, unPublishProductByShop, searchProductByUser, getDetailsProduct } = require("../../services/Products/product.service");
 const HEADER = {
     CLIENT_ID: 'x-client-id',
 };

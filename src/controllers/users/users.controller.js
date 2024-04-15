@@ -1,25 +1,42 @@
+'use strict'
 
-const { Users } = require('../../models');
+const { CreatedResponse, SuccessResponse } = require("../../core/success.response");
+const { follow_shop, getListFollowerForshop, getListFollowerForUser } = require("../../services/user.service");
+const HEADER = {
+    CLIENT_ID: 'x-client-id',
+};
 
-const createUser = async (req, res) => {
-    try {
-        console.log("emaiul:", req.body.email);
-        // Check if the email already exists in the database
-        const existingUser = await Users.findOne({ where: { email: req.body.email } });
-
-        // If the email already exists, return an error
-        if (existingUser) {
-            return res.status(400).send({ error: 'Email already exists' });
-        }
-
-        const user = await Users.create(req.body);
-        res.status(201).send(user);
-    } catch (error) {
-        console.error('error:', error.message);
-        res.status(400).send(error);
+class UsersController {
+    userId = null;
+    setUserId(req) {
+        this.userId = req.headers[HEADER.CLIENT_ID];
     }
-};
 
-module.exports = {
-    createUser
-};
+    handleFollow = async (req, res, next) => {
+        this.setUserId(req);
+        const { shopId } = req.body;
+        new CreatedResponse({
+            message: 'refreshToken Success',
+            metadata: await follow_shop(this.userId, shopId),
+        }).send(res)
+
+    }
+    getListFollowerForshop = async (req, res, next) => {
+        this.setUserId(req);
+        new SuccessResponse({
+            message: 'refreshToken Success',
+            metadata: await getListFollowerForshop(this.userId),
+        }).send(res)
+
+    }
+    getListFollowerForUser = async (req, res, next) => {
+        this.setUserId(req);
+        new SuccessResponse({
+            message: 'refreshToken Success',
+            metadata: await getListFollowerForUser(this.userId),
+        }).send(res)
+
+    }
+}
+
+module.exports = new UsersController();

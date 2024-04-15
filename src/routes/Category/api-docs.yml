@@ -1,0 +1,101 @@
+openapi: 3.0.0
+info:
+  title: Ecommerce API
+  description: API endpoints for Shop Ecommerce
+  version: 1.0.0
+servers:
+  - url: "https://shop-ecommerce.click/"
+    description: Server
+paths:
+  /v1/api/category/create:
+    post:
+      tags:
+        - Category Product
+      summary: Create Categorys for Products [Role ADMIN] 
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type_name
+              properties:
+                type_name:
+                  type: string
+                  default: 'Clothings'
+      responses:
+        '200':
+          description: Create Categorys successfully.
+        '400':
+          description: Bad request
+        '401':
+          description: Author
+  /v1/api/category/list-all:
+    get:
+      tags:
+        - Category Product
+      summary: Get list Category/Type Products
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      responses:
+        '200':
+          description: Get list Category successfully.
+        '400':
+          description: Bad request
+        '401':
+          description: Author
+  /v1/api/category/one:
+    get:
+      tags:
+        - Category Product
+      summary: Get a Category/Type Products
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+            default: 1
+          description: Category ID
+      responses:
+        '200':
+          description: Get a Category successfully.
+        '400':
+          description: Bad request
+        '401':
+          description: Author
+  /v1/api/category/delete/:
+    post:
+      tags:
+        - Category Product
+      summary: Delete Categorys for Role ADMIN
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: integer
+                  default: 4
+      responses:
+        '200':
+          description: Delete Categorys successfully.
+        '400':
+          description: Bad request
+        '401':
+          description: Author

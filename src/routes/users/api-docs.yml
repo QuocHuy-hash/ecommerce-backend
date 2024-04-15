@@ -1,0 +1,51 @@
+
+paths:
+  /v1/api/users/follow-shop:
+    post:
+      summary: Follow a shop
+      tags: [Follow]
+      description: This route allows you to follow a shop.
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                shopId:
+                  type: integer
+                  default: 1
+      responses:
+        200:
+          description: follow shop successfully
+        400:
+          description: Error 
+  /v1/api/users/list-followers-shop:
+    get:
+      summary: List Followers for shop
+      tags: [Follow]
+      description: This route get list follower for shop.
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      responses:
+        200:
+          description: follow shop successfully
+        400:
+          description: Error 
+  /v1/api/users/list-shop-follow:
+    get:
+      summary: List Followers for Follows
+      tags: [Follow]
+      description: This route get list shop was follow for Users.
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      responses:
+        200:
+          description: follow shop successfully
+        400:
+          description: Error 

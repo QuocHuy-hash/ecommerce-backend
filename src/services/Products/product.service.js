@@ -1,13 +1,13 @@
 'use strict';
 
-const { BadRequestError } = require('../core/error.response');
-const { Products, Electronic, ProductsType, Clothings, db } = require('../models');
-const { sequelize } = require('../models/index');
-const { insertInventory } = require('../models/reponsitorys/eventorys.repo');
-const productReponsitory = require("../models/reponsitorys/product.repo");
-const { removeEmptyFields } = require('../utils');
-const { createNotiMessage } = require('./notifications.service');
-const { findById } = require('./shop.service');
+const { BadRequestError } = require('../../core/error.response');
+const { Products, Electronic, ProductsType, Clothings, db } = require('../../models');
+const { sequelize } = require('../../models/index');
+const { insertInventory } = require('../../models/reponsitorys/eventorys.repo');
+const productReponsitory = require("../../models/reponsitorys/product.repo");
+const { removeEmptyFields } = require('../../utils');
+const { createNotiMessage } = require('../notifications.service');
+const { findById } = require('../shop.service');
 const TypeNoti = {
     ADD: 'ADD_PRODUCT_SHOP',
     VOUCHER: 'PROMOTION'
@@ -38,7 +38,8 @@ class product {
                 const productId = newProduct[0].id;
                 const shop = await findById({ shopId: this.product_shop });
                 await insertInventory(productId, this.product_shop, this.product_quantity,);
-                await createNotiMessage({ type: TypeNoti.ADD, receivedId: [1], senderId: this.product_shop, product_name: this.product_name, product_shop: shop.email })
+                await createNotiMessage({ type: TypeNoti.ADD, receivedId: 0, senderId: this.product_shop, product_name: this.product_name, product_shop: shop.email })
+               
             } catch (error) {
                 console.log("error :::", error);
             }
@@ -122,13 +123,13 @@ const createAttributeProduct = (productData, id) => {
 
 async function findAllIsDraftShop(product_shop, limit = 50, skip = 0) {
     const where = { where: { product_shop: product_shop, isDraft: true } }
-    const attribute = ['id', 'product_name', 'product_thumb', 'product_description', 'product_price', 'product_quantity', 'product_start'];
+    const attribute = ['id', 'product_name', 'product_thumb', 'product_description', 'product_price', 'product_quantity', 'product_start', 'createdAt'];
     return await productReponsitory.findAllIsDraftShop(where, attribute, limit, skip);
 
 }
 async function findAllIsPublishShop(product_shop, limit = 50, skip = 0) {
     const where = { where: { product_shop: product_shop, isPublished: true } }
-    const attribute = ['id', 'product_name', 'product_thumb', 'product_description', 'product_price', 'product_quantity', 'product_start'];
+    const attribute = ['id', 'product_name', 'product_thumb', 'product_description', 'product_price', 'product_quantity', 'product_start', 'createdAt'];
     return await productReponsitory.findAllIsPublishShop(where, attribute, limit, skip);
 
 }

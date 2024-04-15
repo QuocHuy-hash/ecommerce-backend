@@ -11,7 +11,7 @@ module.exports = {
       },
       noti_type: { type: Sequelize.STRING },
       noti_senderId: { type: Sequelize.INTEGER },
-      noti_receivedId: { type: Sequelize.JSON, defaultValue: '[]', },
+      noti_receivedId: { type: Sequelize.INTEGER},
       noti_content: { type: Sequelize.STRING, allowNull: false },
       noti_product_name: { type: Sequelize.STRING },
       noti_shop_name: { type: Sequelize.STRING },

@@ -58,7 +58,10 @@ location / {
 
 3. add SSL to domain 
 
-```bash
+```bash [download common]
+sudo apt-get update
+sudo apt-get install software-properties-common
+
 sudo add-apt-repository ppa:certbot/certbot
 sudo apt-get update
 sudo apt-get install python3-certbot-nginx
@@ -69,5 +72,6 @@ sudo systemctl status certbot.timer
 sudo systemctl enable apache2
 
 tesst
-
+ALter pass mysql on VPS :
+[https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server]
 

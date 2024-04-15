@@ -27,7 +27,7 @@ const RoleShop = {
    */
 const login = async ({ email, password, refreshToken = null }) => {
     //1.
-
+    console.log(email, password);
     const foundShop = await findByEmail({ email });
 
     if (!foundShop) {
@@ -56,7 +56,7 @@ const login = async ({ email, password, refreshToken = null }) => {
     //Send Mail
 
     return {
-        shop: getInfoData({ filled: ['id', 'name', 'email'], object: foundShop }),
+        shop: { id: foundShop.id, firstName: foundShop.firstName, lastName: foundShop.lastName , email: foundShop.email},
         tokens
     }
 }
