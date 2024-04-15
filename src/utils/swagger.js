@@ -55,6 +55,9 @@ const options = {
         path.resolve(__dirname, '../routes/discount/*.yml'),
         path.resolve(__dirname, '../routes/orders/*.yml'),
         path.resolve(__dirname, '../routes/upload/*.yml'),
+        path.resolve(__dirname, '../routes/notifications/*.yml'),
+        path.resolve(__dirname, '../routes/users/*.yml'),
+        path.resolve(__dirname, '../routes/Category/*.yml'),
         // path.resolve(__dirname, '../routes/oauth/*.yml'),
     ],
 };

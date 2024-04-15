@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  title: Ecommerce API
+  description: API endpoints for Shop Ecommerce
+  version: 1.0.0
+servers:
+  - url: "https://shop-ecommerce.click/"
+    description: Server
+paths:
+  /v1/api/notifications/getByUser:
+    get:
+      tags:
+        - Notification
+      summary: Get Notification with associated products
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      responses:
+        '200':
+          description: Get Notification successfully.
+        '400':
+          description: Bad request
+        '401':
+          description: Author
+  /v1/api/notifications/get-noti-by-shop:
+    get:
+        tags:
+          - Notification
+        summary: Get Notification By Shop
+        description: Message notification auto create when create Products
+        security:
+          - Authorization: []
+          - ClientIdHeader: []
+        responses:
+          '200':
+            description: Get Notification successfully.
+          '400':
+            description: Bad request
+          '401':
+            description: Author
+          '404':
+            description: Not found
+  /v1/api/notifications/send-noti-by-shop:
+    post:
+      tags:
+        - Notification
+      summary: Send Notification
+      description: If type is ADD_PRODUCT_SHOP, send notification to all user follow shop else just send notification to user actions Order, Comment, Like, Share
+      security:
+        - Authorization: []
+        - ClientIdHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - shopId
+              properties:
+                type:
+                  type: string
+                  description: ADD_PRODUCT_SHOP, PROMOTION , ORDER
+                shopId:
+                  type: integer
+                  description: ID of the shop send noti
+              example:
+                type: ADD_PRODUCT_SHOP
+                shopId: 1
+      responses:
+        '200':
+          description: Send Notification successfully.
+        '400':
+          description: Bad request
+        '401':
+          description: Author
+        '404':
+            description: Not found

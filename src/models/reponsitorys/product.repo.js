@@ -41,6 +41,7 @@ const queryProduct = async (where, attributes, limit, skip) => {
     return await Products.findAll({
         ...where,
         attributes: attributes,
+        include: [{ model: ProductsType, as: 'productType', attributes: ["type_name"] },],
         order: [['updatedAt', 'DESC']],
         offset: skip,
         limit: limit,

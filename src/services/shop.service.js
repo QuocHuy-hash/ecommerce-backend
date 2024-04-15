@@ -1,6 +1,6 @@
 'use strict'
 
-const { Shops } = require("../models")
+const { Shops, Followers } = require("../models")
 
 const findByEmail = async ({ email }) => {
     // Specify the attributes you want to retrieve
@@ -28,5 +28,6 @@ const updateverifyShop = async ({ email, verify }) => {
         where: { email: email },
     });
 }
+
 
 module.exports = { findByEmail, findById, updateverifyShop }
