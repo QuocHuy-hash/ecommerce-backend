@@ -16,7 +16,6 @@ const mockShop = {
 };
 
 
-const mockRefreshToken = 'mock-refresh-token';
 describe('Authentication and Access Service', () => {
     describe('Login Function', () => {
         it('should successfully login a user', async () => {
@@ -29,6 +28,20 @@ describe('Authentication and Access Service', () => {
         });
 
     });
+    // describe('register Function', () => {
+    //     it('should register a user', async () => {
+    //         const { shop, tokens } = await AccessService({
+    //             email: 'huyhqpk0263811@fpt.edu.vn',
+    //             password: mockShop.password,
+    //             firstName: mockShop.firstName,
+    //             lastName: mockShop.lastName,
+    //             role: mockShop.role,
+    //         });
+    //         expect(shop).toBeDefined();
+    //         expect(tokens).toBeDefined();
+    //     });
+
+    // });
     describe('Logout Function', () => {
         it('should successfully logout a user', async () => {
             const mockKeyStore = { id: '1' };
