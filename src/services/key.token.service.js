@@ -32,7 +32,6 @@ const findByUserId = async (userId) => {
     return await Keytoken.findOne({ where: { userId } });
 }
 const removeKeyById = async (id) => {
-    console.log("id::", id);
     return await Keytoken.destroy({ where: { id } });
 }
 const findByRefreshTokenUsed = async (refreshToken) => {

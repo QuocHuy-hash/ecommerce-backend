@@ -5,7 +5,7 @@ const crypto = require('node:crypto');
 const { KeyTokenService, removeKeyById, findByRefreshTokenUsed, updateRefreshToken } = require('./key.token.service');
 const { createTokenPair, verifyJWT } = require('../auth/authUtil');
 const { getInfoData } = require('../utils');
-const { BadRequestError } = require('../core/error.response');
+const { BadRequestError, AuthFailureError } = require('../core/error.response');
 const { findByEmail } = require('./shop.service');
 const { loginSuccess, setAuthorizationHeaders } = require('../auth/checkAuth');
 const { sendMail } = require('./sendMailer/send.mail.service');
@@ -33,6 +33,7 @@ const login = async ({ email, password, refreshToken = null }) => {
     if (!foundShop) {
         throw new BadRequestError('Shop not registed');
     }
+    console.log("foundShop", foundShop);
     if (!foundShop.verify) throw new BadRequestError('Shop is not verify account')
     //2.
     const match = await bcrypt.compare(password, foundShop.password);
@@ -106,7 +107,6 @@ const AccessService = async (shop) => {
 const logout = async (keyStore) => {
     const id = keyStore.id;
     const deleteKey = await removeKeyById(id);
-    console.log({ deleteKey });
     return deleteKey;
 }
 
@@ -130,7 +130,7 @@ const handleRefreshToken = async (refreshToken) => {
     }
 
     // NO
-    const holderToken = await KeyTokenService.findByRefreshToken(refreshToken);
+    const holderToken = await findByRefreshTokenUsed(refreshToken);
     if (!holderToken) {
         throw new AuthFailureError('Shop not registed ');
     }
