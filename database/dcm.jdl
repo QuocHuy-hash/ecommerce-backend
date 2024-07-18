@@ -1,0 +1,258 @@
+application {
+  config {
+    baseName blog,
+    applicationType monolith,
+    packageName com.ecommer,
+    authenticationType jwt,
+    prodDatabaseType mysql,
+    devDatabaseType mysql,
+    searchEngine true,
+    websocket false,
+    enableHibernateCache false,
+    reactive false,
+    languages [en, vi],
+    clientFramework react,
+    testFrameworks [protractor]
+  }
+
+  entities Apikeys, Carts, Clothings, Comments, DiscountDeletes, Discounts, Electronics, Inventories, Keytokens, Orders, Ordersdetails, Products, Productstypes, Pushnotifications, Shops, Users
+}
+
+entity Apikeys {
+    key String,
+    status String,
+    permissions String,
+    createdAt Instant,
+    updatedAt Instant,
+    apiKeys String,
+    productId Integer,
+    cartId Integer,
+    quantity Integer,
+    price Float,
+    total Float
+}
+
+entity Carts {
+    cartState String,
+    cartCountProd Integer,
+    cartUserId Integer,
+    createdAt Instant,
+    updatedAt Instant
+}
+
+entity Clothings {
+    productId Integer,
+    brand String,
+    size String,
+    material String,
+    color String,
+    createdAt Instant,
+    updatedAt Instant
+}
+
+entity Comments {
+    commentProductId String,
+    commentUserId String,
+    commentContent String,
+    commentLeft String,
+    commentRight String,
+    commentParentId String,
+    isDelete String,
+    createdAt Instant,
+    updatedAt Instant
+}
+
+entity DiscountDeletes {
+    discountName String,
+    discountShopId Integer,
+    discountDescription String,
+    discountType String,
+    discountValue Integer,
+    discountMaxValue Integer,
+    discountCode String,
+    discountStartDate Instant,
+    discountEndDate Instant,
+    discountMaxUses String,
+    discountUseCount Integer,
+    discountUsersUsed Integer,
+    discountMaxUsesPerUser Integer,
+    discountMinOrderValue String,
+    discountIsActive String,
+    discountProductId String,
+    createdAt Instant,
+    updatedAt Instant
+}
+
+entity Discounts {
+    discountName String,
+    discountShopId Integer,
+    discountDescription String,
+    discountType String,
+    discountValue Integer,
+    discountCode String,
+    discountStartDate Instant,
+    discountEndDate Instant,
+    discountMaxUses Integer,
+    discountUseCount Integer,
+    discountUsersUsed String,
+    discountMaxUsesPerUser Integer,
+    discountMinOrderValue String,
+    discountMaxValue String,
+    discountIsActive String,
+    discountAppliesTo String,
+    discountProductId String,
+    createdAt Instant,
+    updatedAt Instant
+}
+
+entity Electronics {
+    productId Integer,
+    manufacturer String,
+    model String,
+    color String,
+    createdAt Instant,
+    updatedAt Instant
+}
+
+entity Inventories {
+    invenProductId Integer,
+    invenLocation String,
+    invenStock Integer,
+    invenShopId Integer,
+    invenTemporaryOrder String,
+    createdAt Instant,
+    updatedAt Instant
+}
+
+entity Keytokens {
+    userId Integer,
+    publicKey String,
+    privateKey String,
+    refreshTokensUsed String,
+    refreshToken String,
+    createdAt Instant,
+    updatedAt Instant
+}
+
+entity Orders {
+    orderUserId Integer,
+    orderShopId Integer,
+    orderTotalPrice String,
+    orderTotalDiscount String,
+    orderFreeShip String,
+    orderShipStreet String,
+    orderShipWards String,
+    orderShipDistrict String,
+    orderShipCity String,
+    orderShipCountry String,
+    orderPayment String,
+    orderTrackingNumber String,
+    status String,
+    createdAt Instant,
+    updatedAt Instant
+}
+
+entity Ordersdetails {
+    orderId Integer,
+    productId Integer,
+    quantity Integer,
+    price String,
+    createdAt Instant,
+    updatedAt Instant
+}
+
+entity Products {
+    productName String,
+    productSlug String,
+    productThumb String,
+    productDescription String,
+    productPrice Double,
+    productQuantity Integer,
+    productType Integer,
+    productShop Integer,
+    productStart Integer,
+    isDraft String,
+    isPublished String,
+    createdAt Instant,
+    updatedAt Instant
+}
+
+entity Productstypes {
+    typeName String,
+    createdAt Instant,
+    updatedAt Instant
+}
+
+entity Pushnotifications {
+    notiType String,
+    notiSenderId Integer,
+    notiReceivedId String,
+    notiContent String,
+    notiProductName String,
+    notiShopName String,
+    status String,
+    createdAt Instant,
+    updatedAt Instant
+}
+
+entity Sequelizemeta {
+    name String
+}
+
+entity Shops {
+    firstName String,
+    lastName String,
+    password String,
+    email String,
+    role String,
+    status String,
+    verify String,
+    createdAt Instant,
+    updatedAt Instant
+}
+
+entity Users {
+    username String required minlength(1) maxlength(50),
+    password String required maxlength(30),
+    firstName String maxlength(50),
+    lastName String maxlength(50),
+    email String required pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/) minlength(5) maxlength(254),
+    activated Boolean,
+    imageUrl String maxlength(256),
+    resetDate Instant,
+    createdBy String,
+    createdDate Instant,
+    lastModifiedBy String,
+    lastModifiedDate Instant,
+    authorities String
+}
+
+/**
+ * Relationships between entities.
+ */
+relationship OneToOne {
+    Carts{apikeys} to Apikeys,
+    Clothings{products} to Products,
+    Electronics{products} to Products,
+    Inventories{products} to Products
+}
+
+relationship OneToMany {
+    Shops to Products{shop},
+    Products to Comments{product},
+    Orders to Ordersdetails{order},
+    Users to Orders{user}
+}
+
+relationship ManyToMany {
+    Discounts{products} to Products{discount}
+}
+
+// Set pagination options
+paginate * with pagination
+
+// Use Data Transfer Objects (DTO)
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl

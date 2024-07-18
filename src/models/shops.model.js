@@ -27,6 +27,7 @@ module.exports = (sequelize) => {
       validate: {
         isEmail: true,
       },
+      
     },
     role: {
       type: DataTypes.ARRAY(DataTypes.STRING), // Mảng các chuỗi

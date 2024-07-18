@@ -4,8 +4,8 @@ const { Model, DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
     class OrdersDetails extends Model {
         static associate(models) {
-            OrdersDetails.belongsTo(models.Order, { foreignKey: 'order_id', onDelete: 'CASCADE' });
-            OrdersDetails.belongsTo(models.Products, { foreignKey: 'product_id', onDelete: 'CASCADE' });
+            OrdersDetails.belongsTo(models.Order, { foreignKey: 'order_id', onDelete: 'CASCADE', as: 'order'});
+            OrdersDetails.belongsTo(models.Products, { foreignKey: 'product_id', onDelete: 'CASCADE', as: 'products' });
 
             // Bổ sung các mối quan hệ với các bảng khác ở đây nếu cần thiết
         }

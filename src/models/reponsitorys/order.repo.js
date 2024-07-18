@@ -1,4 +1,4 @@
-const { Order, OrdersDetails } = require('../../models');
+const { Order, OrdersDetails, Products } = require('../../models');
 
 const findAllOrder = async ({
     limit = 20, page = 1, model, where
@@ -9,7 +9,11 @@ const findAllOrder = async ({
             ...where,
             skip: skip,
             limit: limit,
-            include: [{ model: OrdersDetails, as: "orderDetails" }],
+            include: [{ 
+                model: OrdersDetails, 
+                as: "orderDetails",
+                // include: [{ model: Products, as: "product", attributes: ['product_name'] }]
+            }],
             nest: true,
             raw: true,
 
@@ -17,12 +21,14 @@ const findAllOrder = async ({
     return response;
 }
 const findOneOrder = async ({ model, where }) => {
-    return await model.findOne({
+    return await model.findAll({
         ...where,
-        include: [{ model: OrdersDetails, as: "orderDetails" }],
+            include: [{ model: Products, as: "products", attributes: ['product_name'] 
+        }],
         nest: true,
         raw: true,
-    })
+    });
+   
 }
 module.exports = {
     findAllOrder,
