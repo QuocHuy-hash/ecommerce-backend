@@ -10,7 +10,7 @@ router.use(authentication)
 router.get('/list-shop', asyncHandle(OrdersController.getListOrdersForShop));
 router.get('/list-user', asyncHandle(OrdersController.getListOrdersForUser));
 //get details for users and shops
-router.get('/details', asyncHandle(OrdersController.getDetailsOrder));
+router.post('/details', asyncHandle(OrdersController.getDetailsOrder));
 //cancel order by user
 router.post('/cancel-order', asyncHandle(OrdersController.cancelOrderByUser));
 //cancel order by user

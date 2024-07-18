@@ -13,11 +13,16 @@ const getListOrderUser = async (userId) => {
     return getListOrdersUser;
 
 }
-const getDetailsOrder = async (body) => {
-    const { orderId } = body;
-    const where = { where: { id: orderId } }
-    const getDetailsOrder = await findOneOrder({ model: Order, where })
-    return getDetailsOrder;
+const getDetailsOrder = async (orderId) => {
+    console.log({ orderId });
+    const where = { where: { order_id: orderId } }
+    try {
+        const getDetailsOrder = await findOneOrder({ model: OrdersDetails, where })
+        console.log({ getDetailsOrder });
+        return getDetailsOrder;
+    } catch (error) {
+        console.log("error", error);
+    }
 
 }
 

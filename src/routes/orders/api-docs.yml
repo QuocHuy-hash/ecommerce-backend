@@ -39,18 +39,25 @@ paths:
             items:
               $ref: '#/definitions/Order'
   /v1/api/orders/details:
-    get:
+    post:
       tags:
         - Orders
-      summary: Get details of a specific order
+      summary:  Details of a specific order
       security:
         - Authorization: []
         - ClientIdHeader: []
-      parameters:
-        - name: orderId
-          in: query
-          required: true
-          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - orderId
+              properties:
+                orderId:
+                  type: integer
+                  default: 2
       responses:
         200:
           description: Successful operation
