@@ -11,8 +11,9 @@ const { findById } = require('../shop.service');
 const TypeNoti = {
     ADD: 'ADD_PRODUCT_SHOP',
     VOUCHER: 'PROMOTION'
-
 }
+const attributeQuery = ['id', 'product_name', 'product_slug', 'product_thumb', 'product_description',
+     'product_price', 'product_quantity', 'product_start', 'isDraft', 'isPublished', 'createdAt'];
 class product {
     constructor({ id, product_name, product_slug, product_thumb, product_description, product_price, product_shop, product_type, product_quantity,
         product_start, isDraft, isPublished }) {
@@ -123,13 +124,13 @@ const createAttributeProduct = (productData, id) => {
 
 async function findAllIsDraftShop(product_shop, limit = 50, skip = 0) {
     const where = { where: { product_shop: product_shop, isDraft: true } }
-    const attribute = ['id', 'product_name', 'product_thumb', 'product_description', 'product_price', 'product_quantity', 'product_start', 'createdAt'];
+    const attribute = attributeQuery;
     return await productReponsitory.findAllIsDraftShop(where, attribute, limit, skip);
 
 }
 async function findAllIsPublishShop(product_shop, limit = 50, skip = 0) {
-    const where = { where: { product_shop: product_shop, isPublished: true } }
-    const attribute = ['id', 'product_name', 'product_thumb', 'product_description', 'product_price', 'product_quantity', 'product_start', 'createdAt'];
+    const where = { where: { product_shop: product_shop, isPublished: true } } 
+    const attribute = attributeQuery;
     return await productReponsitory.findAllIsPublishShop(where, attribute, limit, skip);
 
 }
@@ -137,7 +138,7 @@ async function findAllIsPublishShop(product_shop, limit = 50, skip = 0) {
 async function getAllProducts() {
     const listProduct = await Products.findAll({
         where: { isPublished: true },
-        attributes: ['id', 'product_name', 'product_shop', 'product_thumb', 'product_description', 'product_price', 'product_quantity', 'product_start'],
+        attributes: ['id', 'product_name', 'product_shop', 'product_thumb', 'product_description', 'product_price', 'product_quantity', 'product_start', 'product_isPublished', 'product_isDraft' ],
         include: [
             { model: ProductsType, as: 'productType', attributes: ["type_name"] },
         ],

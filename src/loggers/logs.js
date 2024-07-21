@@ -3,6 +3,7 @@ const { format, transports } = winston;
 const { combine, timestamp, align, printf } = format;
 require('winston-daily-rotate-file');
 const { v4: uuidv4 } = require('uuid');
+const { File } = require('winston/lib/winston/transports');
 
 /**
  * error
@@ -43,12 +44,23 @@ class Logger {
     }
     commonParams(params) {
         let context, req, metadata;
-        if (!Array.isArray(params)) {
-            context = params.toString(); // Convert context to string if it's not an array
-        } else {
+        if (params instanceof File) {
+            // Xử lý trường hợp params là một File
+            context = params.name; // hoặc bất kỳ thông tin nào phù hợp
+            metadata = {};
+        } else if (!Array.isArray(params) && typeof params === 'object' && params !== null) {
+            try {
+                return JSON.stringify(params);
+            } catch (error) {
+                console.error('Error stringifying params:', error);
+                return '';
+            }
+        } else if (Array.isArray(params)) {
             [context, req, metadata] = params;
             context = context.toString();
             metadata = metadata ? this.serializeObject(metadata) : {};
+        } else {
+            context = String(params); // Chuyển đổi params thành chuỗi an toàn
         }
         const requestId = req && req.userID ? req.userID : uuidv4();
         return { context, requestId, metadata };
