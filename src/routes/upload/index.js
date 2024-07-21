@@ -7,7 +7,7 @@ const { uploadDisk } = require('../../config/multer.config');
 
 //authenticationr
 router.use(authentication) //require login
-router.post('/products/multiple', uploadDisk.single('file'), asyncHandle(uploadController.uploadFromLocal));
+router.post('/products/multiple', uploadDisk.single('images'), asyncHandle(uploadController.uploadFromLocal));
 router.post('/products/delete', asyncHandle(uploadController.deleteImage));
 // router.post('/products/multiple', uploadDisk.array('files', 3), asyncHandle(uploadController.uploadFromLocal));
 
