@@ -105,6 +105,7 @@ const AccessService = async (shop) => {
 };
 
 const logout = async (keyStore) => {
+    console.log("keyStore", keyStore);
     const id = keyStore.id;
     const deleteKey = await removeKeyById(id);
     return deleteKey;

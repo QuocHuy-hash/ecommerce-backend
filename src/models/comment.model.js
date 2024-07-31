@@ -4,7 +4,8 @@ const { Model, DataTypes, ARRAY } = require('sequelize');
 module.exports = (sequelize) => {
     class Comment extends Model {
         static associate(models) {
-
+            Comment.belongsTo(models.Shops, { foreignKey: 'comment_userId', as: 'shop' });
+            Comment.belongsTo(models.Products, { foreignKey: 'comment_productId', as: 'product' });
         }
     }
     Comment.init({

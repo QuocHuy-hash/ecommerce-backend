@@ -8,7 +8,7 @@ const options = {
         info: {
             title: 'Ecommerce API',
             description: "API endpoints for Shop Ecommerce",
-            version: '1.0.0',
+            version: '1.0.1',
         },
         servers: [
             {

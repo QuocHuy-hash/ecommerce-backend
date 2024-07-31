@@ -8,8 +8,8 @@ const router = express.Router();
 //discounts
 // signUp
 router.use('/v1/api/', require('./access/index'));
-router.use('/v1/api/users', require('./users/index'));
 router.use('/v1/api/products', require('./products/index'));
+router.use('/v1/api/users', require('./users/index'));
 
 router.use('/v1/api/discount', require('./discount/index'));
 //carts and review orders

@@ -1,4 +1,4 @@
-const { Comment, sequelize } = require('../models');
+const { Comment, sequelize, Shops } = require('../models');
 const { BadRequestError, NotFoundError } = require("../core/error.response");
 const { Op } = require('sequelize');
 
@@ -79,7 +79,9 @@ const createComment = async (userId, body) => {
 const getCommentByParentId = async (body) => {
     const { productId, parentCommentId, limit = 10, offset = 0 } = body;
     try {
-
+        const attributes = ['id', 'comment_userId', 'comment_left', 'comment_right', 'comment_content', 'comment_parentId', 'createdAt'];
+        const include = [{ model: Shops, as: 'shop', attributes: ["firstName", "lastName", "email"] }]
+        
         if (parentCommentId) {
             const parent = await Comment.findOne({ where: { id: parentCommentId } });
             if (!parent) throw new NotFoundError('not found comments for product')
@@ -90,7 +92,8 @@ const getCommentByParentId = async (body) => {
                     comment_left: { [Op.gt]: parent.comment_left },
                     comment_right: { [Op.lt]: parent.comment_right }
                 },
-                attributes: ['id', 'comment_left', 'comment_right', 'comment_content', 'comment_parentId'],
+                attributes: attributes,
+                include: include,
                 order: [['comment_left', 'ASC']],
                 limit,
                 offset
@@ -102,7 +105,8 @@ const getCommentByParentId = async (body) => {
                 comment_productId: productId,
                 comment_parentId: null,
             },
-            attributes: ['id', 'comment_left', 'comment_right', 'comment_content', 'comment_parentId'],
+            attributes: attributes,
+            include: include,
             order: [['comment_left', 'ASC']],
             limit,
             offset
