@@ -20,8 +20,8 @@ const uploadFromLocal = async (path, userId) => {
         image_url: result.secure_url,
         shopId: userId,
         thumb_url: await cloudinary.url(result.public_id, {
-            height: 250,
-            width: 250,
+            height: 500,
+            width: 500,
             crop: 'fill',
             quality: 'auto',
             format: 'jpg',

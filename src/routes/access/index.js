@@ -139,7 +139,7 @@ router.post('/shop/verify-email', asyncHandle(EmailController.verifyOtp));
  */
 router.post('/shop/resend-email', asyncHandle(EmailController.reSendMail));
 //authentication
-router.use(authentication);
+// router.use(authentication);
 /**
  * @swagger
  * /v1/api/shop/logout:

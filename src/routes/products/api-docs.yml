@@ -144,15 +144,19 @@ paths:
           description: Bad request
 
   /v1/api/products/details:
-    get:
+    post:
       summary: Get details of a product
       tags: [Products]
-      parameters:
-        - in: query
-          name: productId
-          required: true
+      requestBody:
+        required: true
+      content:
+        application/json:
           schema:
-            type: integer
+            type: object
+            properties:
+              id:
+              type: integer
+              default: 2
           description: ID of the product to get details for
       responses:
         '200':

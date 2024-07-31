@@ -47,7 +47,7 @@ router.post('/create', asyncHandle(ProductController.createProduct));
 router.post('/delete', asyncHandle(ProductController.delete));
 router.get('/shop/draft-all', asyncHandle(ProductController.findAllIsDraftShop));
 router.get('/shop/publish-all', asyncHandle(ProductController.findAllIsPublishShop));
-router.get('/details', asyncHandle(ProductController.getDetailsProduct));
+router.post('/details', asyncHandle(ProductController.getDetailsProduct));
 router.post('/shop/publish-product', asyncHandle(ProductController.publishProductShop));
 router.post('/shop/unpublish-product', asyncHandle(ProductController.unPublishProductShop));
 module.exports = router;

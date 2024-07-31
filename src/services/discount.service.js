@@ -105,7 +105,7 @@ const getDiscountCodeByShop = async (shopId, limit = 10, page = 0) => {
     try {
         shopId = parseInt(shopId);
         const where = { where: { discount_shopId: shopId, discount_is_active: true } }
-        const attributes = ["discount_name", "discount_description", "discount_type", "discount_value", "discount_code", "discount_start_date", "discount_end_date",
+        const attributes = ["id" ,"discount_name", "discount_description", "discount_type", "discount_value", "discount_code", "discount_start_date", "discount_end_date",
             "discount_max_uses", "discount_use_count", "discount_users_used", "discount_max_uses_per_user", "discount_min_order_value", "discount_max_value", "discount_is_active",
             "discount_applies_to", "discount_product_id"];
 
