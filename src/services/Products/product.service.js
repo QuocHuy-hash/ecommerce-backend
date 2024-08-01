@@ -1,7 +1,7 @@
 'use strict';
 
 const { BadRequestError } = require('../../core/error.response');
-const { Products, Electronic, ProductsType, Clothings, db } = require('../../models');
+const { Products, Electronic, ProductsType, Clothings, Shops } = require('../../models');
 const { sequelize } = require('../../models/index');
 const { insertInventory } = require('../../models/reponsitorys/eventorys.repo');
 const productReponsitory = require("../../models/reponsitorys/product.repo");
@@ -178,6 +178,7 @@ async function getDetailsProduct(product_id) {
             { model: Clothings, as: "clothing", attributes: ["brand", "size", "color", "material"] },
             { model: Electronic, as: 'electronic', attributes: ["manufacturer", "model", "color"] },
             { model: ProductsType, as: 'productType', attributes: ["type_name"] },
+            { model: Shops, as: 'shop', attributes: ['firstName', 'lastName', 'email']}
         ],
         nest: true,
         raw: true,
