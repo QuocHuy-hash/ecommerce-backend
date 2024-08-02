@@ -69,6 +69,13 @@ const addToCartV2 = async (body, userId) => {
         await CartDetails.update({ ...CartDetails, quantity: newQuantity, total: newTotal }, { where: { id: id } });
         await Cart.update({ ...foundCart }, { where: { id: foundCart.id } })
     }
+    foundCartDetails.quantity = newQuantity;
+    foundCartDetails.total = newTotal;
+
+    return {
+        cart: foundCart,
+        cartDetails: foundCartDetails
+    };
 
 }
 
@@ -81,7 +88,8 @@ const deleteCartProductV1 = async (product_id, userId) => {
     const foundCartDetails = await findCartDetails(findDetails);
     if (!foundCartDetails) throw new NotFoundError('not found cart details');
 
-    await CartDetails.destroy({ where: { id: foundCartDetails.id } })
+   return await CartDetails.destroy({ where: { id: foundCartDetails.id } });
+    
 }
 
 // delete mutiple product in the cart
