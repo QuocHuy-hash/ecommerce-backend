@@ -1,10 +1,10 @@
 {
     "development": {
         "username": "root",
-        "password": "12345678",
+        "password": "master_password",
         "database": "nodejs",
         "port": "3306",
-        "host": "db",
+        "host": "mysql-master",
         "host_redis": "redis",
         "port_redis": "6379",
         "dialect": "mysql",
