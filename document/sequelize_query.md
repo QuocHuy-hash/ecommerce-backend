@@ -15,7 +15,18 @@ lte: bé hơn hoặc bằng
 
 <<<<<<<==================================================================================================>>>>
 Deploy server EC2
+cấu hình để đăng nhập bằng ssh và password trên ec2 với quyền root 
+```bash
+sudo passwd root
+sudo nano /etc/ssh/sshd_config
+---Thay đổi các dòng:
+PermitRootLogin yes
+PasswordAuthentication yes
+sudo systemctl restart ssh
 
+
+
+```
 Command:
 
 install nginx 
@@ -47,7 +58,7 @@ sudo systemctl restart nginx
 server_name shop-ecommerce.click www.shop-ecommerce.click;
 
 location / {
-    proxy_pass https://shop-ecommerce.click; 
+    proxy_pass http://locahost:3000; 
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection 'upgrade';
@@ -65,7 +76,7 @@ sudo apt-get install software-properties-common
 sudo add-apt-repository ppa:certbot/certbot
 sudo apt-get update
 sudo apt-get install python3-certbot-nginx
-sudo certbot --nginx -d shop-ecommerce.click
+sudo certbot --nginx -d shop-ecommerce.click hoặc sudo certbot certonly --nginx -d shop-ecommerce.click -d www.shop-ecommerce.click
 sudo certbot renew --dry-run
 sudo systemctl status certbot.timer
 ```
@@ -75,3 +86,7 @@ tesst
 ALter pass mysql on VPS :
 [https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server]
 
+upstream backend_servers {
+    server localhost:3055;     
+    server 43.74.41.163:3056;      
+}
